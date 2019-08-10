@@ -65,7 +65,11 @@ final class CRent
     const AGETAG     = 'rea';
     const AGEMIN     = 1;
     const AGEDEFAULT = 2;
-    const AGEMAX     = 3;
+    const AGEMAX     = 4;
+	
+	const HORAIRETAG     = 'reo';
+    const HORAIREMIN     = 0;
+    const HORAIREMAX     = 6;
 
     const ARRHESTAG = 'reh';
     const ARRHESMIN = 0;
@@ -96,8 +100,11 @@ final class CRent
     // Max rent
     private $m_iMax = CRent::MAXMIN;
 
-    // Group Age (1,2,3)
+    // Group Age (1,2,3,4)
     private $m_iAge = CRent::AGEDEFAULT;
+	
+    // Group Horaire (0,1,2,3,4,5,6)
+    private $m_iHoraire = CRent::HORAIREMIN;
 
     // Group Arrhes (0,1,2,3)
     private $m_iArrhes = CRent::ARRHESMIN;
@@ -223,6 +230,7 @@ final class CRent
     public function GetCountCanceled(){return (integer)$this->m_iCanceled;}
     public function GetMax(){return (integer)$this->m_iMax;}
     public function GetAge(){return (integer)$this->m_iAge;}
+	public function GetHoraire(){return (integer)$this->m_iHoraire;}
     public function GetArrhes(){return (integer)$this->m_iArrhes;}
     public function GetComment($iFilter=0){return ((1==$iFilter)?htmlentities($this->m_sComment,ENT_QUOTES,'UTF-8'):$this->m_sComment);}
     public function GetCreationDate($iFilter=0){return ((1==$iFilter)?htmlentities($this->m_sCreationDate,ENT_QUOTES,'UTF-8'):$this->m_sCreationDate);}
@@ -261,6 +269,10 @@ final class CRent
     {
         $this->m_iAge = $this->SanitizeInt( $iValue, CRent::AGEMIN, CRent::AGEMAX, CRent::AGEDEFAULT);
     }
+    public function SetHoraire($iValue)
+    {
+        $this->m_iHoraire = $this->SanitizeInt( $iValue, CRent::HORAIREMIN, CRent::HORAIREMAX, 0);
+    }	
     public function SetArrhes($iValue)
     {
         $this->m_iArrhes = $this->SanitizeInt( $iValue, CRent::ARRHESMIN, CRent::ARRHESMAX, 0);
@@ -332,6 +344,11 @@ final class CRent
                 $tFilter = array('options' => array('min_range'=>CRent::AGEMIN, 'max_range'=>CRent::AGEMAX));
                 $this->SetAge( filter_input( $iFilter, CRent::AGETAG, FILTER_VALIDATE_INT, $tFilter));
             }
+            if( filter_has_var( $iFilter, CRent::HORAIRETAG) )
+            {
+                $tFilter = array('options' => array('min_range'=>CRent::HORAIREMIN, 'max_range'=>CRent::HORAIREMAX));
+                $this->SetHoraire( filter_input( $iFilter, CRent::HORAIRETAG, FILTER_VALIDATE_INT, $tFilter));
+            }			
             if( filter_has_var( $iFilter, CRent::ARRHESTAG) )
             {
                 $tFilter = array('options' => array('min_range'=>CRent::ARRHESMIN, 'max_range'=>CRent::ARRHESMAX));
@@ -366,6 +383,7 @@ final class CRent
         $this->m_iCanceled = CRent::RPCMIN;
         $this->m_iMax = CRent::MAXMIN;
         $this->m_iAge = CRent::AGEDEFAULT;
+        $this->m_iHoraire = CRent::HORAIREMIN;		
         $this->m_iArrhes = CRent::ARRHESMIN;
         $this->m_sComment = '';
         $this->m_sCreationDate = '';

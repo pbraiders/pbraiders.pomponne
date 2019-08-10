@@ -77,7 +77,7 @@ function RentGet( $sLogin, $sSession, $sInet, CRent $pRent, CDate $pDate, CConta
         try
         {
             // Prepare
-    		$sSQL = 'SELECT r.`idreservation` AS "reservation_id", r.`year` AS "reservation_year", r.`month` AS "reservation_month", r.`day` AS "reservation_day", r.`rent_real` AS "reservation_real", r.`rent_planned` AS "reservation_planned", r.`rent_canceled` AS "reservation_canceled", r.`rent_max` AS "reservation_max", r.`age` AS "reservation_age", r.`arrhe` AS "reservation_arrhes", r.`comment` AS "reservation_comment", r.`create_date` AS "creation_date", u.`login` AS "creation_username", r.`update_date` AS "update_date", v.`login` AS "update_username", c.`lastname` AS "contact_lastname", c.`firstname` AS "contact_firstname", c.`tel` AS "contact_tel", c.`email` AS "contact_email", c.`address` AS "contact_address", c.`address_more` AS "contact_addressmore", c.`city` AS "contact_addresscity", c.`zip` AS "contact_addresszip", c.`idcontact` AS "contact_id" FROM `'.PBR_DB_DBN.'`.`reservation` AS r INNER JOIN `'.PBR_DB_DBN.'`.`contact` AS c ON r.`idcontact`=c.`idcontact` INNER JOIN `'.PBR_DB_DBN.'`.`user` AS u ON r.`create_iduser`=u.`iduser` LEFT JOIN `'.PBR_DB_DBN.'`.`user` AS v ON r.`update_iduser`=v.`iduser` WHERE r.`idreservation`=:iIdentifier';
+    		$sSQL = 'SELECT r.`idreservation` AS "reservation_id", r.`year` AS "reservation_year", r.`month` AS "reservation_month", r.`day` AS "reservation_day", r.`rent_real` AS "reservation_real", r.`rent_planned` AS "reservation_planned", r.`rent_canceled` AS "reservation_canceled", r.`rent_max` AS "reservation_max", r.`age` AS "reservation_age", r.`horaire` AS "reservation_horaire", r.`arrhe` AS "reservation_arrhes", r.`comment` AS "reservation_comment", r.`create_date` AS "creation_date", u.`login` AS "creation_username", r.`update_date` AS "update_date", v.`login` AS "update_username", c.`lastname` AS "contact_lastname", c.`firstname` AS "contact_firstname", c.`tel` AS "contact_tel", c.`email` AS "contact_email", c.`idcontact` AS "contact_id" FROM `'.PBR_DB_DBN.'`.`reservation` AS r INNER JOIN `'.PBR_DB_DBN.'`.`contact` AS c ON r.`idcontact`=c.`idcontact` INNER JOIN `'.PBR_DB_DBN.'`.`user` AS u ON r.`create_iduser`=u.`iduser` LEFT JOIN `'.PBR_DB_DBN.'`.`user` AS v ON r.`update_iduser`=v.`iduser` WHERE r.`idreservation`=:iIdentifier';
             $pPDOStatement = CDBLayer::GetInstance()->GetDriver()->prepare($sSQL);
             // Bind
             $pPDOStatement->bindValue(':iIdentifier', $pRent->GetIdentifier(), PDO::PARAM_INT);
@@ -108,6 +108,8 @@ function RentGet( $sLogin, $sSession, $sInet, CRent $pRent, CDate $pDate, CConta
                     $pRent->SetMax((integer)$tabResult[0]['reservation_max']);
                 if( array_key_exists( 'reservation_age', $tabResult[0]) )
                     $pRent->SetAge((integer)$tabResult[0]['reservation_age']);
+                if( array_key_exists( 'reservation_horaire', $tabResult[0]) )
+                    $pRent->SetHoraire((integer)$tabResult[0]['reservation_horaire']);
                 if( array_key_exists( 'reservation_arrhes', $tabResult[0]) )
                     $pRent->SetArrhes((integer)$tabResult[0]['reservation_arrhes']);
                 if( array_key_exists( 'reservation_comment', $tabResult[0]) )
@@ -130,14 +132,6 @@ function RentGet( $sLogin, $sSession, $sInet, CRent $pRent, CDate $pDate, CConta
                     $pContact->SetTel($tabResult[0]['contact_tel']);
                 if( array_key_exists( 'contact_email', $tabResult[0]) )
                     $pContact->SetEmail($tabResult[0]['contact_email']);
-                if( array_key_exists( 'contact_address', $tabResult[0]) )
-                    $pContact->SetAddress($tabResult[0]['contact_address']);
-                if( array_key_exists( 'contact_addressmore', $tabResult[0]) )
-                    $pContact->SetAddressMore($tabResult[0]['contact_addressmore']);
-                if( array_key_exists( 'contact_addresscity', $tabResult[0]) )
-                    $pContact->SetCity($tabResult[0]['contact_addresscity']);
-                if( array_key_exists( 'contact_addresszip', $tabResult[0]) )
-                    $pContact->SetZip($tabResult[0]['contact_addresszip']);
                 $iReturn = $pRent->GetIdentifier();
             }//if( is_array($tabResult) && isset($tabResult[0]) && is_array($tabResult[0]) )
         }

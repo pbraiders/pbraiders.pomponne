@@ -72,17 +72,13 @@ function ContactAdd( $sLogin, $sSession, $sInet, CContact $pContact)
 	    try
 	    {
 	        // Prepare
-	        $sSQL = 'INSERT INTO `'.PBR_DB_DBN.'`.`contact`(`lastname`, `firstname`, `tel`, `email`, `address`, `address_more`, `city`, `zip`, `create_date`, `create_iduser`, `update_date`, `update_iduser`) VALUES (:sLastName, :sFirstName, :sTel, :sEmail, :sAddress, :sAddressMore, :sCity, :sZip, SYSDATE(), :iUserId, NULL, NULL)';
+	        $sSQL = 'INSERT INTO `'.PBR_DB_DBN.'`.`contact`(`lastname`, `firstname`, `tel`, `email`, `create_date`, `create_iduser`, `update_date`, `update_iduser`) VALUES (:sLastName, :sFirstName, :sTel, :sEmail, SYSDATE(), :iUserId, NULL, NULL)';
 			$pPDOStatement = CDBLayer::GetInstance()->GetDriver()->prepare($sSQL);
 			// Bind
             $pPDOStatement->bindValue(':sLastName',$pContact->GetLastName(),PDO::PARAM_STR);
             $pPDOStatement->bindValue(':sFirstName',$pContact->GetFirstName(),PDO::PARAM_STR);
             $pPDOStatement->bindValue(':sTel',$pContact->GetTel(),PDO::PARAM_STR);
             $pPDOStatement->bindValue(':sEmail',$pContact->GetEmail(),PDO::PARAM_STR);
-            $pPDOStatement->bindValue(':sAddress',$pContact->GetAddress(),PDO::PARAM_STR);
-            $pPDOStatement->bindValue(':sAddressMore',$pContact->GetAddressMore(),PDO::PARAM_STR);
-            $pPDOStatement->bindValue(':sCity',$pContact->GetCity(),PDO::PARAM_STR);
-            $pPDOStatement->bindValue(':sZip',$pContact->GetZip(),PDO::PARAM_STR);
 			$pPDOStatement->bindValue(':iUserId',CAuth::GetInstance()->GetUserBDIdentifier(),PDO::PARAM_INT);
             // Execute
             $pPDOStatement->execute();

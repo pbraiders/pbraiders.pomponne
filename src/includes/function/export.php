@@ -123,10 +123,6 @@ function ExportRebuild( &$tIn, &$tOut )
         && array_key_exists('contact_firstname', $tIn)
         && array_key_exists('contact_tel', $tIn)
         && array_key_exists('contact_email', $tIn)
-        && array_key_exists('contact_address', $tIn)
-        && array_key_exists('contact_addressmore', $tIn)
-        && array_key_exists('contact_addresscity', $tIn)
-        && array_key_exists('contact_addresszip', $tIn)
         && array_key_exists('contact_comment', $tIn)
         && array_key_exists('creation_date', $tIn) )
     {
@@ -134,9 +130,6 @@ function ExportRebuild( &$tIn, &$tOut )
         $tOut[] = $tIn['contact_firstname'];
         $tOut[] = $tIn['contact_tel'];
         $tOut[] = $tIn['contact_email'];
-        $tOut[] = $tIn['contact_address'].' '.$tIn['contact_addressmore'];
-        $tOut[] = $tIn['contact_addresscity'];
-        $tOut[] = $tIn['contact_addresszip'];
         $tOut[] = str_replace($tCarriage, ' ', $tIn['contact_comment']);
         $tOut[] = $tIn['creation_date'];
     }//if( ...

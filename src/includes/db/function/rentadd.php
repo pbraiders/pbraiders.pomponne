@@ -65,7 +65,7 @@ function RentAdd( $sLogin, $sSession, $sInet, CContact $pContact, CDate $pDate, 
     $sErrorTitle = __FUNCTION__ .'('.$sLogin.','.$sSession.',[obfuscated],'.$pContact->GetIdentifier();
     $sErrorTitle .= ','.$pDate->GetRequestDay().','.$pDate->GetRequestMonth().','.$pDate->GetRequestYear();
     $sErrorTitle .= ','.$pRent->GetCountReal().','.$pRent->GetCountPlanned().','.$pRent->GetCountCanceled();
-    $sErrorTitle .= ','.$pRent->GetAge().','.$pRent->GetArrhes();
+    $sErrorTitle .= ','.$pRent->GetAge().','.$pRent->GetHoraire().','.$pRent->GetArrhes();
     $sErrorTitle .= ',...)';
     $pRent->SetIdentifier(0);
 
@@ -86,7 +86,7 @@ function RentAdd( $sLogin, $sSession, $sInet, CContact $pContact, CDate $pDate, 
         try
         {
             // Prepare
-            $sSQL = 'INSERT INTO `'.PBR_DB_DBN.'`.`reservation` (`idcontact`, `year`, `month`, `day`, `rent_real`, `rent_planned`, `rent_canceled`, `rent_max`, `age`, `arrhe`, `create_date`, `create_iduser`, `update_date`, `update_iduser`) VALUES (:iIdentifier, :iYear, :iMonth, :iDay, :iReal, :iPlanned, :iCanceled, :iMaxRent, :iAge, :iArrhes, SYSDATE(), :iUserId, NULL, NULL)';
+            $sSQL = 'INSERT INTO `'.PBR_DB_DBN.'`.`reservation` (`idcontact`, `year`, `month`, `day`, `rent_real`, `rent_planned`, `rent_canceled`, `rent_max`, `age`, `horaire`, `arrhe`, `create_date`, `create_iduser`, `update_date`, `update_iduser`) VALUES (:iIdentifier, :iYear, :iMonth, :iDay, :iReal, :iPlanned, :iCanceled, :iMaxRent, :iAge, :iHoraire, :iArrhes, SYSDATE(), :iUserId, NULL, NULL)';
             $pPDOStatement = CDBLayer::GetInstance()->GetDriver()->prepare($sSQL);
             // Bind
             $pPDOStatement->bindValue(':iIdentifier',$pContact->GetIdentifier(),PDO::PARAM_INT);
@@ -98,6 +98,7 @@ function RentAdd( $sLogin, $sSession, $sInet, CContact $pContact, CDate $pDate, 
             $pPDOStatement->bindValue(':iCanceled',$pRent->GetCountCanceled(),PDO::PARAM_INT);
             $pPDOStatement->bindValue(':iMaxRent',$iMaxRent,PDO::PARAM_INT);
             $pPDOStatement->bindValue(':iAge',$pRent->GetAge(),PDO::PARAM_INT);
+            $pPDOStatement->bindValue(':iHoraire',$pRent->GetHoraire(),PDO::PARAM_INT);			
             $pPDOStatement->bindValue(':iArrhes',$pRent->GetArrhes(),PDO::PARAM_INT);
             $pPDOStatement->bindValue(':iUserId',CAuth::GetInstance()->GetUserBDIdentifier(),PDO::PARAM_INT);
             // Execute

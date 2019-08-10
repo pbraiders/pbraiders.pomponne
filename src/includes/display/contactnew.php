@@ -94,14 +94,6 @@ function BuildMessage($iCode)
 <li><input id="contactphone" class="inputText" type="text" value="<?php echo $pContact->GetTel(1);?>" maxlength="<?php echo CContact::TELMAX; ?>" size="10" name="<?php echo CContact::TELTAG; ?>"<?php echo $pHeader->GetCloseTag(); ?></li>
 <li class="label">Email</li>
 <li><input id="contactemail" class="inputText" type="text" value="<?php echo $pContact->GetEmail(1);?>" maxlength="<?php echo CContact::EMAILMAX; ?>" size="10" name="<?php echo CContact::EMAILTAG; ?>"<?php echo $pHeader->GetCloseTag(); ?></li>
-<li class="label">Adresse</li>
-<li><input id="contactaddress_1" class="inputText" type="text" value="<?php echo $pContact->GetAddress(1);?>" maxlength="<?php echo CContact::ADDRESSMAX; ?>" size="10" name="<?php echo CContact::ADDRESSTAG; ?>"<?php echo $pHeader->GetCloseTag(); ?></li>
-<li class="label hide">&nbsp;</li>
-<li><input id="contactaddress_2" class="inputText" type="text" value="<?php echo $pContact->GetAddressMore(1);?>" maxlength="<?php echo CContact::ADDRESSMOREMAX; ?>" size="10" name="<?php echo CContact::ADDRESSMORETAG; ?>"<?php echo $pHeader->GetCloseTag(); ?></li>
-<li class="label">Ville</li>
-<li><input id="contactcity" class="inputText" type="text" value="<?php echo $pContact->GetCity(1);?>" maxlength="<?php echo CContact::CITYMAX; ?>" size="10" name="<?php echo CContact::CITYTAG; ?>"<?php echo $pHeader->GetCloseTag(); ?></li>
-<li class="label">Code postal</li>
-<li><input id="contactzip" class="inputText" type="text" value="<?php echo $pContact->GetZip(1);?>" maxlength="<?php echo CContact::ZIPMAX; ?>" size="10" name="<?php echo CContact::ZIPTAG; ?>"<?php echo $pHeader->GetCloseTag(); ?></li>
 </ul>
 </fieldset>
 <ul class="listbuttons">

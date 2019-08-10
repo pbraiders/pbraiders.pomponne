@@ -112,7 +112,7 @@ function ContactsGet( $sLogin, $sSession, $sInet, CContact $pSearch, CPaging $pP
         $sSQL_Join = ' INNER JOIN `'.PBR_DB_DBN.'`.`user` AS u ON c.`create_iduser`=u.`iduser` LEFT JOIN `'.PBR_DB_DBN.'`.`user` AS v ON c.`update_iduser`=v.`iduser`';
 
         // Select
-        $sSQL_Select = 'SELECT c.`idcontact` AS "contact_id",c.`lastname` AS "contact_lastname",c.`firstname` AS "contact_firstname",c.`tel` AS "contact_tel",c.`email` AS "contact_email",c.`address` AS "contact_address",c.`address_more` AS "contact_addressmore",c.`city` AS "contact_addresscity",c.`zip` AS "contact_addresszip",c.`comment` AS "contact_comment",c.`create_date` AS "creation_date",u.`login` AS "creation_username",c.`update_date` AS "update_date",v.`login` AS "update_username" FROM';
+        $sSQL_Select = 'SELECT c.`idcontact` AS "contact_id",c.`lastname` AS "contact_lastname",c.`firstname` AS "contact_firstname",c.`tel` AS "contact_tel",c.`email` AS "contact_email",c.`comment` AS "contact_comment",c.`create_date` AS "creation_date",u.`login` AS "creation_username",c.`update_date` AS "update_date",v.`login` AS "update_username" FROM';
 
         // Search
         if( $bSearch===FALSE )

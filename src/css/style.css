@@ -54,14 +54,15 @@ fieldset legend.legendmain{font-weight:700;}
 .required{font-weight:700;}
 .inputText,.inputTextS,.inputSelect,.inputParam{margin:2px;}
 .inputText,.inputTextS,.inputTextarea,.inputRadio,.inputSelect,.inputButton,.inputParam{font-size:1em;}
-.inputText,.inputTextarea{width:95%;}
+.inputText,.inputTextarea{width:93%;}
 .inputButton{font-weight:700;width:113px;}
-.fieldsetformgroup{float:left;width:33%;}
+.fieldsetformgroup{float:left;width:22%;}
 .graph{height:470px;overflow:auto;white-space:nowrap;overflow-y:hidden;}
 /** LIST **/
 .records li{font-weight:700;line-height:1.875;text-align:justify;border-top:1px solid #346B9E;}
 li.first{border-top:none;}
-.fixedwidth span.real,.fixedwidth span.planned,.fixedwidth span.canceled{display:block;float:left;width:2.5em;}
+/** Ajout de Kid, kidplanned **/
+.fixedwidth span.real,.fixedwidth span.planned,.fixedwidth span.canceled,.fixedwidth span.kid,.fixedwidth span.kidplanned{display:block;float:left;width:2.5em;}
 .fixedwidth span.empty{display:block;float:left;width:2.813em;}
 .records a{color:#000;}
 .records a:hover{color:#FF6600;background:#F8F9FA none repeat scroll 0 0;}
@@ -85,11 +86,18 @@ li.first{border-top:none;}
 .dayrent a,.dayrent a:link,.dayrent a:visited{color:#000;}
 .daytotal a,.daytotal a:link,.daytotal a:visited{color:#000;}
 .days a:hover{color:#FF6600;}
-.real,.planned,.canceled,.maximum{border-left-style:solid;border-left-width:5px;}
+/** Ajout de Kid, kidplanned **/
+.real,.planned,.canceled,.kid,.kidplanned,.maximum{border-left-style:solid;border-left-width:5px;}
 .real{border-left-color:#98D8A5;}
 .planned{border-left-color:#FEDE58;}
 .canceled{border-left-color:#FF4040;}
-.maximum{border-left-color:#000000;}
+/** Ajout de Kid, kidplanned, kidcolor, kidabc **/
+.kid{border-left-color:#0066CC;}
+.kidplanned{border-left-color:#FF9933;}
+.kidcolor{color:#0066CC;}
+.red{color:#FF0000;}
+.kidabc{background-color:#0066CC;color:#FFFFFFFF;}
+.maximum{color:#000000;}
 /** FOOTER **/
 #VMOBILE{font-size:smaller;font-style:italic;text-align:center;}
 #VMOBILE a{overflow:hidden;clear:both;display:inline;}

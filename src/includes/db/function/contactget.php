@@ -75,7 +75,7 @@ function ContactGet( $sLogin, $sSession, $sInet, CContact $pContact)
         try
         {
     		// Prepare
-    		$sSQL = 'SELECT c.`idcontact` AS "contact_id",c.`lastname` AS "contact_lastname",c.`firstname` AS "contact_firstname",c.`tel` AS "contact_tel",c.`email` AS "contact_email",c.`address` AS "contact_address",c.`address_more` AS "contact_addressmore",c.`city` AS "contact_addresscity",c.`zip` AS "contact_addresszip",c.`comment` AS "contact_comment",c.`create_date` AS "creation_date",u.`login` AS "creation_username",c.`update_date` AS "update_date",v.`login` AS "update_username" FROM `'.PBR_DB_DBN.'`.`contact` AS c INNER JOIN `'.PBR_DB_DBN.'`.`user` AS u ON c.`create_iduser`=u.`iduser` LEFT JOIN `'.PBR_DB_DBN.'`.`user` AS v ON c.`update_iduser`=v.`iduser` WHERE c.`idcontact`=:iIdentifier';
+    		$sSQL = 'SELECT c.`idcontact` AS "contact_id",c.`lastname` AS "contact_lastname",c.`firstname` AS "contact_firstname",c.`tel` AS "contact_tel",c.`email` AS "contact_email",c.`comment` AS "contact_comment",c.`create_date` AS "creation_date",u.`login` AS "creation_username",c.`update_date` AS "update_date",v.`login` AS "update_username" FROM `'.PBR_DB_DBN.'`.`contact` AS c INNER JOIN `'.PBR_DB_DBN.'`.`user` AS u ON c.`create_iduser`=u.`iduser` LEFT JOIN `'.PBR_DB_DBN.'`.`user` AS v ON c.`update_iduser`=v.`iduser` WHERE c.`idcontact`=:iIdentifier';
             $pPDOStatement = CDBlayer::GetInstance()->GetDriver()->prepare($sSQL);
             // Bind
             $pPDOStatement->bindValue(':iIdentifier',$pContact->GetIdentifier(),PDO::PARAM_INT);
@@ -97,14 +97,6 @@ function ContactGet( $sLogin, $sSession, $sInet, CContact $pContact)
                     $pContact->SetTel($tabResult[0]['contact_tel']);
                 if( array_key_exists( 'contact_email', $tabResult[0]) )
                     $pContact->SetEmail($tabResult[0]['contact_email']);
-                if( array_key_exists( 'contact_address', $tabResult[0]) )
-                    $pContact->SetAddress($tabResult[0]['contact_address']);
-                if( array_key_exists( 'contact_addressmore', $tabResult[0]) )
-                    $pContact->SetAddressMore($tabResult[0]['contact_addressmore']);
-                if( array_key_exists( 'contact_addresscity', $tabResult[0]) )
-                    $pContact->SetCity($tabResult[0]['contact_addresscity']);
-                if( array_key_exists( 'contact_addresszip', $tabResult[0]) )
-                    $pContact->SetZip($tabResult[0]['contact_addresszip']);
                 if( array_key_exists( 'contact_comment', $tabResult[0]) )
                     $pContact->SetComment($tabResult[0]['contact_comment']);
                 if( array_key_exists( 'creation_date', $tabResult[0]) )

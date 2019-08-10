@@ -102,6 +102,7 @@ function BuildMessage($iCode)
     $iCountPlanned  = ( $pRent->GetCountPlanned()==0 ? '' : $pRent->GetCountPlanned() );
     $iCountCanceled = ( $pRent->GetCountCanceled()==0 ? '' : $pRent->GetCountCanceled() );
     $iAge    = $pRent->GetAge();
+	$iHoraire = $pRent->GetHoraire();	
     $iArrhes = $pRent->GetArrhes();
     $iMax    = $pRent->GetMax();
 
@@ -153,14 +154,6 @@ function BuildMessage($iCode)
 <li><input id="contactphone" class="inputText" type="text" value="<?php echo $pContact->GetTel(1);?>" maxlength="<?php echo CContact::TELMAX; ?>" size="10" name="<?php echo CContact::TELTAG; ?>" disabled="disabled"<?php echo $pHeader->GetCloseTag(); ?></li>
 <li class="label">Email</li>
 <li><input id="contactemail" class="inputText" type="text" value="<?php echo $pContact->GetEmail(1);?>" maxlength="<?php echo CContact::EMAILMAX; ?>" size="10" name="<?php echo CContact::EMAILTAG; ?>" disabled="disabled"<?php echo $pHeader->GetCloseTag(); ?></li>
-<li class="label">Adresse</li>
-<li><input id="contactaddress_1" class="inputText" type="text" value="<?php echo $pContact->GetAddress(1);?>" maxlength="<?php echo CContact::ADDRESSMAX; ?>" size="10" name="<?php echo CContact::ADDRESSTAG; ?>" disabled="disabled"<?php echo $pHeader->GetCloseTag(); ?></li>
-<li class="label hide">&nbsp;</li>
-<li><input id="contactaddress_2" class="inputText" type="text" value="<?php echo $pContact->GetAddressMore(1);?>" maxlength="<?php echo CContact::ADDRESSMOREMAX; ?>" size="10" name="<?php echo CContact::ADDRESSMORETAG; ?>" disabled="disabled"<?php echo $pHeader->GetCloseTag(); ?></li>
-<li class="label">Ville</li>
-<li><input id="contactcity" class="inputText" type="text" value="<?php echo $pContact->GetCity(1);?>" maxlength="<?php echo CContact::CITYMAX; ?>" size="10" name="<?php echo CContact::CITYTAG; ?>" disabled="disabled"<?php echo $pHeader->GetCloseTag(); ?></li>
-<li class="label">Code postal</li>
-<li><input id="contactzip" class="inputText" type="text" value="<?php echo $pContact->GetZip(1);?>" maxlength="<?php echo CContact::ZIPMAX; ?>" size="10" name="<?php echo CContact::ZIPTAG; ?>" disabled="disabled"<?php echo $pHeader->GetCloseTag(); ?></li>
 </ul>
 </fieldset>
 <fieldset class="fieldsetform">
@@ -179,12 +172,26 @@ function BuildMessage($iCode)
 </ul>
 </fieldset>
 <fieldset class="fieldsetsub fieldsetform fieldsetformgroup">
-<legend>&#194;ge</legend>
+<legend>Type</legend>
 <ul>
-<li class="radio"><input id="rentage1" class="inputRadio" type="radio" name="<?php echo CRent::AGETAG; ?>" value="1" <?php if($iAge===1) echo 'checked="checked"'; echo $pHeader->GetCloseTag(); ?>16-25 ans</li>
-<li class="radio"><input id="rentage2" class="inputRadio" type="radio" name="<?php echo CRent::AGETAG; ?>" value="2" <?php if(($iAge===2)||($iAge===0)) echo 'checked="checked"'; echo $pHeader->GetCloseTag(); ?>26-35 ans</li>
-<li class="radio"><input id="rentage3" class="inputRadio" type="radio" name="<?php echo CRent::AGETAG; ?>" value="3" <?php if($iAge===3) echo 'checked="checked"'; echo $pHeader->GetCloseTag(); ?>35 ans et +</li>
-<li class="label hide">&nbsp;</li>
+<li class="radio"><input id="rentage1" class="inputRadio" type="radio" name="<?php echo CRent::AGETAG; ?>" value="1" <?php if($iAge===1) echo 'checked="checked"'; echo $pHeader->GetCloseTag(); ?>Kids</li>
+<li class="radio"><input id="rentage2" class="inputRadio" type="radio" name="<?php echo CRent::AGETAG; ?>" value="2" <?php if(($iAge===2)||($iAge===0)) echo 'checked="checked"'; echo $pHeader->GetCloseTag(); ?>EMEK</li>
+<li class="radio"><input id="rentage3" class="inputRadio" type="radio" name="<?php echo CRent::AGETAG; ?>" value="3" <?php if($iAge===3) echo 'checked="checked"'; echo $pHeader->GetCloseTag(); ?>EVG</li>
+<li class="radio"><input id="rentage4" class="inputRadio" type="radio" name="<?php echo CRent::AGETAG; ?>" value="4" <?php if($iAge===4) echo 'checked="checked"'; echo $pHeader->GetCloseTag(); ?>Etha</li>
+<li class="label hide">&nbsp;</li><li class="label hide">&nbsp;</li><li class="label hide">&nbsp;</li>
+</ul>
+</fieldset>
+<fieldset class="fieldsetsub fieldsetform fieldsetformgroup">
+<!--ajout des éléments d'horaire-->
+<legend>Horaire</legend>
+<ul> 
+<li class="radio"><input id="horaire1" class="inputRadio" type="radio" name="<?php echo CRent::HORAIRETAG; ?>" value="1" <?php if($iHoraire===1) echo 'checked="checked"'; echo $pHeader->GetCloseTag(); ?>10H30 &lt; Kids</li>
+<li class="radio"><input id="horaire2" class="inputRadio" type="radio" name="<?php echo CRent::HORAIRETAG; ?>" value="2" <?php if($iHoraire===2) echo 'checked="checked"'; echo $pHeader->GetCloseTag(); ?>12H</li>
+<li class="radio"><input id="horaire3" class="inputRadio" type="radio" name="<?php echo CRent::HORAIRETAG; ?>" value="3" <?php if($iHoraire===3) echo 'checked="checked"'; echo $pHeader->GetCloseTag(); ?>13H   &lt; Kids</li>
+<li class="radio"><input id="horaire4" class="inputRadio" type="radio" name="<?php echo CRent::HORAIRETAG; ?>" value="4" <?php if($iHoraire===4) echo 'checked="checked"'; echo $pHeader->GetCloseTag(); ?>14H</li>
+<li class="radio"><input id="horaire5" class="inputRadio" type="radio" name="<?php echo CRent::HORAIRETAG; ?>" value="5" <?php if($iHoraire===5) echo 'checked="checked"'; echo $pHeader->GetCloseTag(); ?>15H   &lt; Kids</li>
+<li class="radio"><input id="horaire6" class="inputRadio" type="radio" name="<?php echo CRent::HORAIRETAG; ?>" value="6" <?php if($iHoraire===6) echo 'checked="checked"'; echo $pHeader->GetCloseTag(); ?>16H</li>
+<li class="radio"><input id="horaire0" class="inputRadio" type="radio" name="<?php echo CRent::HORAIRETAG; ?>" value="0"<?php echo $pHeader->GetCloseTag(); ?>Inconnu</li>
 </ul>
 </fieldset>
 <fieldset class="fieldsetsub fieldsetform">
@@ -194,6 +201,7 @@ function BuildMessage($iCode)
 <li class="radio"><input id="rentarrhre2" class="inputRadio" type="radio" name="<?php echo CRent::ARRHESTAG; ?>" value="2" <?php if($iArrhes===2) echo 'checked="checked"'; echo $pHeader->GetCloseTag(); ?>Ch&#232;que</li>
 <li class="radio"><input id="rentarrhre3" class="inputRadio" type="radio" name="<?php echo CRent::ARRHESTAG; ?>" value="3" <?php if($iArrhes===3) echo 'checked="checked"'; echo $pHeader->GetCloseTag(); ?>CB</li>
 <li class="radio"><input id="rentarrhre4" class="inputRadio" type="radio" name="<?php echo CRent::ARRHESTAG; ?>" value="0"<?php echo $pHeader->GetCloseTag(); ?>Aucune</li>
+<li class="label hide">&nbsp;</li><li class="label hide">&nbsp;</li><li class="label hide">&nbsp;</li>
 </ul>
 </fieldset>
 <ul>
