@@ -73,7 +73,7 @@ final class CContact
     const EMAILTAG = 'cte';
     const EMAILMIN = 0;
     const EMAILMAX = 255;
-
+/*
     const ADDRESSTAG = 'cta';
     const ADDRESSMIN = 0;
     const ADDRESSMAX = 255;
@@ -89,7 +89,7 @@ final class CContact
     const ZIPTAG = 'ctz';
     const ZIPMIN = 0;
     const ZIPMAX = 8;
-
+*/
     const COMMENTTAG    = 'ctk';
     const COMMENTLENGTH = 300;
 
@@ -110,7 +110,7 @@ final class CContact
 
     //  email
     private $m_sEmail = '';
-
+/*
     //  address
     private $m_sAddress = '';
 
@@ -122,7 +122,7 @@ final class CContact
 
     //  zip
     private $m_sZip = '';
-
+*/
     // comment
     private $m_sComment = '';
 
@@ -259,11 +259,13 @@ final class CContact
     public function GetFirstName($iFilter=0){return ((1==$iFilter)?htmlentities($this->m_sFirstName,ENT_QUOTES,'UTF-8'):$this->m_sFirstName);}
     public function GetTel($iFilter=0){return ((1==$iFilter)?htmlentities($this->m_sTel,ENT_QUOTES,'UTF-8'):$this->m_sTel);}
     public function GetEmail($iFilter=0){return ((1==$iFilter)?htmlentities($this->m_sEmail,ENT_QUOTES,'UTF-8'):$this->m_sEmail);}
-    public function GetAddress($iFilter=0){return ((1==$iFilter)?htmlentities($this->m_sAddress,ENT_QUOTES,'UTF-8'):$this->m_sAddress);}
+   /** 
+	public function GetAddress($iFilter=0){return ((1==$iFilter)?htmlentities($this->m_sAddress,ENT_QUOTES,'UTF-8'):$this->m_sAddress);}
     public function GetAddressMore($iFilter=0){return ((1==$iFilter)?htmlentities($this->m_sAdressMore,ENT_QUOTES,'UTF-8'):$this->m_sAdressMore);}
     public function GetCity($iFilter=0){return ((1==$iFilter)?htmlentities($this->m_sCity,ENT_QUOTES,'UTF-8'):$this->m_sCity);}
     public function GetZip($iFilter=0){return ((1==$iFilter)?htmlentities($this->m_sZip,ENT_QUOTES,'UTF-8'):$this->m_sZip);}
-    public function GetComment($iFilter=0){return ((1==$iFilter)?htmlentities($this->m_sComment,ENT_QUOTES,'UTF-8'):$this->m_sComment);}
+     */
+	public function GetComment($iFilter=0){return ((1==$iFilter)?htmlentities($this->m_sComment,ENT_QUOTES,'UTF-8'):$this->m_sComment);}
     public function GetCreationDate($iFilter=0){return ((1==$iFilter)?htmlentities($this->m_sCreationDate,ENT_QUOTES,'UTF-8'):$this->m_sCreationDate);}
     public function GetCreationUser($iFilter=0){return ((1==$iFilter)?htmlentities($this->m_sCreationUser,ENT_QUOTES,'UTF-8'):$this->m_sCreationUser);}
     public function GetUpdateDate($iFilter=0){return ((1==$iFilter)?htmlentities($this->m_sUpdateDate,ENT_QUOTES,'UTF-8'):$this->m_sUpdateDate);}
@@ -285,10 +287,12 @@ final class CContact
     public function SetFirstName($sValue){$this->m_sFirstName=$this->Sanitize($sValue);}
     public function SetTel($sValue){$this->m_sTel=$this->Sanitize($sValue);}
     public function SetEmail($sValue){$this->m_sEmail=$this->Sanitize($sValue);}
-    public function SetAddress($sValue){$this->m_sAddress=$this->Sanitize($sValue);}
+	/* 
+	public function SetAddress($sValue){$this->m_sAddress=$this->Sanitize($sValue);}
     public function SetAddressMore($sValue){$this->m_sAdressMore=$this->Sanitize($sValue);}
     public function SetCity($sValue){$this->m_sCity=$this->Sanitize($sValue);}
     public function SetZip($sValue){$this->m_sZip=$this->Sanitize($sValue);}
+	*/
     public function SetComment($sValue)
     {
         $sValue = TruncMe( $sValue, CContact::COMMENTLENGTH);
@@ -402,6 +406,7 @@ final class CContact
                 $this->SetTel(filter_input( $iFilter, CContact::TELTAG, FILTER_UNSAFE_RAW));
             if(filter_has_var( $iFilter, CContact::EMAILTAG))
                 $this->SetEmail(filter_input( $iFilter, CContact::EMAILTAG, FILTER_UNSAFE_RAW));
+			/*
             if(filter_has_var( $iFilter, CContact::ADDRESSTAG))
                 $this->SetAddress( filter_input( $iFilter, CContact::ADDRESSTAG, FILTER_UNSAFE_RAW));
             if(filter_has_var( $iFilter, CContact::ADDRESSMORETAG))
@@ -410,7 +415,8 @@ final class CContact
                 $this->SetCity( filter_input( $iFilter, CContact::CITYTAG, FILTER_UNSAFE_RAW));
             if(filter_has_var( $iFilter, CContact::ZIPTAG))
                 $this->SetZip( filter_input( $iFilter, CContact::ZIPTAG, FILTER_UNSAFE_RAW));
-            if(filter_has_var( $iFilter, CContact::COMMENTTAG))
+            */
+			if(filter_has_var( $iFilter, CContact::COMMENTTAG))
                 $this->SetComment( filter_input( $iFilter, CContact::COMMENTTAG, FILTER_UNSAFE_RAW));
             $bReturn = TRUE;
         }
@@ -431,11 +437,13 @@ final class CContact
         $this->m_sFirstName = '';
         $this->m_sTel = '';
         $this->m_sEmail = '';
-        $this->m_sAddress = '';
+        /*
+		$this->m_sAddress = '';
         $this->m_sAdressMore = '';
         $this->m_sCity = '';
         $this->m_sZip = '';
-        $this->m_sComment = '';
+        */
+		$this->m_sComment = '';
         $this->m_sCreationDate = '';
         $this->m_sCreationUser = '';
         $this->m_sUpdateDate = '';

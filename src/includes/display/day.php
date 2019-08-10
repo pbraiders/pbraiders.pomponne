@@ -88,6 +88,11 @@ function BuildMessage($iCode)
   * return: none
   * author: Olivier JULLIEN - 2010-02-04
   */
+  /** 
+    * Ajout de horaires, les éléments d'adresse supprimés 
+    * Plus d'otion de choix
+    * Nouvelle options Arrhe a prévoir (trivial)
+    */
 function BuildCurrentRent( &$tRecord, $sPrintHRef)
 {
     if( is_array($tRecord) && array_key_exists('reservation_id', $tRecord)
@@ -95,6 +100,8 @@ function BuildCurrentRent( &$tRecord, $sPrintHRef)
                            && array_key_exists('reservation_planned', $tRecord)
                            && array_key_exists('reservation_canceled', $tRecord)
                            && array_key_exists('reservation_arrhes', $tRecord)
+                           && array_key_exists('reservation_age', $tRecord)						   
+                           && array_key_exists('reservation_horaire', $tRecord)			   
                            && array_key_exists('contact_lastname', $tRecord)
                            && array_key_exists('contact_firstname', $tRecord)
                            && array_key_exists('contact_phone', $tRecord) )
@@ -104,28 +111,65 @@ function BuildCurrentRent( &$tRecord, $sPrintHRef)
         {
             // Resume
             $sBuffer.='<a title="Imprimer les r&#233;servations" href="'.$sPrintHRef.'" >';
-            $sBuffer.='<span class="real">'.$tRecord['reservation_real'].'</span>';
+			$sBuffer.='<span class="real">'.$tRecord['reservation_real'].'</span>';			
             $sBuffer.='<span class="planned">'.$tRecord['reservation_planned'].'</span>';
             $sBuffer.='<span class="canceled">'.$tRecord['reservation_canceled'].'</span>';
             $iTotal=(integer)$tRecord['reservation_real']+(integer)$tRecord['reservation_planned'];
-            $sBuffer.='<span>Total: '.$iTotal.' / '.$tRecord['reservation_arrhes'].'</span></a>';
+            $sBuffer.='<span>Total: '.$iTotal.' possibles sur '.$tRecord['reservation_arrhes'].' max</span></a>';
         }
         else
         {
             // Rent
             $sBuffer.='<a href="'.PBR_URL.'rent.php?'.CRent::IDENTIFIERTAG.'='.$tRecord['reservation_id'].'" title="Modifier la r&#233;servation">';
             $sBuffer.='<span class="';
-            $sBuffer.=($tRecord['reservation_real']==0?'empty hide">&nbsp;':'real">'.$tRecord['reservation_real']);
+            if($tRecord['reservation_age']==1) 
+				{	
+				$sBuffer.=($tRecord['reservation_real']==0?'empty hide">&nbsp;':'kid">'.$tRecord['reservation_real']);
+				}
+				else
+				{		
+				$sBuffer.=($tRecord['reservation_real']==0?'empty hide">&nbsp;':'real">'.$tRecord['reservation_real']);
+				}
             $sBuffer.='</span><span class="';
-            $sBuffer.=($tRecord['reservation_planned']==0?'empty hide">&nbsp;':'planned">'.$tRecord['reservation_planned']);
-            $sBuffer.='</span><span class="';
+			if($tRecord['reservation_age']==1) 
+				{	
+				$sBuffer.=($tRecord['reservation_planned']==0?'empty hide">&nbsp;':'kidplanned">'.$tRecord['reservation_planned']);
+				}
+				else
+				{		
+				$sBuffer.=($tRecord['reservation_planned']==0?'empty hide">&nbsp;':'planned">'.$tRecord['reservation_planned']);
+				}
+			$sBuffer.='</span><span class="';
             $sBuffer.=($tRecord['reservation_canceled']==0?'empty hide">&nbsp;':'canceled">'.$tRecord['reservation_canceled']);
             $sBuffer.='</span>';
             $sBuffer.='<span>'.htmlentities($tRecord['contact_lastname'],ENT_QUOTES,'UTF-8').' ';
             $sBuffer.=htmlentities($tRecord['contact_firstname'],ENT_QUOTES,'UTF-8').' &#8226; ';
             $sBuffer.=htmlentities($tRecord['contact_phone'],ENT_QUOTES,'UTF-8');
-            if($tRecord['reservation_arrhes']==1) $sBuffer.=' &#8226; Esp&#232;ce';
-            if($tRecord['reservation_arrhes']==2) $sBuffer.=' &#8226; Ch&#232;que';
+ 	
+            if($tRecord['reservation_age']==1) 
+			{	
+			$sBuffer.=' &#8226; <span class="kidabc"> Kids</span>';
+			if($tRecord['reservation_horaire']==1) $sBuffer.=' &#8226; <span class="kidcolor"> 10H30</span>';
+            if($tRecord['reservation_horaire']==2) $sBuffer.=' &#8226; <span class="red"> 12H</span>';
+            if($tRecord['reservation_horaire']==3) $sBuffer.=' &#8226; <span class="kidcolor"> 13H</span>';
+            if($tRecord['reservation_horaire']==4) $sBuffer.=' &#8226; <span class="red">14H</span>';
+            if($tRecord['reservation_horaire']==5) $sBuffer.=' &#8226; <span class="kidcolor"> 15H</span>';			
+            if($tRecord['reservation_horaire']==6) $sBuffer.=' &#8226; <span class="red"> 16H</span>';		
+			}
+			else
+			{		
+            if($tRecord['reservation_age']==2) $sBuffer.=' &#8226; Classic';
+            if($tRecord['reservation_age']==3) $sBuffer.=' &#8226; EVG';
+            if($tRecord['reservation_age']==4) $sBuffer.=' &#8226; Etha';
+            if($tRecord['reservation_horaire']==1) $sBuffer.=' &#8226; 10H30';
+            if($tRecord['reservation_horaire']==2) $sBuffer.=' &#8226; 12H';
+            if($tRecord['reservation_horaire']==3) $sBuffer.=' &#8226; 13H';
+            if($tRecord['reservation_horaire']==4) $sBuffer.=' &#8226; 14H';
+            if($tRecord['reservation_horaire']==5) $sBuffer.=' &#8226; 15H';			
+            if($tRecord['reservation_horaire']==6) $sBuffer.=' &#8226; 16H';			
+			}						
+            if($tRecord['reservation_arrhes']==1) $sBuffer.=' &#8226; ESP';
+            if($tRecord['reservation_arrhes']==2) $sBuffer.=' &#8226; CHQ';
             if($tRecord['reservation_arrhes']==3) $sBuffer.=' &#8226; CB';
             if( array_key_exists('reservation_comment', $tRecord) && strlen($tRecord['reservation_comment'])>0 )
             {
@@ -183,6 +227,7 @@ function BuildCurrentRent( &$tRecord, $sPrintHRef)
     $iCountReal     = ( $pRent->GetCountReal()==0 ? '' : $pRent->GetCountReal() );
     $iCountPlanned  = ( $pRent->GetCountPlanned()==0 ? '' : $pRent->GetCountPlanned() );
     $iAge    = $pRent->GetAge();
+    $iHoraire = $pRent->GetHoraire();	
     $iArrhes = $pRent->GetArrhes();
 
 ?>
@@ -205,7 +250,7 @@ function BuildCurrentRent( &$tRecord, $sPrintHRef)
 <h1><?php echo htmlentities( $sFormTitle, ENT_QUOTES, 'UTF-8'); ?></h1>
 <form id="FORMDAY" method="post" action="<?php echo PBR_URL.'day.php'; ?>">
 <fieldset class="fieldsetform">
-<legend class="legendmain">Nouvelle r&#233;servation</legend>
+<legend class="legendmain">+ Nouvelle r&#233;servation</legend>
 <fieldset class="fieldsetsub fieldsetform">
 <legend>Contact</legend>
 <?php
@@ -228,14 +273,7 @@ function BuildCurrentRent( &$tRecord, $sPrintHRef)
 <li><input id="contactphone" class="inputText" type="text" value="<?php echo $pContact->GetTel(1);?>" maxlength="<?php echo CContact::TELMAX; ?>" size="10" name="<?php echo CContact::TELTAG; ?>" <?php echo $sDisable.$pHeader->GetCloseTag(); ?></li>
 <li class="label">Email</li>
 <li><input id="contactemail" class="inputText" type="text" value="<?php echo $pContact->GetEmail(1);?>" maxlength="<?php echo CContact::EMAILMAX; ?>" size="10" name="<?php echo CContact::EMAILTAG; ?>" <?php echo $sDisable.$pHeader->GetCloseTag(); ?></li>
-<li class="label">Adresse</li>
-<li><input id="contactaddress_1" class="inputText" type="text" value="<?php echo $pContact->GetAddress(1);?>" maxlength="<?php echo CContact::ADDRESSMAX; ?>" size="10" name="<?php echo CContact::ADDRESSTAG; ?>" <?php echo $sDisable.$pHeader->GetCloseTag(); ?></li>
-<li class="label hide">&nbsp;</li>
-<li><input id="contactaddress_2" class="inputText" type="text" value="<?php echo $pContact->GetAddressMore(1);?>" maxlength="<?php echo CContact::ADDRESSMOREMAX; ?>" size="10" name="<?php echo CContact::ADDRESSMORETAG; ?>" <?php echo $sDisable.$pHeader->GetCloseTag(); ?></li>
-<li class="label">Ville</li>
-<li><input id="contactcity" class="inputText" type="text" value="<?php echo $pContact->GetCity(1);?>" maxlength="<?php echo CContact::CITYMAX; ?>" size="10" name="<?php echo CContact::CITYTAG; ?>" <?php echo $sDisable.$pHeader->GetCloseTag(); ?></li>
-<li class="label">Code postal</li>
-<li><input id="contactzip" class="inputText" type="text" value="<?php echo $pContact->GetZip(1);?>" maxlength="<?php echo CContact::ZIPMAX; ?>" size="10" name="<?php echo CContact::ZIPTAG; ?>" <?php echo $sDisable.$pHeader->GetCloseTag(); ?></li>
+<!-- supp -->
 </ul>
 </fieldset>
 <fieldset class="fieldsetsub fieldsetform fieldsetformgroup">
@@ -248,20 +286,35 @@ function BuildCurrentRent( &$tRecord, $sPrintHRef)
 <li class="label hide">&nbsp;</li>
 </ul>
 </fieldset>
+
 <fieldset class="fieldsetsub fieldsetform fieldsetformgroup">
-<legend>&#194;ge</legend>
+<legend>Type</legend>
 <ul>
-<li class="radio"><input id="rentage1" class="inputRadio" type="radio" name="<?php echo CRent::AGETAG; ?>" value="1" <?php if($iAge===1) echo 'checked="checked"'; echo $pHeader->GetCloseTag(); ?>16-25 ans</li>
-<li class="radio"><input id="rentage2" class="inputRadio" type="radio" name="<?php echo CRent::AGETAG; ?>" value="2" <?php if(($iAge===2)||($iAge===0)) echo 'checked="checked"'; echo $pHeader->GetCloseTag(); ?>26-35 ans</li>
-<li class="radio"><input id="rentage3" class="inputRadio" type="radio" name="<?php echo CRent::AGETAG; ?>" value="3" <?php if($iAge===3) echo 'checked="checked"'; echo $pHeader->GetCloseTag(); ?>35 ans et +</li>
+<li class="radio"><input id="rentage1" class="inputRadio" type="radio" name="<?php echo CRent::AGETAG; ?>" value="1" <?php if($iAge===1) echo 'checked="checked"'; echo $pHeader->GetCloseTag(); ?>Kids</li>
+<li class="radio"><input id="rentage2" class="inputRadio" type="radio" name="<?php echo CRent::AGETAG; ?>" value="2" <?php if(($iAge===2)||($iAge===0)) echo 'checked="checked"'; echo $pHeader->GetCloseTag(); ?>EMEK</li>
+<li class="radio"><input id="rentage3" class="inputRadio" type="radio" name="<?php echo CRent::AGETAG; ?>" value="3" <?php if($iAge===3) echo 'checked="checked"'; echo $pHeader->GetCloseTag(); ?>EVG</li>
+<li class="radio"><input id="rentage4" class="inputRadio" type="radio" name="<?php echo CRent::AGETAG; ?>" value="4" <?php if($iAge===4) echo 'checked="checked"'; echo $pHeader->GetCloseTag(); ?>Etha</li>
+<li class="label hide">&nbsp;</li><li class="label hide">&nbsp;</li>
 </ul>
 </fieldset>
+<fieldset class="fieldsetsub fieldsetform fieldsetformgroup">
+<legend>Horaire</legend>
+<ul>
+<li class="radio"><input id="horaire1" class="inputRadio" type="radio" name="<?php echo CRent::HORAIRETAG; ?>" value="1" <?php if($iHoraire===1) echo 'checked="checked"'; echo $pHeader->GetCloseTag(); ?>10H30 &lt; Kids</li>
+<li class="radio"><input id="horaire2" class="inputRadio" type="radio" name="<?php echo CRent::HORAIRETAG; ?>" value="2" <?php if($iHoraire===2) echo 'checked="checked"'; echo $pHeader->GetCloseTag(); ?>12H</li>
+<li class="radio"><input id="horaire2" class="inputRadio" type="radio" name="<?php echo CRent::HORAIRETAG; ?>" value="3" <?php if($iHoraire===3) echo 'checked="checked"'; echo $pHeader->GetCloseTag(); ?>13H   &lt; Kids</li>
+<li class="radio"><input id="horaire2" class="inputRadio" type="radio" name="<?php echo CRent::HORAIRETAG; ?>" value="4" <?php if($iHoraire===4) echo 'checked="checked"'; echo $pHeader->GetCloseTag(); ?>14H</li>
+<li class="radio"><input id="horaire3" class="inputRadio" type="radio" name="<?php echo CRent::HORAIRETAG; ?>" value="5" <?php if($iHoraire===5) echo 'checked="checked"'; echo $pHeader->GetCloseTag(); ?>15H   &lt; Kids</li>
+<li class="radio"><input id="horaire2" class="inputRadio" type="radio" name="<?php echo CRent::HORAIRETAG; ?>" value="6" <?php if($iHoraire===6) echo 'checked="checked"'; echo $pHeader->GetCloseTag(); ?>16H</li>
+</ul>
+</fieldset>	
 <fieldset class="fieldsetsub fieldsetform">
 <legend>Arrhes</legend>
 <ul>
 <li class="radio"><input id="rentarrhre1" class="inputRadio" type="radio" name="<?php echo CRent::ARRHESTAG; ?>" value="1" <?php if($iArrhes===1) echo 'checked="checked"'; echo $pHeader->GetCloseTag(); ?>Esp&#232;ce</li>
 <li class="radio"><input id="rentarrhre2" class="inputRadio" type="radio" name="<?php echo CRent::ARRHESTAG; ?>" value="2" <?php if($iArrhes===2) echo 'checked="checked"'; echo $pHeader->GetCloseTag(); ?>Ch&#232;que</li>
-<li class="radio"><input id="rentarrhre3" class="inputRadio" type="radio" name="<?php echo CRent::ARRHESTAG; ?>" value="3" <?php if($iArrhes===3) echo 'checked="checked"'; echo $pHeader->GetCloseTag(); ?>CB</li>
+<li class="radio"><input id="rentarrhre3" class="inputRadio" type="radio" name="<?php echo CRent::ARRHESTAG; ?>" value="3" <?php if($iArrhes===3) echo 'checked="checked"'; echo $pHeader->GetCloseTag(); ?>CB PLBS</li>
+<li class="label hide">&nbsp;</li><li class="label hide">&nbsp;</li><li class="label hide">&nbsp;</li>
 </ul>
 </fieldset>
 <ul class="listbuttons">

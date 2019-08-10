@@ -103,7 +103,7 @@ function ContactsGetExport( $sLogin, $sSession, $sInet, CContact $pSearch, CPagi
         $sSQL_Limit = ' LIMIT :iLimit OFFSET :iOffset';
 
         // Select
-        $sSQL_Select = 'SELECT c.`lastname` AS "contact_lastname",c.`firstname` AS "contact_firstname",c.`tel` AS "contact_tel",c.`email` AS "contact_email",c.`address` AS "contact_address",c.`address_more` AS "contact_addressmore",c.`city` AS "contact_addresscity",c.`zip` AS "contact_addresszip",c.`comment` AS "contact_comment",c.`create_date` AS "creation_date" FROM';
+        $sSQL_Select = 'SELECT c.`lastname` AS "contact_lastname",c.`firstname` AS "contact_firstname",c.`tel` AS "contact_tel",c.`email` AS "contact_email",c.`comment` AS "contact_comment",c.`create_date` AS "creation_date" FROM';
 
         // Search
         if( $bSearch===FALSE )

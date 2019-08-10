@@ -68,8 +68,7 @@ function BuildContact( &$tRecord, $iPagingMax, $iIndex, CDate $pDate)
     if( is_array($tRecord) && array_key_exists('contact_id', $tRecord)
                            && array_key_exists('contact_lastname', $tRecord)
                            && array_key_exists('contact_firstname', $tRecord)
-                           && array_key_exists('contact_tel', $tRecord)
-                           && array_key_exists('contact_addresscity', $tRecord) )
+                           && array_key_exists('contact_tel', $tRecord) )
     {
         if( ($iIndex<=1) && ($iPagingMax<=1) )
         {
@@ -84,10 +83,6 @@ function BuildContact( &$tRecord, $iPagingMax, $iIndex, CDate $pDate)
         $sBuffer.='<span>'.htmlentities($tRecord['contact_lastname'],ENT_QUOTES,'UTF-8').' ';
         $sBuffer.=htmlentities($tRecord['contact_firstname'],ENT_QUOTES,'UTF-8').' &#8226; ';
         $sBuffer.=htmlentities($tRecord['contact_tel'],ENT_QUOTES,'UTF-8');
-        if( strlen($tRecord['contact_addresscity'])>0 )
-        {
-            $sBuffer.=' &#8226; '.htmlentities($tRecord['contact_addresscity'],ENT_QUOTES,'UTF-8');
-        }//city
         if( array_key_exists('contact_comment', $tRecord) && strlen($tRecord['contact_comment'])>0 )
         {
             $sBuffer.='</span><span class="hide"> &#8226; '.htmlentities(TruncMe($tRecord['contact_comment'],50),ENT_QUOTES,'UTF-8');

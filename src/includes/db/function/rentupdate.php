@@ -94,7 +94,7 @@ function RentUpdate( $sLogin, $sSession, $sInet, CRent $pRent)
     		 *************/
 
             // Prepare
-	        $sSQL = 'UPDATE `'.PBR_DB_DBN.'`.`reservation` SET `rent_real`=:iReal, `rent_planned`=:iPlanned, `rent_canceled`=:iCanceled, `age`=:iAge, `arrhe`=:iArrhes, `comment`=:sComment, `update_date`=SYSDATE(), `update_iduser`=:iUserId WHERE `idreservation`=:iIdentifier';
+	        $sSQL = 'UPDATE `'.PBR_DB_DBN.'`.`reservation` SET `rent_real`=:iReal, `rent_planned`=:iPlanned, `rent_canceled`=:iCanceled, `age`=:iAge, `horaire`=:iHoraire, `arrhe`=:iArrhes, `comment`=:sComment, `update_date`=SYSDATE(), `update_iduser`=:iUserId WHERE `idreservation`=:iIdentifier';
             $pPDOStatement = CDBLayer::GetInstance()->GetDriver()->prepare($sSQL);
             // Bind
             $pPDOStatement->bindValue(':iIdentifier',$pRent->GetIdentifier(),PDO::PARAM_INT);
@@ -102,6 +102,7 @@ function RentUpdate( $sLogin, $sSession, $sInet, CRent $pRent)
             $pPDOStatement->bindValue(':iPlanned',$pRent->GetCountPlanned(),PDO::PARAM_INT);
             $pPDOStatement->bindValue(':iCanceled',$pRent->GetCountCanceled(),PDO::PARAM_INT);
             $pPDOStatement->bindValue(':iAge',$pRent->GetAge(),PDO::PARAM_INT);
+            $pPDOStatement->bindValue(':iHoraire',$pRent->GetHoraire(),PDO::PARAM_INT);			
             $pPDOStatement->bindValue(':iArrhes',$pRent->GetArrhes(),PDO::PARAM_INT);
             $pPDOStatement->bindValue(':sComment',$pRent->GetComment(),PDO::PARAM_STR);
 			$pPDOStatement->bindValue(':iUserId',CAuth::GetInstance()->GetUserBDIdentifier(),PDO::PARAM_INT);

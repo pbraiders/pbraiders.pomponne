@@ -4,23 +4,23 @@ Pbraiders est une application web de gestion de réservations à destination des
 
 ## Pré-requis
 
-Pbraiders fonctionne grâce au couple MySQL et PHP sur un serveur web. MySQL est un gestionnaire de base de données et PHP un langage de scripts qui permet de produire des pages web dynamiques.
+Pbraiders fonctionne grâce au couple MariaDB et PHP sur un serveur web. MariaDB est un gestionnaire de base de données et PHP un langage de scripts qui permet de produire des pages web dynamiques.
 
-Les versions PHP et MySQL minimums sont :
-PHP: version 5.2 ou supérieure. Les modules modules suivants doivent être activés:
-     - GD version 2.0 ou supérieure.
-     - PDO (driver pour MySQL)
-MYSQL: version 5.0 ou supérieure.
+Les versions PHP et MariaDB minimums sont :
+PHP: version 7.3 ou supérieure. Les modules modules suivants doivent être activés:
+     - GD version 2.1 ou supérieure.
+     - PDO (driver pour MariaDB)
+MariaDB: version 10.0 ou supérieure.
 
-PBRaiders utilise aussi les procédures stockées MySQL. Une procédure stockée est un ensemble d'instructions SQL pré-compilées, stockées sur le serveur, directement dans la base de données. Pendant l'installation, PBRaiders va tenter de les installer. Mais, à cause des restrictions imposées par les hébergements mutualisés, il est possible que PBRaiders n'y arrive pas. Dans ce cas, PAS DE PANIQUE: PBRaiders est configuré, par défaut, pour ne pas les utiliser et est complètement opérationnel sans.
+PBRaiders utilise aussi les procédures stockées MariaDB. Une procédure stockée est un ensemble d'instructions SQL pré-compilées, stockées sur le serveur, directement dans la base de données. Pendant l'installation, PBRaiders va tenter de les installer. Mais, à cause des restrictions imposées par les hébergements mutualisés, il est possible que PBRaiders n'y arrive pas. Dans ce cas, PAS DE PANIQUE: PBRaiders est configuré, par défaut, pour ne pas les utiliser et est complètement opérationnel sans.
 
 ## Installation
 
 1- Créez une base de données pour PBRaiders sur votre serveur web.
 
   a- Créez la base de données (par exemple: pbraidersdb) avec les options suivantes si votre hébergeur vous le permet:
-   CHARACTER (ou "jeu de caractères" ) = utf8
-   COLLATE (ou " interclassement" ) = utf8_general_ci
+   CHARACTER (ou "jeu de caractères" ) = utf8mb4
+   COLLATE (ou " interclassement" ) = utf8mb4_general_ci
 
   b- Si votre hébergeur vous le permet, créez un utilisateur (par exemple: pbraidersdbuser) avec les privilèges suivants sur cette base de données:
    Données: SELECT , INSERT , UPDATE , DELETE
@@ -52,7 +52,7 @@ PBRaiders utilise aussi les procédures stockées MySQL. Une procédure stockée
 
 9- Ouvrez la page install.php dans votre navigateur. (Par exemple: <https://www.votre-site.com/pbraiders/install.php>)
    Suivez les instructions. Si vous obtenez une erreur, vérifiez le contenu du fichier config.php, et réessayez.
-   Si cela échoue encore une fois, contactez moi par email (pbraiders@netcourrier.com) et soyez le plus précis possible dans vos explications.
+   Si cela échoue encore une fois, contactez moi par email (contact@pbraiders.fr) et soyez le plus précis possible dans vos explications.
 
 10- Une fois l'installation terminée, supprimez le fichier install.php et le répertoire includes-install\ de votre serveur.
 

@@ -78,7 +78,7 @@ function BuildMessage($iCode)
   * parameters: ARRAY|tRecord    - recordset
   *                              should have keys: (reservation_id, reservation_year,
   *                              reservation_month, reservation_day, reservation_real, reservation_planned,
-  *                              reservation_canceled, reservation_arrhes, reservation_age, reservation_comment)
+  *                              reservation_canceled, reservation_horaire, reservation_arrhes, reservation_age, reservation_comment)
   *           INTEGER|iPagingMax - Max page count
   *            INTEGER|iIndex     - Record count
   * return: none
@@ -93,6 +93,7 @@ function BuildCurrentRent(&$tRecord, $iPagingMax, $iIndex, CDate $pDate)
                            && array_key_exists('reservation_real', $tRecord)
                            && array_key_exists('reservation_planned', $tRecord)
                            && array_key_exists('reservation_canceled', $tRecord)
+                           && array_key_exists('reservation_horaire', $tRecord)						   
                            && array_key_exists('reservation_arrhes', $tRecord)
                            && array_key_exists('reservation_age', $tRecord) )
     {
@@ -133,12 +134,16 @@ function BuildCurrentRent(&$tRecord, $iPagingMax, $iIndex, CDate $pDate)
         {
             $sBuffer.='<span class="empty hide">&nbsp;</span>';
         }//canceled
-        if($tRecord['reservation_age']==1) $sBuffer.=' &#8226; 16-25 ans';
-        if(($tRecord['reservation_age']==2)||($tRecord['reservation_age']==0)) $sBuffer.=' &#8226; 26-35 ans';
-        if($tRecord['reservation_age']==3) $sBuffer.=' &#8226; 35 ans et +';
-        if($tRecord['reservation_arrhes']==1) $sBuffer.=' &#8226; Esp&#232;ce';
-        if($tRecord['reservation_arrhes']==2) $sBuffer.=' &#8226; Ch&#232;que';
-        if($tRecord['reservation_arrhes']==3) $sBuffer.=' &#8226; CB';
+        if($tRecord['reservation_age']==1) $sBuffer.=' &#8226; 16-25 ans zz';
+        if(($tRecord['reservation_age']==2)||($tRecord['reservation_age']==0)) $sBuffer.=' &#8226; 26-35 ans zz';
+        if($tRecord['reservation_age']==3) $sBuffer.=' &#8226; 35 ans et + zz';
+        if($tRecord['reservation_age']==4) $sBuffer.=' &#8226; 35 ans et + zz';		
+        if($tRecord['reservation_horaire']==1) $sBuffer.=' &#8226; Esp&#232;ce zz';
+        if($tRecord['reservation_horaire']==2) $sBuffer.=' &#8226; Ch&#232;que zz';
+        if($tRecord['reservation_horaire']==3) $sBuffer.=' &#8226; CB zz';		
+		if($tRecord['reservation_arrhes']==1) $sBuffer.=' &#8226; Esp&#232;ce zz';
+        if($tRecord['reservation_arrhes']==2) $sBuffer.=' &#8226; Ch&#232;que zz';
+        if($tRecord['reservation_arrhes']==3) $sBuffer.=' &#8226; CB zz';
         if( array_key_exists('reservation_comment', $tRecord) && strlen($tRecord['reservation_comment'])>0 )
         {
                 $sBuffer.='<span class="hide"> &#8226; '.htmlentities(TruncMe($tRecord['reservation_comment'],50),ENT_QUOTES,'UTF-8').'</span>';
@@ -198,14 +203,6 @@ function BuildCurrentRent(&$tRecord, $iPagingMax, $iIndex, CDate $pDate)
 <li><input id="contactphone" class="inputText" type="text" value="<?php echo $pContact->GetTel(1);?>" maxlength="<?php echo CContact::TELMAX; ?>" size="10" name="<?php echo CContact::TELTAG; ?>"<?php echo $pHeader->GetCloseTag(); ?></li>
 <li class="label">Email</li>
 <li><input id="contactemail" class="inputText" type="text" value="<?php echo $pContact->GetEmail(1);?>" maxlength="<?php echo CContact::EMAILMAX; ?>" size="10" name="<?php echo CContact::EMAILTAG; ?>"<?php echo $pHeader->GetCloseTag(); ?></li>
-<li class="label">Adresse</li>
-<li><input id="contactaddress_1" class="inputText" type="text" value="<?php echo $pContact->GetAddress(1);?>" maxlength="<?php echo CContact::ADDRESSMAX; ?>" size="10" name="<?php echo CContact::ADDRESSTAG; ?>"<?php echo $pHeader->GetCloseTag(); ?></li>
-<li class="label hide">&nbsp;</li>
-<li><input id="contactaddress_2" class="inputText" type="text" value="<?php echo $pContact->GetAddressMore(1);?>" maxlength="<?php echo CContact::ADDRESSMOREMAX; ?>" size="10" name="<?php echo CContact::ADDRESSMORETAG; ?>"<?php echo $pHeader->GetCloseTag(); ?></li>
-<li class="label">Ville</li>
-<li><input id="contactcity" class="inputText" type="text" value="<?php echo $pContact->GetCity(1);?>" maxlength="<?php echo CContact::CITYMAX; ?>" size="10" name="<?php echo CContact::CITYTAG; ?>"<?php echo $pHeader->GetCloseTag(); ?></li>
-<li class="label">Code postal</li>
-<li><input id="contactzip" class="inputText" type="text" value="<?php echo $pContact->GetZip(1);?>" maxlength="<?php echo CContact::ZIPMAX; ?>" size="10" name="<?php echo CContact::ZIPTAG; ?>"<?php echo $pHeader->GetCloseTag(); ?></li>
 <?php echo $sHelpCreate,"\n"; ?>
 <?php if( strlen($sHelpUpdate)>0 ) echo $sHelpUpdate,"\n"; ?>
 </ul>
