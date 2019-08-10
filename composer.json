@@ -1,24 +1,31 @@
 {
-    "name": "pbraiders/pbraiders-pomponne",
-    "type": "library",
-    "description": "Personal PHP source code draft and snippets",
-    "keywords": ["php-framework","php7"],
-    "homepage":"https://github.com/oseille/DraftAndSnippet",
-    "readme":"README.md",
-    "time":"2018-09-22",
-    "license": "MIT",
+    "name": "pbraiders/pomponne",
+    "description": "Paintball reservation management system",
+    "version": "2.0.0",
+    "keywords": [
+        "paintball",
+        "reservation",
+        "management"
+    ],
+    "homepage": "https://github.com/pbraiders/pomponne",
+    "readme": "README.md",
+    "time": "2019-08-10",
+    "license": "GPL-3.0",
     "authors": [
         {
             "name": "Olivier Jullien",
-            "homepage": "https://github.com/ojullien"
+            "homepage": "https://github.com/ojullien",
+            "email": "contact@pbraiders.fr",
+            "role": "Developer"
         }
     ],
     "require": {
-        "php": "^7.3"
+        "php": "^7.3",
+        "zendframework/zend-config": "^3.3"
     },
     "autoload": {
         "psr-4": {
-            "Oseille\\DraftAndSnippet\\": "src/"
+            "Pbraiders\\Pomponne\\": "src/"
         }
     },
     "require-dev": {
@@ -28,15 +35,20 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Oseille\\DraftAndSnippet\\": "tests/src/"
+            "Pbraiders\\Pomponne\\Tests\\": "tests/src/"
         }
     },
+    "config": {
+        "sort-packages": true,
+        "vendor-dir": "src/vendor/"
+    },
     "scripts": {
-        "post-autoload-dump": [
-            "vendor\\bin\\classmap_generator.php.bat --library vendor/zendframework --output vendor/zendframework/autoload_classmap.php --overwrite --sort"
+        "check": [
+            "@cs-check",
+            "@test"
         ],
-        "testmycode": ["vendor/bin/phpunit"],
-        "sniffemycode": ["vendor/bin/phpcs --standard=./phpcs.xml"],
-        "messmycode": ["vendor/bin/phpmd src text ./phpmd.xml"]
+        "cs-check": "vendor/bin/phpcs --standard=./phpcs.xml",
+        "test": "vendor/bin/phpunit --colors=always",
+        "md-check": "vendor/bin/phpmd src text ./phpmd.xml"
     }
 }

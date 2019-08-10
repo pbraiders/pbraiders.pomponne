@@ -1,6 +1,6 @@
 .vscode/
 /vendor/
+/src/vendor/
 /tests/_report/
 desktop.ini
 local.*
-config.php
