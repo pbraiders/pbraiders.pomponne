@@ -1,3 +1,6 @@
-SetEnv REGISTER_GLOBALS 0
-SetEnv MAGIC_QUOTES 0
-SetEnv PHP_VER 5
+Options -Indexes
+ErrorDocument 401 An authorization is required to access to this ressource. Contact your PBRaiders administrator.
+ErrorDocument 403 The access to PBRaiders is denied. Contact your PBRaiders administrator.
+ErrorDocument 404 /404.html
+ErrorDocument 500 A server error has occured. Contact your web hosting provider.
+ErrorDocument 503 The service is unavailable. Contact your web hosting provider.
