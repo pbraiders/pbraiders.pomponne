@@ -9,7 +9,7 @@
 return [
 
     // Configure PBRaiders website URL. If PBRaiders is installed into a directory called "pbraiders" for the
-    //  domain example.com, define 'website_url' like this:
+    //  domain www.example.com, define 'website_url' like this:
     'website_url' => 'https://www.example.com/pbraiders/',
 
     // Configure database settings.
@@ -52,6 +52,7 @@ return [
     ],
 
     // These are various options for php
+    // Do not change unless you know what you are doing
     'php' => [
 
         // Default timezone used by all date/time functions
@@ -79,45 +80,6 @@ return [
 // Drivers - ne pas modifier
 //define('PBR_DB_DSN', 'mysql:host=' . PBR_DB_HOST . ';dbname=');
  /*
- Set Cookie Domain # Set Cookie Domain
-
-The domain set in the cookies for WordPress can be specified for those with unusual domain setups. For example, if subdomains are used to serve static content, you can set the cookie domain to only your non-static domain to prevent WordPress cookies from being sent with each request to static content on your subdomain .
-
-define( 'COOKIE_DOMAIN', 'www.example.com' );
-
-The WP_DEBUG option controls the reporting of some errors and warnings and enables use of the WP_DEBUG_DISPLAY and WP_DEBUG_LOG settings. The default boolean value is false.
-
-define( 'WP_DEBUG', true );
-
-Database errors are printed only if WP_DEBUG is set to true. Database errors are handled by the wpdb class and are not affected by PHP’s error settings.
-
-Setting WP_DEBUG to true also raises the error reporting level to E_ALL and activates warnings when deprecated functions or files are used; otherwise, WordPress sets the error reporting level to E_ALL ^ E_NOTICE ^ E_USER_NOTICE.
-
-Configure Error Logging # Configure Error Logging
-
-Configuring error logging can be a bit tricky. First of all, default PHP error log and display settings are set in the php.ini file, which you may or may not have access to. If you do, they should be set to the desired settings for live PHP pages served to the public. It’s strongly recommended that no error messages are displayed to the public and instead routed to an error log. Further more, error logs should not be located in the publicly accessible portion of your server. Sample recommended php.ini error settings:
-
-error_reporting = 4339
-display_errors = Off
-display_startup_errors = Off
-log_errors = On
-error_log = /home/example.com/logs/php_error.log
-log_errors_max_len = 1024
-ignore_repeated_errors = On
-ignore_repeated_source = Off
-html_errors = Off
-@ini_set( 'log_errors', 'Off' );
-@ini_set( 'display_errors', 'On' );
-define( 'WP_DEBUG', true );
-define( 'WP_DEBUG_LOG', false );
-define( 'WP_DEBUG_DISPLAY', true );
-
-define( 'WP_DEBUG', true ); // Or false
-if ( WP_DEBUG ) {
-    define( 'WP_DEBUG_LOG', true );
-    define( 'WP_DEBUG_DISPLAY', false );
-    @ini_set( 'display_errors', 0 );
-}
 
 Increasing memory allocated to PHP # Increasing memory allocated to PHP
 
