@@ -53,12 +53,42 @@ return [
 
     ],
 
-    // These are various options for php
-    // Do not change unless you know what you are doing
+    // These are various options for php.
+    // Do not change unless you know what you are doing!
     'php' => [
 
         // Default timezone used by all date/time functions
-        'date_default_timezone' => 'Europe/Paris',
+        'date.timezone' => 'Europe/Paris',
+
+        // Sets which PHP errors are reported.
+        'error_reporting' => E_ALL & ~E_DEPRECATED & ~E_STRICT,
+
+        // Maximum amount of memory in bytes that a script is allowed to allocate.
+        'memory_limit' => '40M',
+
+        // Determines whether errors should be printed to the screen as part of the output or if they should be hidden from the user.
+        'display_errors' => '0',
+
+        // Even when display_errors is on, errors that occur during PHP's startup sequence are not displayed.
+        // It's strongly recommended to keep display_startup_errors off, except for debugging.
+        'display_startup_errors' => false,
+
+        // Name of the file where script errors should be logged.
+        'error_log' => null,
+        /*
+session.cache_expire "180"
+session.cache_limiter "nocache"
+session.cookie_domain ""
+session.cookie_httponly ""
+session.cookie_lifetime "0"
+session.cookie_path "/"
+session.cookie_secure ""
+....
+*/
+
+    ],
+
+    'other' => [
 
         'cookie' => [
             'lifetime' => 36000,
@@ -82,20 +112,6 @@ return [
 // Drivers - ne pas modifier
 //define('PBR_DB_DSN', 'mysql:host=' . PBR_DB_HOST . ';dbname=');
  /*
-
-Increasing memory allocated to PHP # Increasing memory allocated to PHP
-
-WP_MEMORY_LIMIT option allows you to specify the maximum amount of memory that can be consumed by PHP. This setting may be necessary in the event you receive a message such as “Allowed memory size of xxxxxx bytes exhausted”.
-
-This setting increases PHP Memory only for WordPress, not other applications. By default, WordPress will attempt to increase memory allocated to PHP to 40MB (code is at the beginning of /wp-includes/default-constants.php) for single site and 64MB for multisite, so the setting in wp-config.php should reflect something higher than 40MB or 64MB depending on your setup.
-
-WordPress will automatically check if PHP has been allocated less memory than the entered value before utilizing this function. For example, if PHP has been allocated 64MB, there is no need to set this value to 64M as WordPress will automatically use all 64MB if need be.
-
-Note: Some hosts do not allow for increasing the PHP memory limit automatically. In that event, contact your host to increase the PHP memory limit. Also, many hosts set the PHP limit at 8MB.
-
-Increase PHP Memory to 64MB
-
-define( 'WP_MEMORY_LIMIT', '64M' );
 
 https://wordpress.org/support/article/editing-wp-config-php/
 */

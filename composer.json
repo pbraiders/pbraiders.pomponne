@@ -1,7 +1,6 @@
 {
     "name": "pbraiders/pomponne",
     "description": "Paintball reservation management system",
-    "version": "2.0.0",
     "keywords": [
         "paintball",
         "reservation",
@@ -10,7 +9,7 @@
     "homepage": "https://github.com/pbraiders/pomponne",
     "readme": "README.md",
     "time": "2019-08-10",
-    "license": "GPL-3.0",
+    "license": "GPL-3.0-or-later",
     "authors": [
         {
             "name": "Olivier Jullien",
@@ -43,7 +42,6 @@
         }
     },
     "require-dev": {
-        "ext-xdebug": "*",
         "squizlabs/php_codesniffer": "*",
         "phpmd/phpmd": "@stable",
         "phpunit/phpunit": "^8"
