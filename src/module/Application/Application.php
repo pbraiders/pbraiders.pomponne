@@ -13,6 +13,12 @@ namespace Pbraiders\Application;
 
 class Application
 {
+
+    public static function init(array $configuration = [])
+    {
+        // Prepare the service manager
+    }
+
     function hello(): void
     {
         echo '<p>hello</p>', PHP_EOL;
