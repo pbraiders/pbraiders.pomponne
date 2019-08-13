@@ -60,30 +60,57 @@ return [
         // Default timezone used by all date/time functions
         'date.timezone' => 'Europe/Paris',
 
-        // Sets which PHP errors are reported.
-        'error_reporting' => E_ALL & ~E_DEPRECATED & ~E_STRICT,
-
         // Maximum amount of memory in bytes that a script is allowed to allocate.
         'memory_limit' => '40M',
+
+        // This sets the maximum time in seconds a script is allowed to run before it is terminated by the parser.
+        'max_execution_time' => '60',
+
+        // Sets which PHP errors are reported.
+        'error_reporting' => E_ALL & ~E_DEPRECATED & ~E_STRICT,
 
         // Determines whether errors should be printed to the screen as part of the output or if they should be hidden from the user.
         'display_errors' => '0',
 
         // Even when display_errors is on, errors that occur during PHP's startup sequence are not displayed.
         // It's strongly recommended to keep display_startup_errors off, except for debugging.
-        'display_startup_errors' => false,
+        'display_startup_errors' => '0',
+
+        // Do not log repeated messages.
+        'ignore_repeated_errors' => '1',
+
+        // This parameter will show a report of memory leaks detected by the Zend memory manager.
+        'report_memleaks' => '0',
+
+        // If enabled, the last error message will always be present in the variable $php_errormsg.
+        'track_errors' => '0',
+
+        // If enabled, error messages will include HTML tags.
+        'html_errors' => '0',
+
+        // Tells whether script error messages should be logged to the server's error log or error_log.
+        'log_errors' => '1',
 
         // Name of the file where script errors should be logged.
-        'error_log' => null,
+        'error_log' => sprintf('%s/log/%s_php_error.log', constant('PBR_PATH'), date("Ymd")),
+
         /*
-session.cache_expire "180"
-session.cache_limiter "nocache"
-session.cookie_domain ""
-session.cookie_httponly ""
-session.cookie_lifetime "0"
-session.cookie_path "/"
-session.cookie_secure ""
-....
+session.save_path                = /path/PHP-session/
+ session.name                     = myPHPSESSID
+ session.use_trans_sid            = 0
+ session.cookie_domain            = full.qualified.domain.name
+ #session.cookie_path             = /application/path/
+ session.use_strict_mode          = 1
+ session.use_cookies              = 1
+ session.use_only_cookies         = 1
+ session.cookie_lifetime          = 14400 # 4 hours
+ session.cookie_secure            = 1
+ session.cookie_httponly          = 1
+!!!??? session.cookie_samesite          = Strict
+ session.cache_expire             = 30
+ session.sid_length               = 256
+ session.sid_bits_per_character   = 6 # PHP 7.2+
+ session.referer_check
 */
 
     ],

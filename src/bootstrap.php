@@ -15,27 +15,44 @@ define('PBR_PATH', __DIR__);
 // Includes the Composer autoloader
 require 'vendor/autoload.php';
 
-// Retrieves the configuration
-$aConfig = require 'config/config.php';
-if (is_readable('config/local.config.php')) {
-    $aConfig = array_replace_recursive($aConfig, require 'config/local.config.php');
-}
+// Loads the configuration
+//$pConfigFactory = new \Pbraiders\Config\Factory();
+//$pConfig = $pConfigFactory->fromFile(PBR_PATH . '/config/config.php');
+//echo '<pre>', PHP_EOL;
+//print_r($pConfig);
+//echo '</pre>', PHP_EOL;
 
+/*
+// Retrieves the configuration
+aConfig = require 'config/config.php';
+f (is_readable('config/local.config.php')) {
+   $aConfig = array_replace_recursive($aConfig, require 'config/local.config.php');
+
+$container = new League\Container\Container;
+$container->add(Pbraiders\Config\Config::class)->addArgument($aConfig);
+$pConfig = $container->get(Pbraiders\Config\Config::class);
+var_dump($pConfig instanceof Pbraiders\Config\Config);               // true
+*/
+
+$container = new League\Container\Container;
+//$container->addServiceProvider('Pbraiders\ServiceProvider\ServiceProvider');
+$container->addServiceProvider(new Pbraiders\ServiceProvider\ServiceProvider);
+$pConfig = $container->get(Pbraiders\Config\Config::class);
+/*var_dump($pConfig instanceof Pbraiders\Config\Config);               // true
+
+// Updates the PHP configuration
 function setIni($newvalue, string $sVarname)
 {
-    echo '<pre>varname=' . $sVarname . '</pre>', PHP_EOL;
-    echo '<pre>newvalue=' . $newvalue . '</pre>', PHP_EOL;
+    echo '<pre>init_set=' . $sVarname . '</pre>', PHP_EOL;
     @ini_set($sVarname, (string) $newvalue);
 }
-
-echo '<pre>' . print_r($aConfig['php'], true) . '</pre>', PHP_EOL;
-
-array_walk($aConfig['php'], 'setIni');
-
+$aaaaa = $pConfig['php']->toArray();
+array_walk($aaaaa, 'setIni');
+*/
 
 $pApplication = new \Pbraiders\Application\Application();
 $pApplication->hello();
 $pApplication = null;
 unset($pApplication);
 
-error_log("You messed up!", 3, "/home/ojullien/work/pomponne/src/log/my-errors.log");
+error_log("You messed up!", 3);

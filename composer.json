@@ -20,20 +20,6 @@
     ],
     "require": {
         "php": "^7.3",
-        "ext-bcmath": "*",
-        "ext-bz2": "*",
-        "ext-curl": "*",
-        "ext-exif": "*",
-        "ext-fileinfo": "*",
-        "ext-gd": "*",
-        "ext-iconv": "*",
-        "ext-intl": "*",
-        "ext-json": "*",
-        "ext-mbstring": "*",
-        "ext-pdo_mysql": "*",
-        "ext-readline": "*",
-        "ext-xml": "*",
-        "ext-zip": "*",
         "league/container": "^3.3"
     },
     "autoload": {

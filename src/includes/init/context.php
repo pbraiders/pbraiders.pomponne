@@ -48,22 +48,6 @@ if( !defined('PBR_VERSION') || !defined('PBR_PATH') )
      *****************/
     $fGlobalBeginningTime = GetTime();
 
-    /** Update memory
-     ****************/
-    // Default value
-    define('PBR_MEMORY_LIMIT', '64M');
-
-    // Update memory
-    if( function_exists('memory_get_usage')
-        && ( (int) @ini_get('memory_limit') < abs(intval(PBR_MEMORY_LIMIT)) ) )
-    {
-        @ini_set('memory_limit', PBR_MEMORY_LIMIT);
-    }// if( function_exists('memory_get_usage')
-
-    /** Set error level
-     ******************/
-    error_reporting(E_ALL ^ E_NOTICE);
-//    error_reporting(E_ALL | E_STRICT);
 
     /** Error management
      *******************/

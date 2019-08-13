@@ -2,5 +2,6 @@
 /vendor/
 /src/vendor/
 /docs/
-desktop.ini
+*.log
 local.*
+desktop.ini
