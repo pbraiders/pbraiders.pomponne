@@ -15,29 +15,34 @@ define('PBR_PATH', __DIR__);
 // Includes the Composer autoloader
 require 'vendor/autoload.php';
 
-// Loads the configuration
-//$pConfigFactory = new \Pbraiders\Config\Factory();
-//$pConfig = $pConfigFactory->fromFile(PBR_PATH . '/config/config.php');
-//echo '<pre>', PHP_EOL;
-//print_r($pConfig);
-//echo '</pre>', PHP_EOL;
-
 /*
-// Retrieves the configuration
-aConfig = require 'config/config.php';
-f (is_readable('config/local.config.php')) {
-   $aConfig = array_replace_recursive($aConfig, require 'config/local.config.php');
-
-$container = new League\Container\Container;
-$container->add(Pbraiders\Config\Config::class)->addArgument($aConfig);
-$pConfig = $container->get(Pbraiders\Config\Config::class);
-var_dump($pConfig instanceof Pbraiders\Config\Config);               // true
+// Loads the configuration
+$pConfigFactory = new \Pbraiders\Config\Factory();
+$pConfig = $pConfigFactory->fromFile(PBR_PATH . '/config/config.php');
+echo '<pre>', PHP_EOL;
+print_r($pConfig);
+echo '</pre>', PHP_EOL;
 */
 
+// Retrieves the configuration
+$aConfig = require 'config/config.php';
+if (is_readable('config/local.config.php')) {
+   $aConfig = array_replace_recursive($aConfig, require 'config/local.config.php');
+}
+
 $container = new League\Container\Container;
-//$container->addServiceProvider('Pbraiders\ServiceProvider\ServiceProvider');
-$container->addServiceProvider(new Pbraiders\ServiceProvider\ServiceProvider);
+$container->share(Pbraiders\Config\Config::class)->addArgument($aConfig);
 $pConfig = $container->get(Pbraiders\Config\Config::class);
+var_dump($pConfig instanceof Pbraiders\Config\Config);               // true
+
+echo '<pre>', PHP_EOL;
+print_r($pConfig);
+echo '</pre>', PHP_EOL;
+
+//$container = new League\Container\Container;
+//$container->addServiceProvider('Pbraiders\ServiceProvider\ServiceProvider');
+//$container->addServiceProvider(new Pbraiders\ServiceProvider\ServiceProvider);
+//pConfig = $container->get(Pbraiders\Config\Config::class);
 /*var_dump($pConfig instanceof Pbraiders\Config\Config);               // true
 
 // Updates the PHP configuration

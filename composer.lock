@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f5404006819d8ebdc6f5a38e7373f14f",
+    "content-hash": "d722f802ed118f0b1a19d04148b46960",
     "packages": [
         {
             "name": "league/container",
@@ -2056,21 +2056,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.3",
-        "ext-bcmath": "*",
-        "ext-bz2": "*",
-        "ext-curl": "*",
-        "ext-exif": "*",
-        "ext-fileinfo": "*",
-        "ext-gd": "*",
-        "ext-iconv": "*",
-        "ext-intl": "*",
-        "ext-json": "*",
-        "ext-mbstring": "*",
-        "ext-pdo_mysql": "*",
-        "ext-readline": "*",
-        "ext-xml": "*",
-        "ext-zip": "*"
+        "php": "^7.3"
     },
     "platform-dev": []
 }
