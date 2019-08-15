@@ -24,6 +24,9 @@ print_r($pConfig);
 echo '</pre>', PHP_EOL;
 */
 
+
+/*
+// This works.
 // Retrieves the configuration
 $aConfig = require 'config/config.php';
 if (is_readable('config/local.config.php')) {
@@ -38,10 +41,19 @@ var_dump($pConfig instanceof Pbraiders\Config\Config);               // true
 echo '<pre>', PHP_EOL;
 print_r($pConfig);
 echo '</pre>', PHP_EOL;
+*/
 
-//$container = new League\Container\Container;
-//$container->addServiceProvider('Pbraiders\ServiceProvider\ServiceProvider');
-//$container->addServiceProvider(new Pbraiders\ServiceProvider\ServiceProvider);
+// This works.
+$container = new League\Container\Container();
+$container->addServiceProvider( new \Pbraiders\Config\ServiceProvider() );
+
+echo '<pre>', PHP_EOL;
+print_r($container->has('config'));
+echo '</br>', PHP_EOL;
+$pConfig = $container->get('config');
+print_r($pConfig);
+echo '</pre>', PHP_EOL;
+
 //pConfig = $container->get(Pbraiders\Config\Config::class);
 /*var_dump($pConfig instanceof Pbraiders\Config\Config);               // true
 
@@ -60,4 +72,4 @@ $pApplication->hello();
 $pApplication = null;
 unset($pApplication);
 
-error_log("You messed up!", 3);
+//error_log("You messed up!", 3);
