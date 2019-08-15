@@ -11,9 +11,8 @@ declare(strict_types=1);
 namespace Pbraiders\Config;
 
 use League\Container\ServiceProvider\AbstractServiceProvider;
-use League\Container\ServiceProvider\BootableServiceProviderInterface;
 
-class ServiceProvider extends AbstractServiceProvider implements BootableServiceProviderInterface {
+class ServiceProvider extends AbstractServiceProvider {
 
     /**
      * Main config filename.
@@ -37,7 +36,7 @@ class ServiceProvider extends AbstractServiceProvider implements BootableService
      * to this array or it will be ignored.
      *
      * @var array
-     */    
+     */
     protected $provides = [
         'config'
     ];
@@ -67,46 +66,27 @@ class ServiceProvider extends AbstractServiceProvider implements BootableService
     }
 
     /**
-     * In much the same way, this method has access to the container
-     * itself and can interact with it however you wish, the difference
-     * is that the boot method is invoked as soon as you register
-     * the service provider with the container meaning that everything
-     * in this method is eagerly loaded.
-     *
-     * If you wish to apply inflectors or register further service providers
-     * from this one, it must be from a bootable service provider like
-     * this one, otherwise they will be ignored.
-     */
-    public function boot()
-    {
-        return true;
-    }
-
-    /**
      * This is where the magic happens, within the method you can
      * access the container and register or retrieve anything
      * that you need to, but remember, every alias registered
      * within this method must be declared in the `$provides` array.
-     * 
+     *
      * @return void
      */
     public function register(): void
     {
 
-        // Init
-
-
         // File must exists
-        if (!is_readable($sConfigFileMain)) {
-            throw new Exception\RuntimeException(sprintf('The config file "%s" cannot be found.', $sConfigFileMain));
+        if (!is_readable($this->sConfigFileMain)) {
+            throw new Exception\RuntimeException(sprintf('The config file "%s" cannot be found.', $this->sConfigFileMain));
         }
 
         // Reads the main config file
-        $aConfig = require $sConfigFileMain;
+        $aConfig = require $this->sConfigFileMain;
 
         // Reads the local config file
-        if (is_readable($sConfigFileLocal)) {
-            $aConfig = array_replace_recursive($aConfig, require $sConfigFileLocal);
+        if (is_readable($this->sConfigFileLocal)) {
+            $aConfig = array_replace_recursive($aConfig, require $this->sConfigFileLocal);
         }
 
         // Register

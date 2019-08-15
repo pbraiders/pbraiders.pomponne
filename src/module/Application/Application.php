@@ -14,12 +14,31 @@ namespace Pbraiders\Application;
 class Application
 {
 
-    public static function init(array $configuration = [])
+    /**
+     * Sets the values of PHP configuration options.
+     *
+     * The array should be an associative array likes:
+     *  'php_option_name' => 'new_value_for_the_option'
+     *
+     * @see https://www.php.net/manual/en/function.array-walk.php
+     * @param array $config
+     * @return boolean
+     */
+    public function initPHP(array $config): bool
     {
-        // Prepare the service manager
+        return array_walk($config, function( $newvalue, string $varname )
+        {
+            echo '<pre>init_set: ' . $varname . '</pre>', PHP_EOL;
+            @ini_set($varname, (string) $newvalue);
+        });
     }
 
-    function hello(): void
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function hello(): void
     {
         echo '<p>hello</p>', PHP_EOL;
     }
