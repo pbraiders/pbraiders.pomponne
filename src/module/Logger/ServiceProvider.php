@@ -7,12 +7,12 @@ declare(strict_types=1);
  * larger applications as definitions registered within a service provider are lazily registered at the point where a
  * service is retrieved.
  *
- * @package Pbraiders\Application
+ * @package Pbraiders\Logger
  * @link    https://github.com/pbraiders/pomponne for the canonical source repository
  * @license https://github.com/pbraiders/pomponne/blob/master/LICENSE GNU General Public License v3.0 License.
  */
 
-namespace Pbraiders\Application;
+namespace Pbraiders\Logger;
 
 use \League\Container\ServiceProvider\AbstractServiceProvider;
 
@@ -28,7 +28,8 @@ class ServiceProvider extends AbstractServiceProvider {
      * @var array
      */
     protected $provides = [
-        'application',
+        'logger',
+        'logger.handler.stream',
     ];
 
     /**
@@ -41,8 +42,25 @@ class ServiceProvider extends AbstractServiceProvider {
      */
     public function register(): void
     {
-        // Register
-        $this->getContainer()->share('application',\Pbraiders\Application\Application::class);
+        // Retrieves the container.
+        $pContainer = $this->getContainer();
+
+        // Loads the configuration.
+        $aConfig = $pContainer->get('config');
+        if( !$pContainer->has('config') ){
+            throw new \League\Container\Exception\NotFoundException('Configuration is missing.');
+        }
+
+
+
+        $this->getContainer()->share('logger',\Monolog\Logger::class)->addArgument('pbraiders');
+        $this->getContainer()
+            ->share('logger.handler.stream',\Monolog\Handler\StreamHandler::class)
+            ->addArgument( \PBR_PATH . '/log/my_app.log')
+            ->addArgument( 100 );
+        $this->getContainer()
+            ->inflector(\Monolog\Logger::class)
+            ->invokeMethod('pushHandler', [$this->getContainer()->get('logger.handler.stream')]);
     }
 
 };

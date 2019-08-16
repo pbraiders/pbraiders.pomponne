@@ -39,11 +39,11 @@ return [
             'paging' => 50,
         ],
 
-        'log' => [
+        'logger' => [
             // Number of items to display per page.
             'paging' => 50,
-            // Set to true if you want to write log in a file.
-            'file_enable' => false,
+            //
+            'filename' => false,
         ],
 
         'print' => [

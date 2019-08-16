@@ -17,19 +17,42 @@ define('PBR_PATH', __DIR__);
 // Includes the Composer autoloader
 require 'vendor/autoload.php';
 
-// Loads services
-$container = new League\Container\Container();
-$container->addServiceProvider( new \Pbraiders\Config\ServiceProvider() );
-$container->addServiceProvider( new \Pbraiders\Application\ServiceProvider() );
-echo '<pre>', PHP_EOL;
-print_r($container->has('config'));
-print_r($container->has('application'));
-echo '</br>', PHP_EOL;
-$aConfig = $container->get('config');
-$pApplication = $container->get('application');
-$pApplication->initPHP($aConfig['php']);
-print_r($aConfig);
-echo '</pre>', PHP_EOL;
+try {
 
+    // Loads all the needed services
+    $container = new League\Container\Container();
+    $container
+        ->addServiceProvider( new \Pbraiders\Config\ServiceProvider() )
+        ->addServiceProvider( new \Pbraiders\Application\ServiceProvider() )
+        ->addServiceProvider( new \Pbraiders\Logger\ServiceProvider() );
+
+    echo '<pre>', PHP_EOL;
+    print_r($container->has('config'));
+    print_r($container->has('application'));
+    print_r($container->has('logger'));
+    print_r($container->has('logger.handler.stream'));
+    echo '</pre>', PHP_EOL;
+
+    // Configures the application
+    $aConfig = $container->get('config');
+    $pApplication = $container->get('application');
+    $return = $pApplication->configurePHP($aConfig['php']);
+    echo '<pre>configurePHP returns: ';
+    print_r($return);
+    echo '</br>', PHP_EOL;
+    $pLogger = $container->get('logger');
+    var_dump($pLogger);
+    $pLogger = $container->get('logger.handler.stream');
+    var_dump($pLogger);
+    //$pLogger->info('My logger is now ready');
+    echo '</br>', PHP_EOL;
+    print_r($aConfig);
+    echo '</pre>', PHP_EOL;
+
+}
+catch ( \Exception $e ){
+    var_dump($e->getMessage());
+    exit(1);
+}
 
 //error_log("You messed up!", 3);
