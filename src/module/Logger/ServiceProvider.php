@@ -42,25 +42,49 @@ class ServiceProvider extends AbstractServiceProvider {
      */
     public function register(): void
     {
-        // Retrieves the container.
-        $pContainer = $this->getContainer();
+        // Retrieves the configuration
+        $aConfig = $this->getConfig();
 
-        // Loads the configuration.
-        $aConfig = $pContainer->get('config');
-        if( !$pContainer->has('config') ){
-            throw new \League\Container\Exception\NotFoundException('Configuration is missing.');
-        }
-
-
-
-        $this->getContainer()->share('logger',\Monolog\Logger::class)->addArgument('pbraiders');
+        // Register the handlers
         $this->getContainer()
             ->share('logger.handler.stream',\Monolog\Handler\StreamHandler::class)
-            ->addArgument( \PBR_PATH . '/log/my_app.log')
+            ->addArgument( $aConfig['error_log'] )
             ->addArgument( 100 );
+
+        // Register the logger
+        $this->getContainer()->share('logger',\Monolog\Logger::class)->addArgument('pbraiders');
+
+        // Initialize the logger the first time is instanciated
         $this->getContainer()
             ->inflector(\Monolog\Logger::class)
             ->invokeMethod('pushHandler', [$this->getContainer()->get('logger.handler.stream')]);
+    }
+
+    /**
+     * Retrieves and filters the logger configuration.
+     *
+     * @return array
+     */
+    protected function getConfig(): array
+    {
+        echo '<pre>' . __METHOD__ . '</pre>', PHP_EOL;
+
+        // Retrieves the logger configuration.
+        $aConfig = $this->getContainer()->get('config');
+
+        if( empty($aConfig['modules']['logger']) ) {
+            throw new Exception\RuntimeException('Logger configuration is missing.');
+        }
+
+        // Filter the logger configuration.
+        $aFilter = [ 'error_log' => true ];
+        $aConfig = array_intersect_key($aConfig['modules']['logger'], $aFilter );
+
+        if( count($aConfig) != count($aFilter) ) {
+            throw new Exception\RuntimeException('Logger configuration is not valid.');
+        }
+
+        return $aConfig;
     }
 
 };

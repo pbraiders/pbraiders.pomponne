@@ -41,17 +41,16 @@ try {
     print_r($return);
     echo '</br>', PHP_EOL;
     $pLogger = $container->get('logger');
+    $pLogger->pushProcessor(new \Monolog\Processor\PsrLogMessageProcessor());
+    $pLogger->info('My logger is now ready');
     var_dump($pLogger);
-    $pLogger = $container->get('logger.handler.stream');
-    var_dump($pLogger);
-    //$pLogger->info('My logger is now ready');
     echo '</br>', PHP_EOL;
     print_r($aConfig);
     echo '</pre>', PHP_EOL;
 
 }
 catch ( \Exception $e ){
-    var_dump($e->getMessage());
+    var_dump($e);
     exit(1);
 }
 
