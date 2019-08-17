@@ -38,53 +38,35 @@ class ServiceProvider extends AbstractServiceProvider {
      * that you need to, but remember, every alias registered
      * within this method must be declared in the `$provides` array.
      *
+     * @throws \Pbraiders\Logger\Exception\RuntimeException If the configuration is not valid.
      * @return void
      */
     public function register(): void
     {
-        // Retrieves the configuration
-        $aConfig = $this->getConfig();
+        // Retrieves the container.
+        $pContainer = $this->getContainer();
 
-        // Register the handlers
-        $this->getContainer()
-            ->share('logger.handler.stream',\Monolog\Handler\StreamHandler::class)
-            ->addArgument( $aConfig['error_log'] )
-            ->addArgument( 100 );
-
-        // Register the logger
-        $this->getContainer()->share('logger',\Monolog\Logger::class)->addArgument('pbraiders');
-
-        // Initialize the logger the first time is instanciated
-        $this->getContainer()
-            ->inflector(\Monolog\Logger::class)
-            ->invokeMethod('pushHandler', [$this->getContainer()->get('logger.handler.stream')]);
-    }
-
-    /**
-     * Retrieves and filters the logger configuration.
-     *
-     * @return array
-     */
-    protected function getConfig(): array
-    {
-        echo '<pre>' . __METHOD__ . '</pre>', PHP_EOL;
-
-        // Retrieves the logger configuration.
-        $aConfig = $this->getContainer()->get('config');
+        // Retrieves the configuration.
+        $aConfig = $pContainer->get('config');
 
         if( empty($aConfig['modules']['logger']) ) {
             throw new Exception\RuntimeException('Logger configuration is missing.');
         }
 
-        // Filter the logger configuration.
-        $aFilter = [ 'error_log' => true ];
-        $aConfig = array_intersect_key($aConfig['modules']['logger'], $aFilter );
+        $aConfig = &$aConfig['modules']['logger'];
 
-        if( count($aConfig) != count($aFilter) ) {
-            throw new Exception\RuntimeException('Logger configuration is not valid.');
-        }
+        // Registers the handlers.
+        $pContainer
+            ->share('logger.handler.stream',\Pbraiders\Logger\StreamHandler::class)
+            ->addArgument( $aConfig );
 
-        return $aConfig;
+        // Registers the logger.
+        $pContainer->share('logger',\Monolog\Logger::class)->addArgument('pbraiders');
+
+        // Initializes the logger with handlers the first time is instanciated.
+        $pContainer
+            ->inflector(\Monolog\Logger::class)
+            ->invokeMethod('pushHandler', [$pContainer->get('logger.handler.stream')]);
     }
 
 };
