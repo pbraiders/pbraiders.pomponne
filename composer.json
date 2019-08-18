@@ -20,6 +20,7 @@
     ],
     "require": {
         "php": "^7.3",
+        "filp/whoops": "^2.5",
         "league/container": "^3.3",
         "monolog/monolog": "^1.24"
     },

@@ -58,6 +58,9 @@ class ServiceProvider extends AbstractServiceProvider {
         // Registers the Formatter.
         $pContainer->share('logger.formater.line',\Pbraiders\Logger\LineFormatter::class);
 
+        // Registers the processor.
+        $pContainer->share('logger.processor.web',\Monolog\Processor\WebProcessor::class);
+
         // Registers the handler.
         $pContainer
             ->share('logger.handler.stream',\Pbraiders\Logger\StreamHandler::class)
@@ -71,10 +74,13 @@ class ServiceProvider extends AbstractServiceProvider {
             ->inflector(\Pbraiders\Logger\StreamHandler::class)
             ->invokeMethod('setFormatter', [$pContainer->get('logger.formater.line')]);
 
-        // Initializes the logger with handler the first time is instanciated.
+        // Initializes the logger with handler and processor the first time is instanciated.
         $pContainer
             ->inflector(\Monolog\Logger::class)
             ->invokeMethod('pushHandler', [$pContainer->get('logger.handler.stream')]);
+        $pContainer
+            ->inflector(\Monolog\Logger::class)
+            ->invokeMethod('pushProcessor', [$pContainer->get('logger.processor.web')]);
     }
 
 };

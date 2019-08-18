@@ -17,41 +17,41 @@ define('PBR_PATH', __DIR__);
 // Includes the Composer autoloader
 require 'vendor/autoload.php';
 
-try {
+// Loads all the needed services.
+$theContainer = new League\Container\Container();
+$theContainer
+    ->addServiceProvider( new \Pbraiders\Config\ServiceProvider() )
+    ->addServiceProvider( new \Pbraiders\Application\ServiceProvider() )
+    ->addServiceProvider( new \Pbraiders\Logger\ServiceProvider() );
 
-    // Loads all the needed services
-    $container = new League\Container\Container();
-    $container
-        ->addServiceProvider( new \Pbraiders\Config\ServiceProvider() )
-        ->addServiceProvider( new \Pbraiders\Application\ServiceProvider() )
-        ->addServiceProvider( new \Pbraiders\Logger\ServiceProvider() );
+// Get the config
+$theConfig = $theContainer->get('config');
 
-    echo '<pre>', PHP_EOL;
-    print_r($container->has('config'));
-    print_r($container->has('application'));
-    print_r($container->has('logger'));
-    print_r($container->has('logger.handler.stream'));
-    echo '</pre>', PHP_EOL;
+// Configure PHP
+if(!empty($theConfig['php'])) {
+    $theContainer->get('application')->configurePHP($theConfig['php']);
+}
+
+// Activate Whoops
+if( (!empty($theConfig['modules']['application']['use_whoops']))) {
+    echo '<pre>hello</pre>', PHP_EOL;
+    $theContainer->get('whoops')->register();
+}
+
 
     // Configures the application
-    $aConfig = $container->get('config');
-    $pApplication = $container->get('application');
-    $return = $pApplication->configurePHP($aConfig['php']);
-    echo '<pre>configurePHP returns: ';
-    print_r($return);
-    echo '</br>', PHP_EOL;
-    $pLogger = $container->get('logger');
-    $pLogger->pushProcessor(new \Monolog\Processor\PsrLogMessageProcessor());
-    $pLogger->info('My logger is now ready');
-    var_dump($pLogger);
+
+    $pLogger = $theContainer->get('logger');
+   $pLogger->info('My logger is now ready');
+/*    var_dump($pLogger);
     echo '</br>', PHP_EOL;
     print_r($aConfig);
     echo '</pre>', PHP_EOL;
 
-}
+/*}
 catch ( \Exception $e ){
     var_dump($e);
     exit(1);
 }
-
+*/
 //error_log("You messed up!", 3);

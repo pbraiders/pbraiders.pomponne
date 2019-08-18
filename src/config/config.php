@@ -29,6 +29,12 @@ return [
     // These are various options for the modules used in this application.
     'modules' => [
 
+        'application' => [
+            // If set to 1, the application will use 'whoops error handling library' instead of the default PHP one.
+            // Usefull during development
+            'use_whoops' => false,
+        ],
+
         'contact' => [
             // Number of items to display per page.
             'paging' => 50,
@@ -86,7 +92,7 @@ return [
         'track_errors' => '0',
 
         // If enabled, error messages will include HTML tags.
-        'html_errors' => '0',
+        'html_errors' => '1',
 
         // Tells whether script error messages should be logged to the server's error log or error_log.
         'log_errors' => '1',

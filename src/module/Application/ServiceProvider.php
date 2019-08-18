@@ -29,6 +29,7 @@ class ServiceProvider extends AbstractServiceProvider {
      */
     protected $provides = [
         'application',
+        'whoops',
     ];
 
     /**
@@ -41,8 +42,14 @@ class ServiceProvider extends AbstractServiceProvider {
      */
     public function register(): void
     {
-        // Register
-        $this->getContainer()->share('application',\Pbraiders\Application\Application::class);
+        $pContainer = $this->getContainer();
+        $pContainer->share('application',\Pbraiders\Application\Application::class);
+        $pContainer->share('whoops',\Whoops\Run::class);
+
+        // Initializes Whoops.
+        $pContainer
+            ->inflector(\Whoops\Run::class)
+            ->invokeMethod('prependHandler', [new \Whoops\Handler\PrettyPageHandler()]);
     }
 
 };

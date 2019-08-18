@@ -20,19 +20,13 @@ class LineFormatter extends \Monolog\Formatter\LineFormatter
 
     public function __construct()
     {
-        //"%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\""
-        //"%h %l %u [%{%Y-%m-%d %H:%M:%S}t.%{usec_frac}t] \"%r\" %>s %O \"%{Referer}i\" \"%{User-Agent}i\""
-        // %h Serveur distant.
-        // %l -
-        // %u L'utilisateur distant (en provenance d'auth ; peut être faux si le statut de retour (%s) est 401).
-        // [%{%Y-%m-%d %H:%M:%S}t.%{usec_frac}t] La date.
-        // %r La première ligne de la requête
-        // %s Statut
-        // %O - octet envoyé
-        //
-        // "[%datetime%] %channel%.%level_name%: %message% %context% %extra%\n";
-        $sFormat = "[%datetime%] [%channel%:%level_name%] [%extra.user%] [%extra.ip%] \"%extra.http_method% %extra.url%\" %message% \"%http_referer}\" %context% %extra%\n";
-        parent::__construct($sFormat);
+        // New formats
+        $sOutputFormat = "[%extra.ip%] [%extra.user%] [%datetime%] [%channel%:%level_name%]  \"%extra.http_method% %extra.url%\" %message% \"%extra.referrer%\" %context% %extra%\n";
+
+        $sDateFormat = 'Y-m-d H:i:s.u';
+
+        // Initialize
+        parent::__construct($sOutputFormat,$sDateFormat);
     }
 
 }
