@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use SebastianBergmann\CodeCoverage\Report\PHP;
-
 /**
  * Loads the application environment.
  *
@@ -18,40 +16,35 @@ define('PBR_PATH', __DIR__);
 require 'vendor/autoload.php';
 
 // Loads all the needed services.
-$theContainer = new League\Container\Container();
-$theContainer
+$pContainer = new League\Container\Container();
+$pContainer
     ->addServiceProvider( new \Pbraiders\Config\ServiceProvider() )
     ->addServiceProvider( new \Pbraiders\Application\ServiceProvider() )
     ->addServiceProvider( new \Pbraiders\Logger\ServiceProvider() );
 
 // Get the config
-$theConfig = $theContainer->get('config');
+$aConfig = $pContainer->get('config');
 
-// Configure PHP
-if(!empty($theConfig['php'])) {
-    $theContainer->get('application')->configurePHP($theConfig['php']);
+// Configures PHP
+if(!empty($aConfig['php'])) {
+    $pContainer->get('application')->configurePHP($aConfig['php']);
 }
 
-// Activate Whoops
-if( (!empty($theConfig['modules']['application']['use_whoops']))) {
-    echo '<pre>hello</pre>', PHP_EOL;
-    $theContainer->get('whoops')->register();
+// Activates Whoops
+if( (!empty($aConfig['modules']['application']['use_whoops']))) {
+    $pContainer->get('whoops')->register();
 }
 
+// Configures the logger
+$pContainer->get('logger');
 
-    // Configures the application
+// Now
+// Session http://paul-m-jones.com/post/2016/04/12/psr-7-and-session-cookies/
+//https://github.com/psr7-sessions/storageless
+//https://docs.zendframework.com/zend-expressive-session/intro/
+// https://github.com/dflydev/dflydev-fig-cookies
+//https://discourse.zendframework.com/t/rfc-php-session-and-psr-7/294
 
-    $pLogger = $theContainer->get('logger');
-   $pLogger->info('My logger is now ready');
-/*    var_dump($pLogger);
-    echo '</br>', PHP_EOL;
-    print_r($aConfig);
-    echo '</pre>', PHP_EOL;
-
-/*}
-catch ( \Exception $e ){
-    var_dump($e);
-    exit(1);
-}
-*/
-//error_log("You messed up!", 3);
+// middleware https://akrabat.com/writing-psr-7-middleware/
+// https://github.com/middlewares/psr15-middlewares
+//https://github.com/middlewares/awesome-psr15-middlewares#dispatcher
