@@ -18,25 +18,25 @@ require 'vendor/autoload.php';
 // Loads all the needed services.
 $pContainer = new League\Container\Container();
 $pContainer
-    ->addServiceProvider( new \Pbraiders\Config\ServiceProvider() )
-    ->addServiceProvider( new \Pbraiders\Application\ServiceProvider() )
-    ->addServiceProvider( new \Pbraiders\Logger\ServiceProvider() );
+    ->addServiceProvider(new \Pbraiders\Config\ServiceProvider())
+    ->addServiceProvider(new \Pbraiders\Application\ServiceProvider())
+    ->addServiceProvider(new \Pbraiders\Logger\ServiceProvider());
 
 // Get the config
 $aConfig = $pContainer->get('config');
 
 // Configures PHP
-if(!empty($aConfig['php'])) {
+if (!empty($aConfig['php'])) {
     $pContainer->get('application')->configurePHP($aConfig['php']);
 }
 
 // Activates Whoops
-if( (!empty($aConfig['modules']['application']['use_whoops']))) {
+if ((!empty($aConfig['modules']['application']['use_whoops']))) {
     $pContainer->get('whoops')->register();
 }
 
 // Configures the logger
-$pContainer->get('logger');
+$pContainer->get('logger')->info('hello');
 
 // Now
 // Session http://paul-m-jones.com/post/2016/04/12/psr-7-and-session-cookies/

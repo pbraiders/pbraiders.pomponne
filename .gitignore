@@ -2,6 +2,7 @@
 /vendor/
 /src/vendor/
 /docs/
+/src/config.php
 *.log
 local.*
 desktop.ini
