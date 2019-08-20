@@ -13,4 +13,6 @@ namespace Pbraiders\Application\Exception;
  * This represents errors that cannot be detected at compile time.
  */
 class OverflowException extends \OverflowException implements ExceptionInterface
-{ }
+{
+
+}

@@ -26,7 +26,6 @@ class LineFormatter extends \Monolog\Formatter\LineFormatter
         $sDateFormat = 'Y-m-d H:i:s.u';
 
         // Initialize
-        parent::__construct($sOutputFormat,$sDateFormat);
+        parent::__construct($sOutputFormat, $sDateFormat);
     }
-
 }

@@ -29,13 +29,12 @@ class StreamHandler extends \Monolog\Handler\StreamHandler
     {
         // Filter the logger configuration.
         $aFilter = [ 'error_log' => true ];
-        $aConfig = array_intersect_key($config, $aFilter );
+        $aConfig = array_intersect_key($config, $aFilter);
 
-        if( count($aConfig) != count($aFilter) ) {
+        if (count($aConfig) != count($aFilter)) {
             throw new Exception\InvalidArgumentException('Logger configuration is not valid.');
         }
 
         parent::__construct((string)$aConfig['error_log']);
     }
-
 }

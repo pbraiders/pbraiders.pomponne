@@ -16,7 +16,8 @@ namespace Pbraiders\Application;
 
 use \League\Container\ServiceProvider\AbstractServiceProvider;
 
-class ServiceProvider extends AbstractServiceProvider {
+class ServiceProvider extends AbstractServiceProvider
+{
 
     /**
      * The provided array is a way to let the container
@@ -43,13 +44,12 @@ class ServiceProvider extends AbstractServiceProvider {
     public function register(): void
     {
         $pContainer = $this->getContainer();
-        $pContainer->share('application',\Pbraiders\Application\Application::class);
-        $pContainer->share('whoops',\Whoops\Run::class);
+        $pContainer->share('application', \Pbraiders\Application\Application::class);
+        $pContainer->share('whoops', \Whoops\Run::class);
 
         // Initializes Whoops.
         $pContainer
             ->inflector(\Whoops\Run::class)
             ->invokeMethod('prependHandler', [new \Whoops\Handler\PrettyPageHandler()]);
     }
-
 };

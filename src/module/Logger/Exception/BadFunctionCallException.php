@@ -18,4 +18,6 @@ namespace Pbraiders\Logger\Exception;
  * This kind of exceptions should directly lead to a fix in the code.
  */
 class BadFunctionCallException extends \BadFunctionCallException implements ExceptionInterface
-{ }
+{
+
+}

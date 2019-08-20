@@ -26,10 +26,8 @@ class Application
      */
     public function configurePHP(array $config): bool
     {
-        return array_walk($config, function( $newvalue, string $varname )
-        {
+        return array_walk($config, function ($newvalue, string $varname) {
             @ini_set($varname, (string) $newvalue);
         });
     }
-
 }

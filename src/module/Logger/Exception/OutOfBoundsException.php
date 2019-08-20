@@ -15,4 +15,6 @@ namespace Pbraiders\Logger\Exception;
  * This represents errors that cannot be detected at compile time.
  */
 class OutOfBoundsException extends \OutOfBoundsException implements ExceptionInterface
-{ }
+{
+
+}

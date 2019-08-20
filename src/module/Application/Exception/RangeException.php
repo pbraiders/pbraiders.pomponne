@@ -15,4 +15,6 @@ namespace Pbraiders\Application\Exception;
  * This represents errors that cannot be detected at compile time.
  */
 class RangeException extends \RangeException implements ExceptionInterface
-{ }
+{
+
+}

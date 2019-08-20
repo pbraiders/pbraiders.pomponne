@@ -16,7 +16,8 @@ namespace Pbraiders\Logger;
 
 use \League\Container\ServiceProvider\AbstractServiceProvider;
 
-class ServiceProvider extends AbstractServiceProvider {
+class ServiceProvider extends AbstractServiceProvider
+{
 
     /**
      * The provided array is a way to let the container
@@ -49,25 +50,25 @@ class ServiceProvider extends AbstractServiceProvider {
         // Retrieves the configuration.
         $aConfig = $pContainer->get('config');
 
-        if( empty($aConfig['modules']['logger']) ) {
+        if (empty($aConfig['modules']['logger'])) {
             throw new Exception\RuntimeException('Logger configuration is missing.');
         }
 
         $aConfig = &$aConfig['modules']['logger'];
 
         // Registers the Formatter.
-        $pContainer->share('logger.formater.line',\Pbraiders\Logger\LineFormatter::class);
+        $pContainer->share('logger.formater.line', \Pbraiders\Logger\LineFormatter::class);
 
         // Registers the processor.
-        $pContainer->share('logger.processor.web',\Monolog\Processor\WebProcessor::class);
+        $pContainer->share('logger.processor.web', \Monolog\Processor\WebProcessor::class);
 
         // Registers the handler.
         $pContainer
-            ->share('logger.handler.stream',\Pbraiders\Logger\StreamHandler::class)
-            ->addArgument( $aConfig );
+            ->share('logger.handler.stream', \Pbraiders\Logger\StreamHandler::class)
+            ->addArgument($aConfig);
 
         // Registers the logger.
-        $pContainer->share('logger',\Monolog\Logger::class)->addArgument('pbraiders');
+        $pContainer->share('logger', \Monolog\Logger::class)->addArgument('pbraiders');
 
         // Initializes the handler with formatter the first time is instanciated.
         $pContainer
@@ -82,5 +83,4 @@ class ServiceProvider extends AbstractServiceProvider {
             ->inflector(\Monolog\Logger::class)
             ->invokeMethod('pushProcessor', [$pContainer->get('logger.processor.web')]);
     }
-
 };

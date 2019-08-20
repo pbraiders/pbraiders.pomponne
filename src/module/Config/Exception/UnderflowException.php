@@ -15,4 +15,6 @@ namespace Pbraiders\Config\Exception;
  * This represents errors that cannot be detected at compile time.
  */
 class UnderflowException extends \UnderflowException implements ExceptionInterface
-{ }
+{
+
+}

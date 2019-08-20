@@ -16,7 +16,8 @@ namespace Pbraiders\Config;
 
 use \League\Container\ServiceProvider\AbstractServiceProvider;
 
-class ServiceProvider extends AbstractServiceProvider {
+class ServiceProvider extends AbstractServiceProvider
+{
 
     /**
      * Main config filename.
@@ -81,7 +82,7 @@ class ServiceProvider extends AbstractServiceProvider {
     {
 
         // File must exists
-        if (!is_readable($this->sConfigFileMain)) {
+        if (! is_readable($this->sConfigFileMain)) {
             throw new Exception\RuntimeException(sprintf('The config file "%s" cannot be found.', $this->sConfigFileMain));
         }
 
@@ -94,8 +95,6 @@ class ServiceProvider extends AbstractServiceProvider {
         }
 
         // Register
-        $this->getContainer()->share('config',$aConfig);
-
+        $this->getContainer()->share('config', $aConfig);
     }
-
 };

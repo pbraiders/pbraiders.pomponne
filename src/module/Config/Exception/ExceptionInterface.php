@@ -14,4 +14,6 @@ namespace Pbraiders\Config\Exception;
  * Interface for exception classes.
  */
 interface ExceptionInterface
-{ }
+{
+
+}

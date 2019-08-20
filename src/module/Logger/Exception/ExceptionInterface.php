@@ -14,4 +14,6 @@ namespace Pbraiders\Logger\Exception;
  * Interface for exception classes.
  */
 interface ExceptionInterface
-{ }
+{
+
+}
