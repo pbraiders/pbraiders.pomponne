@@ -1,6 +1,6 @@
 {
     "name": "pbraiders/pomponne",
-    "description": "Paintball reservation management system",
+    "description": "A paintball reservation management system",
     "keywords": [
         "paintball",
         "reservation",
@@ -8,21 +8,23 @@
     ],
     "homepage": "https://github.com/pbraiders/pomponne",
     "readme": "README.md",
-    "time": "2019-08-10",
+    "time": "2019-09-10",
     "license": "GPL-3.0-or-later",
     "authors": [
         {
             "name": "Olivier Jullien",
             "homepage": "https://github.com/ojullien",
-            "email": "contact@pbraiders.fr",
-            "role": "Developer"
+            "email": "contact@pbraiders.fr"
         }
     ],
     "require": {
         "php": "^7.3",
+        "ext-json": "*",
         "filp/whoops": "^2.5",
         "league/container": "^3.3",
-        "monolog/monolog": "^1.24"
+        "monolog/monolog": "^1.24",
+        "slim/psr7": "^0.5.0",
+        "slim/slim": "^4.1"
     },
     "autoload": {
         "psr-4": {

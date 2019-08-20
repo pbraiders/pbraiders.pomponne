@@ -31,7 +31,7 @@ return [
 
         'application' => [
             // If set to 1, the application will use 'whoops error handling library' instead of the default PHP one.
-            // Usefull during development
+            // Usefull during development.
             'use_whoops' => false,
         ],
 

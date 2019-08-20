@@ -1,4 +1,6 @@
 <?php
+require './bootstrap.php';
+die;
 /*************************************************************************
  *                                                                       *
  * Copyright (C) 2010   Olivier JULLIEN - PBRAIDERS.COM                  *
@@ -131,4 +133,3 @@
     unset($pDate);
     unset($pHeader);
     include(PBR_PATH.'/includes/init/clean.php');
-?>

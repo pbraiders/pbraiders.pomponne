@@ -5,3 +5,8 @@ ErrorDocument 403 "The access to this resource is denied. Contact your PBRaiders
 ErrorDocument 404 /404.html
 ErrorDocument 500 "A server error has occured. Contact your web hosting provider."
 ErrorDocument 503 "The service is unavailable. Contact your web hosting provider."
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [QSA,L]
