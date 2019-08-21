@@ -11,9 +11,10 @@
 return [
 
     // Configure PBRaiders website URL. If PBRaiders is installed into a directory called "pbraiders" for the
-    //  domain www.example.com, define 'website_url' like this:
-    'website_url' => 'https://www.example.com/pbraiders/',
-
+    //  domain www.example.com, define ['website']['url'] like this:
+    'website' => [
+        'url' => 'https://www.example.com/pbraiders/',
+    ],
     // Configure database settings.
     'database' => [
         // Database Name used by PBRaiders.
@@ -24,6 +25,12 @@ return [
         'password' => 'the_password',
         // The hostname of your Database Server. A port number, Unix socket file path or pipe may be needed as well.
         'host' => 'localhost',
+        // Driver
+        'driver' => 'mysql',
+        // Charset
+        'charset' => 'utf8mb4',
+        // Collation
+        'collation' => 'utf8mb4_unicode_ci',
     ],
 
     // These are various options for the modules used in this application.
@@ -33,6 +40,13 @@ return [
             // If set to 1, the application will use 'whoops error handling library' instead of the default PHP one.
             // Usefull during development.
             'use_whoops' => false,
+        ],
+
+        'cookie' => [
+            'domain' => 'localhost',
+            'httpOnly' => true,
+            'path' => '/',
+            'secure' => false,
         ],
 
         'contact' => [
@@ -123,18 +137,12 @@ session.save_path                = /path/PHP-session/
 
     'other' => [
 
-        'cookie' => [
-            'lifetime' => 36000,
-        ],
+
 
         'session' => [
             'lifetime' => 36000,
         ],
 
-        'debug' => [
-            // Set to true if you want to display error and warning on screen.
-            'enable' => false,
-        ],
     ],
 
 ];

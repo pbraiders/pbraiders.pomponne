@@ -48,19 +48,13 @@ class ServiceProvider extends AbstractServiceProvider
         $pContainer = $this->getContainer();
 
         // Retrieves the configuration.
-        $aConfig = $pContainer->get('config');
+        $aConfig = $pContainer->get('settings');
 
         if (empty($aConfig['modules']['logger'])) {
             throw new Exception\RuntimeException('Logger configuration is missing.');
         }
 
         $aConfig = &$aConfig['modules']['logger'];
-
-        // Registers the Formatter.
-        //        $pContainer->share('logger.formater.line', \Pbraiders\Logger\LineFormatter::class);
-
-        // Registers the processor.
-        //        $pContainer->share('logger.processor.web', \Monolog\Processor\WebProcessor::class);
 
         // Registers the handler.
         $pContainer
@@ -71,7 +65,6 @@ class ServiceProvider extends AbstractServiceProvider
         $pContainer
             ->inflector(\Pbraiders\Logger\StreamHandler::class)
             ->invokeMethod('setFormatter', [new \Pbraiders\Logger\LineFormatter()]);
-        //            ->invokeMethod('setFormatter', [$pContainer->get('logger.formater.line')]);
 
         // Registers the logger.
         $pContainer->share('logger', \Monolog\Logger::class)->addArgument('pbraiders');
@@ -83,6 +76,5 @@ class ServiceProvider extends AbstractServiceProvider
         $pContainer
             ->inflector(\Monolog\Logger::class)
             ->invokeMethod('pushProcessor', [new \Monolog\Processor\WebProcessor()]);
-        //->invokeMethod('pushProcessor', [$pContainer->get('logger.processor.web')]);
     }
 };

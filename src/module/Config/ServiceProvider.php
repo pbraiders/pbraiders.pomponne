@@ -14,7 +14,8 @@ declare(strict_types=1);
 
 namespace Pbraiders\Config;
 
-use \League\Container\ServiceProvider\AbstractServiceProvider;
+use League\Container\ServiceProvider\AbstractServiceProvider;
+use League\Uri\Parser;
 
 class ServiceProvider extends AbstractServiceProvider
 {
@@ -43,7 +44,7 @@ class ServiceProvider extends AbstractServiceProvider
      * @var array
      */
     protected $provides = [
-        'config'
+        'settings'
     ];
 
     /**
@@ -82,7 +83,7 @@ class ServiceProvider extends AbstractServiceProvider
     {
 
         // File must exists
-        if (! is_readable($this->sConfigFileMain)) {
+        if (!is_readable($this->sConfigFileMain)) {
             throw new Exception\RuntimeException(sprintf('The config file "%s" cannot be found.', $this->sConfigFileMain));
         }
 
@@ -94,7 +95,17 @@ class ServiceProvider extends AbstractServiceProvider
             $aConfig = array_replace_recursive($aConfig, require $this->sConfigFileLocal);
         }
 
+        // Parse the url
+        if (!empty($aConfig['website']['url'])) {
+            $aWebsite = &$aConfig['website'];
+            $pParser = new Parser();
+            $aWebsite = array_merge($aWebsite, $pParser($aWebsite['url']));
+            unset($pParser);
+        }
+
+        ksort($aConfig);
+
         // Register
-        $this->getContainer()->share('config', $aConfig);
+        $this->getContainer()->share('settings', $aConfig);
     }
 };
