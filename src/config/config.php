@@ -60,8 +60,6 @@ return [
         ],
 
         'logger' => [
-            // Number of items to display per page.
-            'paging' => 50,
             // Name of the file where application errors should be logged.
             'error_log' => sprintf('%s/log/%s_pbraiders_error.log', constant('PBR_PATH'), date("Ymd")),
         ],

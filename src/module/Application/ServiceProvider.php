@@ -29,7 +29,7 @@ class ServiceProvider extends AbstractServiceProvider
      * @var array
      */
     protected $provides = [
-        'application',
+        \Pbraiders\Application\Application::class,
         'whoops',
     ];
 
@@ -44,7 +44,7 @@ class ServiceProvider extends AbstractServiceProvider
     public function register(): void
     {
         $pContainer = $this->getContainer();
-        $pContainer->share('application', \Pbraiders\Application\Application::class);
+        $pContainer->share(\Pbraiders\Application\Application::class);
         $pContainer->share('whoops', \Whoops\Run::class);
 
         // Initializes Whoops.

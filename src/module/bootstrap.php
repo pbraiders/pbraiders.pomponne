@@ -29,7 +29,7 @@ echo '</pre>', PHP_EOL;*/
 
 // Configures PHP
 if (!empty($aConfig['php'])) {
-    $pContainer->get('application')->configurePHP($aConfig['php']);
+    $pContainer->get(\Pbraiders\Application\Application::class)->configurePHP($aConfig['php']);
 }
 
 // Activates Whoops
