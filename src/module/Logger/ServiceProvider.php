@@ -18,7 +18,8 @@ use Psr\Log\LoggerInterface;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use Monolog\Logger;
 use Monolog\Processor\WebProcessor;
-use Pbraiders\Logger\{LineFormatter, StreamHandler};
+use Pbraiders\Logger\LineFormatter;
+use Pbraiders\Logger\StreamHandler;
 
 class ServiceProvider extends AbstractServiceProvider
 {

@@ -49,19 +49,49 @@ class ServiceProvider extends AbstractServiceProvider
      */
     public function register(): void
     {
+        $this->registerStdlib();
+        $this->registerErrorHandler();
+        $this->registerPSR7();
+    }
+
+    /**
+     * Registers utilities
+     *
+     * @return void
+     */
+    protected function registerStdlib(): void
+    {
+        $this->getContainer()->share(Stdlib::class);
+    }
+
+    /**
+     * Registers error handler
+     *
+     * @return void
+     */
+    protected function registerErrorHandler(): void
+    {
         $pContainer = $this->getContainer();
 
-        // Registers application
-        $pContainer->share(Stdlib::class);
-
-        // Registers error handler
         $pContainer->share('whoops', Run::class);
 
         $pContainer
             ->inflector(Run::class)
             ->invokeMethod('prependHandler', [new PrettyPageHandler()]);
+    }
 
-        // Register the PSR-7 Middleware Microframework
+    /**
+     * Register the PSR-7 Middleware Microframework
+     *
+     * In order for the factory to work you need to ensure you have installed
+     * a supported PSR-7 implementation of your choice e.g.: Slim PSR-7 and a supported
+     * ServerRequest creator (included with Slim PSR-7)
+     *
+     * @return void
+     */
+    protected function registerPSR7(): void
+    {
+        $pContainer = $this->getContainer();
         $pContainer->share(App::class, AppFactory::create(\null, $pContainer, \null, \null, \null));
     }
 };

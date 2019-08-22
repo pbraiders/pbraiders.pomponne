@@ -99,7 +99,7 @@ if ((empty($aSettings['modules']['application']['use_whoops']))) {
 }
 
 // Define app routes
-$pApplication->get('/v2.0.0/', function (\Psr\Http\Message\ServerRequestInterface $request, \Psr\Http\Message\ResponseInterface $response, $args) {
+$pApplication->get($aSettings['website']['path'], function (\Psr\Http\Message\ServerRequestInterface $request, \Psr\Http\Message\ResponseInterface $response, $args) {
     $response->getBody()->write("Hello world!");
     return $response;
 });

@@ -104,7 +104,7 @@ class ServiceProvider extends AbstractServiceProvider
     {
 
         // File must exists
-        if (!is_readable($this->sConfigFileMain)) {
+        if (! is_readable($this->sConfigFileMain)) {
             throw new Exception\RuntimeException(sprintf('The config file "%s" cannot be found.', $this->sConfigFileMain));
         }
 
@@ -117,7 +117,7 @@ class ServiceProvider extends AbstractServiceProvider
         }
 
         // Parse the url
-        if (!empty($aConfig['website']['url'])) {
+        if (! empty($aConfig['website']['url'])) {
             $aWebsite = &$aConfig['website'];
             $pParser = new Parser();
             $aWebsite = array_merge($aWebsite, $pParser($aWebsite['url']));
