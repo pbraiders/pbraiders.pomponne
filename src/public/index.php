@@ -12,4 +12,4 @@ declare(strict_types=1);
 // @var string Root path.
 define('PBR_PATH', realpath((dirname(__DIR__))));
 
-require \PBR_PATH . \DIRECTORY_SEPARATOR . 'module' . \DIRECTORY_SEPARATOR . 'bootstrap.php';
+require \PBR_PATH . \DIRECTORY_SEPARATOR . 'bootstrap.php';

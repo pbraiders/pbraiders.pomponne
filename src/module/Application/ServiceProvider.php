@@ -16,6 +16,11 @@ namespace Pbraiders\Application;
 
 use \League\Container\ServiceProvider\AbstractServiceProvider;
 
+use Whoops\Run;
+use Whoops\Handler\PrettyPageHandler;
+use Slim\App;
+use Slim\Factory\AppFactory;
+
 class ServiceProvider extends AbstractServiceProvider
 {
 
@@ -29,7 +34,8 @@ class ServiceProvider extends AbstractServiceProvider
      * @var array
      */
     protected $provides = [
-        \Pbraiders\Application\Application::class,
+        Stdlib::class,
+        App::class,
         'whoops',
     ];
 
@@ -44,12 +50,18 @@ class ServiceProvider extends AbstractServiceProvider
     public function register(): void
     {
         $pContainer = $this->getContainer();
-        $pContainer->share(\Pbraiders\Application\Application::class);
-        $pContainer->share('whoops', \Whoops\Run::class);
 
-        // Initializes Whoops.
+        // Registers application
+        $pContainer->share(Stdlib::class);
+
+        // Registers error handler
+        $pContainer->share('whoops', Run::class);
+
         $pContainer
-            ->inflector(\Whoops\Run::class)
-            ->invokeMethod('prependHandler', [new \Whoops\Handler\PrettyPageHandler()]);
+            ->inflector(Run::class)
+            ->invokeMethod('prependHandler', [new PrettyPageHandler()]);
+
+        // Register the PSR-7 Middleware Microframework
+        $pContainer->share(App::class, AppFactory::create(\null, $pContainer, \null, \null, \null));
     }
 };

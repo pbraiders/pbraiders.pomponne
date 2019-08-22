@@ -51,11 +51,21 @@ class ServiceProvider extends AbstractServiceProvider
      * Sets the main config filename
      *
      * @param string $filename
+     * @throws Exception\InvalidArgumentException If filemane is not valid.
      * @return ServiceProvider
      */
     public function setMainConfigFilename(string $filename): ServiceProvider
     {
-        $this->sConfigFileMain = $filename;
+        // Init
+        $sFilename = trim($filename);
+
+        if (empty($sFilename)) {
+            throw new Exception\InvalidArgumentException('The filename cannot be empty.');
+        }
+
+        // Do the job
+        $this->sConfigFileMain = $sFilename;
+
         return $this;
     }
 
@@ -63,11 +73,21 @@ class ServiceProvider extends AbstractServiceProvider
      * Sets the local config filename
      *
      * @param string $filename
+     * @throws Exception\InvalidArgumentException If filemane is not valid.
      * @return ServiceProvider
      */
     public function setLocalConfigFilename(string $filename): ServiceProvider
     {
-        $this->sConfigFileLocal = $filename;
+        // Init
+        $sFilename = trim($filename);
+
+        if (empty($sFilename)) {
+            throw new Exception\InvalidArgumentException('The filename cannot be empty.');
+        }
+
+        // Do the job
+        $this->sConfigFileLocal = $sFilename;
+
         return $this;
     }
 
@@ -77,6 +97,7 @@ class ServiceProvider extends AbstractServiceProvider
      * that you need to, but remember, every alias registered
      * within this method must be declared in the `$provides` array.
      *
+     * @throws Exception\RuntimeException
      * @return void
      */
     public function register(): void

@@ -14,7 +14,11 @@ declare(strict_types=1);
 
 namespace Pbraiders\Logger;
 
-use \League\Container\ServiceProvider\AbstractServiceProvider;
+use Psr\Log\LoggerInterface;
+use League\Container\ServiceProvider\AbstractServiceProvider;
+use Monolog\Logger;
+use Monolog\Processor\WebProcessor;
+use Pbraiders\Logger\{LineFormatter, StreamHandler};
 
 class ServiceProvider extends AbstractServiceProvider
 {
@@ -29,8 +33,10 @@ class ServiceProvider extends AbstractServiceProvider
      * @var array
      */
     protected $provides = [
-        'logger',
-        'logger.handler.stream',
+        LoggerInterface::class,
+        StreamHandler::class,
+        LineFormatter::class,
+        WebProcessor::class,
     ];
 
     /**
@@ -39,7 +45,7 @@ class ServiceProvider extends AbstractServiceProvider
      * that you need to, but remember, every alias registered
      * within this method must be declared in the `$provides` array.
      *
-     * @throws \Pbraiders\Logger\Exception\RuntimeException If the configuration is not valid.
+     * @throws Exception\RuntimeException If the configuration is not valid.
      * @return void
      */
     public function register(): void
@@ -56,25 +62,34 @@ class ServiceProvider extends AbstractServiceProvider
 
         $aConfig = &$aConfig['modules']['logger'];
 
+        // Registers the processor.
+        $pContainer
+            ->add(WebProcessor::class);
+
+        // Registers the formater.
+        $pContainer
+            ->add(LineFormatter::class);
+
         // Registers the handler.
         $pContainer
-            ->share('logger.handler.stream', \Pbraiders\Logger\StreamHandler::class)
+            ->add(StreamHandler::class)
             ->addArgument($aConfig);
 
         // Initializes the handler with formatter the first time is instanciated.
         $pContainer
-            ->inflector(\Pbraiders\Logger\StreamHandler::class)
-            ->invokeMethod('setFormatter', [new \Pbraiders\Logger\LineFormatter()]);
+            ->inflector(\Monolog\Handler\StreamHandler::class)
+            ->invokeMethod('setFormatter', [$pContainer->get(LineFormatter::class)]);
 
         // Registers the logger.
-        $pContainer->share('logger', \Monolog\Logger::class)->addArgument('pbraiders');
+        $pContainer->share(LoggerInterface::class, Logger::class)->addArgument('pbraiders');
 
         // Initializes the logger with handler and processor the first time is instanciated.
         $pContainer
-            ->inflector(\Monolog\Logger::class)
-            ->invokeMethod('pushHandler', [$pContainer->get('logger.handler.stream')]);
+            ->inflector(Logger::class)
+            ->invokeMethod('pushHandler', [$pContainer->get(StreamHandler::class)]);
+
         $pContainer
-            ->inflector(\Monolog\Logger::class)
-            ->invokeMethod('pushProcessor', [new \Monolog\Processor\WebProcessor()]);
+            ->inflector(Logger::class)
+            ->invokeMethod('pushProcessor', [$pContainer->get(WebProcessor::class)]);
     }
 };

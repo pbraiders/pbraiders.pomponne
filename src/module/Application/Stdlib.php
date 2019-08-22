@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 /**
+ * Pbraiders\Application\Stdlib is a class that implements general purpose utility function for different scopes.
  *
  * @package Pbraiders\Application
  * @link    https://github.com/pbraiders/pomponne for the canonical source repository
@@ -11,7 +12,7 @@ declare(strict_types=1);
 
 namespace Pbraiders\Application;
 
-class Application
+class Stdlib
 {
 
     /**
@@ -21,13 +22,13 @@ class Application
      *  'php_option_name' => 'new_value_for_the_option'
      *
      * @see https://www.php.net/manual/en/function.array-walk.php
-     * @param array $config
+     * @param array $options
      * @return boolean
      */
-    public function configurePHP(array $config): bool
+    public function configurePHP(array $options): bool
     {
-        return array_walk($config, function ($newvalue, string $varname) {
-            @ini_set($varname, (string) $newvalue);
+        return array_walk($options, function ($newvalue, string $option) {
+            @ini_set($option, (string) $newvalue);
         });
     }
 }

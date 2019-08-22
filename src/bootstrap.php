@@ -12,7 +12,11 @@ declare(strict_types=1);
 // Includes the Composer autoloader
 require \PBR_PATH . \DIRECTORY_SEPARATOR . 'vendor' . \DIRECTORY_SEPARATOR . 'autoload.php';
 
-// Creates the container and loads all the needed services.
+/**
+ * Creates the container and loads all the needed services.
+ *
+ * In order to use the dependency injection pattern.
+ */
 $pContainer = \Pbraiders\Container\ContainerFactory::createInvokables(
     [
         '\Pbraiders\Config\ServiceProvider',
@@ -21,27 +25,34 @@ $pContainer = \Pbraiders\Container\ContainerFactory::createInvokables(
     ]
 );
 
-// Get the config
-$aConfig = $pContainer->get('settings');
-/*echo '<pre>', PHP_EOL;
-var_dump($aConfig);
-echo '</pre>', PHP_EOL;*/
+/**
+ * Loads the settings.
+ *
+ * In order to configure many things before the app runs.
+ */
+$aSettings = $pContainer->get('settings');
 
-// Configures PHP
-if (!empty($aConfig['php'])) {
-    $pContainer->get(\Pbraiders\Application\Application::class)->configurePHP($aConfig['php']);
+/**
+ * Configures PHP.
+ *
+ * We modify the configuration options using the ini_set php command.
+ * These options will keep there new values during the script's execution,
+ * and will be restored at the script's ending.
+ */
+if (!empty($aSettings['php'])) {
+    $pContainer->get(\Pbraiders\Application\Stdlib::class)->configurePHP($aSettings['php']);
 }
 
-// Activates Whoops
-if ((!empty($aConfig['modules']['application']['use_whoops']))) {
+/**
+ * Activates Whoops.
+ *
+ * Whoops is an error handler framework for PHP.
+ * Out-of-the-box, it provides a pretty error interface that helps you debug your web projects,
+ * but at heart it's a simple yet powerful stacked error handling system.
+ */
+if ((!empty($aSettings['modules']['application']['use_whoops']))) {
     $pContainer->get('whoops')->register();
 }
-
-// Register the logger
-$pContainer->get('logger');
-
-// Set container to create App with on AppFactory
-\Slim\Factory\AppFactory::setContainer($pContainer);
 
 /**
  * Instantiate App
@@ -50,7 +61,19 @@ $pContainer->get('logger');
  * a supported PSR-7 implementation of your choice e.g.: Slim PSR-7 and a supported
  * ServerRequest creator (included with Slim PSR-7)
  */
-$pApplication = \Slim\Factory\AppFactory::create();
+$pApplication = $pContainer->get(\Slim\App::class);
+
+/**
+ * Set the cache file for the routes. Note that you have to delete this file
+ * whenever you change the routes.
+ */
+/*$pApplication->getRouteCollector()->setCacheFile(
+    $\PBR_PATH . \DIRECTORY_SEPARATOR . 'tmp' . \DIRECTORY_SEPARATOR . 'routes.cache';
+);*/
+
+/**
+ * Add Middlewares
+ */
 
 /*
  * Add Routing Middleware
@@ -61,7 +84,7 @@ $pApplication = \Slim\Factory\AppFactory::create();
 $pApplication->addRoutingMiddleware();
 
 /*
- * Activates Error Handling Middleware
+ * Activates Error Handling Middleware.
  *
  * @param bool $displayErrorDetails -> Should be set to false in production
  * @param bool $logErrors -> Parameter is passed to the default ErrorHandler
@@ -71,7 +94,7 @@ $pApplication->addRoutingMiddleware();
  * Note: This middleware should be added last. It will not handle any exceptions/errors
  * for middleware added after it.
  */
-if ((empty($aConfig['modules']['application']['use_whoops']))) {
+if ((empty($aSettings['modules']['application']['use_whoops']))) {
     $pApplication->addErrorMiddleware(false, true, true);
 }
 
