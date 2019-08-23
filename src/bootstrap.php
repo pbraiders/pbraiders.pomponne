@@ -16,12 +16,26 @@ require \PBR_PATH . \DIRECTORY_SEPARATOR . 'vendor' . \DIRECTORY_SEPARATOR . 'au
  * Creates the container and loads all the needed services.
  *
  * In order to use the dependency injection pattern.
+ *
+ * @var Psr\Container\ContainerInterface $pContainer
  */
 $pContainer = \Pbraiders\Container\ContainerFactory::createInvokables(
     [
-        '\Pbraiders\Config\ServiceProvider',
-        '\Pbraiders\Application\ServiceProvider',
-        '\Pbraiders\Logger\ServiceProvider',
+        // Add the settings (array) as service.
+        \Pbraiders\Config\ServiceProvider::class,
+        // Add the PSR-7 and PSR-15 microframework (Slim), an error handler (Whoops) and other tools as services.
+        \Pbraiders\Application\ServiceProvider::class,
+        // Add the Logger (Monolog) as service.
+        \Pbraiders\Logger\ServiceProvider::class,
+        // Add the database handler () as service.
+        // Add middlewares
+        // -- ...
+        // -- authentication
+        // -- csrf
+        // -- session
+        // -- Routing middleware
+        // -- Error Handling Middleware
+        // Add routes
     ]
 );
 
@@ -29,6 +43,8 @@ $pContainer = \Pbraiders\Container\ContainerFactory::createInvokables(
  * Loads the settings.
  *
  * In order to configure many things before the app runs.
+ *
+ * @var array $aSettings
  */
 $aSettings = $pContainer->get('settings');
 
@@ -57,9 +73,11 @@ if ((!empty($aSettings['modules']['application']['use_whoops']))) {
 /**
  * Instantiate App
  *
- * In order for the factory to work you need to ensure you have installed
+ * In order for the app to work you need to ensure you have installed
  * a supported PSR-7 implementation of your choice e.g.: Slim PSR-7 and a supported
  * ServerRequest creator (included with Slim PSR-7)
+ *
+ * @var Slim\App $pApplication
  */
 $pApplication = $pContainer->get(\Slim\App::class);
 
@@ -75,25 +93,26 @@ $pApplication = $pContainer->get(\Slim\App::class);
  * Add Middlewares
  */
 
+
 /*
- * Add Routing Middleware
- *
- * The routing middleware should be added earlier than the ErrorMiddleware
- * Otherwise exceptions thrown from it will not be handled by the middleware
- */
+* Add Routing Middleware
+*
+* The routing middleware should be added earlier than the ErrorMiddleware
+* Otherwise exceptions thrown from it will not be handled by the middleware
+*/
 $pApplication->addRoutingMiddleware();
 
 /*
- * Activates Error Handling Middleware.
- *
- * @param bool $displayErrorDetails -> Should be set to false in production
- * @param bool $logErrors -> Parameter is passed to the default ErrorHandler
- * @param bool $logErrorDetails -> Display error details in error log
- * which can be replaced by a callable of your choice.
- *
- * Note: This middleware should be added last. It will not handle any exceptions/errors
- * for middleware added after it.
- */
+* Activates Error Handling Middleware.
+*
+* @param bool $displayErrorDetails -> Should be set to false in production
+* @param bool $logErrors -> Parameter is passed to the default ErrorHandler
+* @param bool $logErrorDetails -> Display error details in error log
+* which can be replaced by a callable of your choice.
+*
+* Note: This middleware should be added last. It will not handle any exceptions/errors
+* for middleware added after it.
+*/
 if ((empty($aSettings['modules']['application']['use_whoops']))) {
     $pApplication->addErrorMiddleware(false, true, true);
 }
@@ -101,6 +120,9 @@ if ((empty($aSettings['modules']['application']['use_whoops']))) {
 // Define app routes
 $pApplication->get($aSettings['website']['path'], function (\Psr\Http\Message\ServerRequestInterface $request, \Psr\Http\Message\ResponseInterface $response, $args) {
     $response->getBody()->write("Hello world!");
+    //$a = 1 / 0;
+    trigger_error("notice triggered", E_USER_NOTICE);
+    //trigger_error("error triggered", E_USER_ERROR);
     return $response;
 });
 

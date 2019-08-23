@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 /**
+ * Logger as service.
+ *
  * Service providers give the benefit of organising your container definitions along with an increase in performance for
  * larger applications as definitions registered within a service provider are lazily registered at the point where a
  * service is retrieved.
