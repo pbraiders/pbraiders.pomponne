@@ -19,14 +19,10 @@ require \PBR_PATH . \DIRECTORY_SEPARATOR . 'vendor' . \DIRECTORY_SEPARATOR . 'au
  *
  * @var Psr\Container\ContainerInterface $pContainer
  */
-$pContainer = \Pbraiders\Container\ContainerFactory::createInvokables(
+$pContainer = \Pbraiders\Service\Container\Factory::createFromInvokables(
     [
-        // Add the settings (array) as service.
-        \Pbraiders\Config\ServiceProvider::class,
-        // Add the PSR-7 and PSR-15 microframework (Slim), an error handler (Whoops) and other tools as services.
-        \Pbraiders\Application\ServiceProvider::class,
-        // Add the Logger (Monolog) as service.
-        \Pbraiders\Logger\ServiceProvider::class,
+        // Add the services provider.
+        \Pbraiders\Service\ServiceProvider::class,
         // Add the database handler () as service.
         // Add middlewares
         // -- ...
@@ -56,7 +52,7 @@ $aSettings = $pContainer->get('settings');
  * and will be restored at the script's ending.
  */
 if (!empty($aSettings['php'])) {
-    $pContainer->get(\Pbraiders\Application\Stdlib::class)->configurePHP($aSettings['php']);
+    $pContainer->get(\Pbraiders\Service\Utils\Stdlib::class)->configurePHP($aSettings['php']);
 }
 
 /**
@@ -121,7 +117,7 @@ if ((empty($aSettings['modules']['application']['use_whoops']))) {
 $pApplication->get($aSettings['website']['path'], function (\Psr\Http\Message\ServerRequestInterface $request, \Psr\Http\Message\ResponseInterface $response, $args) {
     $response->getBody()->write("Hello world!");
     //$a = 1 / 0;
-    trigger_error("notice triggered", E_USER_NOTICE);
+    //trigger_error("notice triggered", E_USER_NOTICE);
     //trigger_error("error triggered", E_USER_ERROR);
     return $response;
 });
