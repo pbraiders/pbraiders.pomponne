@@ -8,7 +8,7 @@ class ExceptionTest extends \PHPUnit\Framework\TestCase
 {
 
     /**
-     * @covers Exception\BadFunctionCallException
+     * @covers Pbraiders\Service\Exception\BadFunctionCallException
      * @group specification
      */
     public function testBadFunctionCallException()
@@ -18,7 +18,7 @@ class ExceptionTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Exception\BadMethodCallException
+     * @covers Pbraiders\Service\Exception\BadMethodCallException
      * @group specification
      */
     public function testBadMethodCallException()
@@ -28,7 +28,7 @@ class ExceptionTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Exception\DomainException
+     * @covers Pbraiders\Service\Exception\DomainException
      * @group specification
      */
     public function testDomainException()
@@ -38,7 +38,7 @@ class ExceptionTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Exception\InvalidArgumentException
+     * @covers Pbraiders\Service\Exception\InvalidArgumentException
      * @group specification
      */
     public function testInvalidArgumentException()
@@ -48,7 +48,7 @@ class ExceptionTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Exception\LengthException
+     * @covers Pbraiders\Service\Exception\LengthException
      * @group specification
      */
     public function testLengthException()
@@ -58,7 +58,7 @@ class ExceptionTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Exception\OutOfBoundsException
+     * @covers Pbraiders\Service\Exception\OutOfBoundsException
      * @group specification
      */
     public function testOutOfBoundsException()
@@ -68,7 +68,7 @@ class ExceptionTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Exception\OutOfRangeException
+     * @covers Pbraiders\Service\Exception\OutOfRangeException
      * @group specification
      */
     public function testOutOfRangeException()
@@ -78,7 +78,7 @@ class ExceptionTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Exception\OverflowException
+     * @covers Pbraiders\Service\Exception\OverflowException
      * @group specification
      */
     public function testOverflowException()
@@ -88,7 +88,7 @@ class ExceptionTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Exception\RuntimeException
+     * @covers Pbraiders\Service\Exception\RuntimeException
      * @group specification
      */
     public function testRuntimeException()
@@ -98,7 +98,7 @@ class ExceptionTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Exception\UnderflowException
+     * @covers Pbraiders\Service\Exception\UnderflowException
      * @group specification
      */
     public function testUnderflowException()
@@ -108,7 +108,7 @@ class ExceptionTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers Exception\UnexpectedValueException
+     * @covers Pbraiders\Service\Exception\UnexpectedValueException
      * @group specification
      */
     public function testUnexpectedValueException()

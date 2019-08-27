@@ -13,7 +13,7 @@ class FactoryTest extends \PHPUnit\Framework\TestCase
      *
      * @var string
      */
-    const DEFAULT_FILENAME_MAIN = \PBR_PATH . \DIRECTORY_SEPARATOR . 'config' . \DIRECTORY_SEPARATOR . 'mainconfig.php';
+    const DEFAULT_FILENAME_MAIN = \PBR_PATH . \DIRECTORY_SEPARATOR . 'config' . \DIRECTORY_SEPARATOR . 'config.php';
 
     /**
      * Local config filename

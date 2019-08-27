@@ -37,6 +37,6 @@ class StreamHandler extends \Monolog\Handler\StreamHandler
             throw new Exception\InvalidArgumentException('Logger configuration is not valid.');
         }
 
-        parent::__construct((string) $aConfig['error_log']);
+        parent::__construct($aConfig['error_log']);
     }
 }
