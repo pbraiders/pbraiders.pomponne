@@ -1,28 +1,31 @@
 <?php
 
-namespace PbraidersTest\Container;
+namespace PbraidersTest\Service\Container;
 
-class ContainerFactoryTest extends \PHPUnit\Framework\TestCase
+use Pbraiders\Service\Container\Factory;
+use PbraidersTest\Service\Container\ServiceProvider;
+
+class FactoryTest extends \PHPUnit\Framework\TestCase
 {
 
     /**
-     * @covers \Pbraiders\Container\ContainerFactory
+     * @covers \Pbraiders\Service\Container\Factory
      * @group specification
      */
     public function testCreateInvokables()
     {
         $aInvokables = [
-            '\PbraidersTest\Container\ServiceProvider',
+            ServiceProvider::class,
         ];
 
-        $pContainer = \Pbraiders\Container\ContainerFactory::createInvokables($aInvokables);
+        $pContainer = Factory::createFromInvokables($aInvokables);
 
         $this->assertTrue($pContainer->has('service1'));
         $this->assertTrue($pContainer->has('service2'));
     }
 
     /**
-     * @covers \Pbraiders\Container\ContainerFactory
+     * @covers \Pbraiders\Service\Container\Factory
      * @group specification
      */
     public function testcreateFactories()
@@ -36,7 +39,7 @@ class ContainerFactoryTest extends \PHPUnit\Framework\TestCase
             },
         ];
 
-        $pContainer = \Pbraiders\Container\ContainerFactory::createFactories($aFactories);
+        $pContainer = Factory::createFromFactories($aFactories);
 
         $this->assertTrue($pContainer->has('service1'));
         $this->assertTrue($pContainer->has('service2'));

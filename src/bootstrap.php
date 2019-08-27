@@ -56,13 +56,13 @@ if (!empty($aSettings['php'])) {
 }
 
 /**
- * Activates Whoops.
+ * In debug mode / development environment we activate Whoops globally, not as a middleware.
  *
  * Whoops is an error handler framework for PHP.
  * Out-of-the-box, it provides a pretty error interface that helps you debug your web projects,
  * but at heart it's a simple yet powerful stacked error handling system.
  */
-if ((!empty($aSettings['modules']['application']['use_whoops']))) {
+if ((!empty($aSettings['module']['error']['use_whoops']))) {
     $pContainer->get('whoops')->register();
 }
 
@@ -99,7 +99,8 @@ $pApplication = $pContainer->get(\Slim\App::class);
 $pApplication->addRoutingMiddleware();
 
 /*
-* Activates Error Handling Middleware.
+* Activates Error Handling Middleware. Only in production environment.
+. The warning and notice error are not catched.
 *
 * @param bool $displayErrorDetails -> Should be set to false in production
 * @param bool $logErrors -> Parameter is passed to the default ErrorHandler
@@ -109,7 +110,7 @@ $pApplication->addRoutingMiddleware();
 * Note: This middleware should be added last. It will not handle any exceptions/errors
 * for middleware added after it.
 */
-if ((empty($aSettings['modules']['application']['use_whoops']))) {
+if ((empty($aSettings['module']['error']['use_whoops']))) {
     $pApplication->addErrorMiddleware(false, true, true);
 }
 

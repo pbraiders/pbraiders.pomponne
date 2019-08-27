@@ -15,6 +15,7 @@ return [
     'website' => [
         'url' => 'https://www.example.com/pbraiders/',
     ],
+
     // Configure database settings.
     'database' => [
         // Database Name used by PBRaiders.
@@ -44,31 +45,9 @@ return [
             'temporary_path' => \PBR_PATH . \DIRECTORY_SEPARATOR . 'tmp',
         ],
 
-        'cookie' => [
-            'domain' => 'localhost',
-            'httpOnly' => true,
-            'path' => '/',
-            'secure' => false,
-        ],
-
-        'contact' => [
-            // Number of items to display per page.
-            'paging' => 50,
-        ],
-
-        'rent' => [
-            // Number of items to display per page.
-            'paging' => 50,
-        ],
-
         'logger' => [
             // Name of the file where application errors should be logged.
             'error_log' => sprintf('%s/log/%s_pbraiders_error.log', \PBR_PATH, date("Ymd")),
-        ],
-
-        'print' => [
-            // Number of items to print before break page.
-            'paging' => 6,
         ],
 
     ],
@@ -114,45 +93,6 @@ return [
         // Name of the file where script errors should be logged.
         'error_log' => sprintf('%s/log/%s_php_error.log', \PBR_PATH, date("Ymd")),
 
-        /*
-session.save_path                = /path/PHP-session/
- session.name                     = myPHPSESSID
- session.use_trans_sid            = 0
- session.cookie_domain            = full.qualified.domain.name
- #session.cookie_path             = /application/path/
- session.use_strict_mode          = 1
- session.use_cookies              = 1
- session.use_only_cookies         = 1
- session.cookie_lifetime          = 14400 # 4 hours
- session.cookie_secure            = 1
- session.cookie_httponly          = 1
-!!!??? session.cookie_samesite          = Strict
- session.cache_expire             = 30
- session.sid_length               = 256
- session.sid_bits_per_character   = 6 # PHP 7.2+
- session.referer_check
-*/
-
-    ],
-
-    'other' => [
-
-
-
-        'session' => [
-            'lifetime' => 36000,
-        ],
-
     ],
 
 ];
-
-/**************************
- * Réglages MySQL
- ***************************/
-// Drivers - ne pas modifier
-//define('PBR_DB_DSN', 'mysql:host=' . PBR_DB_HOST . ';dbname=');
- /*
-
-https://wordpress.org/support/article/editing-wp-config-php/
-*/

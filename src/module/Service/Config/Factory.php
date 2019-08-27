@@ -50,7 +50,7 @@ class Factory
         $sConfigFileLocal = empty($local) ? static::DEFAULT_FILENAME_LOCAL : $local;
 
         // File must exists
-        if (! is_readable($sConfigFileMain)) {
+        if (!is_readable($sConfigFileMain)) {
             throw new Exception\RuntimeException(sprintf('The config file "%s" cannot be found.', $sConfigFileMain));
         }
 
@@ -63,11 +63,10 @@ class Factory
         }
 
         // Parse the url
-        if (! empty($aSettings['website']['url'])) {
+        if (!empty($aSettings['website']['url'])) {
             $aWebsite = &$aSettings['website'];
             $pParser = new Parser();
             $aWebsite = array_merge($aWebsite, $pParser($aWebsite['url']));
-            unset($pParser);
         }
 
         ksort($aSettings);

@@ -3,16 +3,13 @@
 declare(strict_types=1);
 
 /**
- * Service providers give the benefit of organising your container definitions along with an increase in performance for
- * larger applications as definitions registered within a service provider are lazily registered at the point where a
- * service is retrieved.
  *
- * @package Pbraiders\Config
+ * @package PbraidersTest\Service\Container
  * @link    https://github.com/pbraiders/pomponne for the canonical source repository
  * @license https://github.com/pbraiders/pomponne/blob/master/LICENSE GNU General Public License v3.0 License.
  */
 
-namespace PbraidersTest\Container;
+namespace PbraidersTest\Service\Container;
 
 use \League\Container\ServiceProvider\AbstractServiceProvider;
 
