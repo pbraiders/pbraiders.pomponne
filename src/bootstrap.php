@@ -78,50 +78,16 @@ if ((!empty($aSettings['module']['error']['use_whoops']))) {
 $pApplication = $pContainer->get(\Slim\App::class);
 
 /**
- * Set the cache file for the routes. Note that you have to delete this file
- * whenever you change the routes.
+ * Register middlewares
  */
-/*$pApplication->getRouteCollector()->setCacheFile(
-    $\PBR_PATH . \DIRECTORY_SEPARATOR . 'tmp' . \DIRECTORY_SEPARATOR . 'routes.cache';
-);*/
+$callable = require \PBR_PATH . \DIRECTORY_SEPARATOR . 'module' . \DIRECTORY_SEPARATOR . 'Middleware' . \DIRECTORY_SEPARATOR . 'middleware.php';
+$callable($pApplication);
 
 /**
- * Add Middlewares
+ * Register routes.
  */
-
-
-/*
-* Add Routing Middleware
-*
-* The routing middleware should be added earlier than the ErrorMiddleware
-* Otherwise exceptions thrown from it will not be handled by the middleware
-*/
-$pApplication->addRoutingMiddleware();
-
-/*
-* Activates Error Handling Middleware. Only in production environment.
-. The warning and notice error are not catched.
-*
-* @param bool $displayErrorDetails -> Should be set to false in production
-* @param bool $logErrors -> Parameter is passed to the default ErrorHandler
-* @param bool $logErrorDetails -> Display error details in error log
-* which can be replaced by a callable of your choice.
-*
-* Note: This middleware should be added last. It will not handle any exceptions/errors
-* for middleware added after it.
-*/
-if ((empty($aSettings['module']['error']['use_whoops']))) {
-    $pApplication->addErrorMiddleware(false, true, true);
-}
-
-// Define app routes
-$pApplication->get($aSettings['website']['path'], function (\Psr\Http\Message\ServerRequestInterface $request, \Psr\Http\Message\ResponseInterface $response, $args) {
-    $response->getBody()->write("Hello world!");
-    //$a = 1 / 0;
-    //trigger_error("notice triggered", E_USER_NOTICE);
-    //trigger_error("error triggered", E_USER_ERROR);
-    return $response;
-});
+$callable = require \PBR_PATH . \DIRECTORY_SEPARATOR . 'module' . \DIRECTORY_SEPARATOR . 'App' . \DIRECTORY_SEPARATOR . 'routes.php';
+$callable($pApplication);
 
 // Run app
 $pApplication->run();

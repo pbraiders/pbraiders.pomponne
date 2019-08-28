@@ -3,18 +3,20 @@
 /**
  * This file is a part of the Pomponne version of Pbraiders
  *
- * @package Pbraiders\Login\Exception
+ * @package Pbraiders\App\Exception
  * @link    https://github.com/pbraiders/pomponne for the canonical source repository
  * @license https://github.com/pbraiders/pomponne/blob/master/LICENSE GNU General Public License v3.0 License.
  */
 
-namespace Pbraiders\Login\Exception;
+namespace Pbraiders\App\Exception;
 
 /**
- * Exception thrown if a value is not a valid key.
+ * Exception thrown to indicate range errors during program execution.
+ * Normally this means there was an arithmetic error other than under/overflow.
+ * This is the runtime version of DomainException.
  * This represents errors that cannot be detected at compile time.
  */
-class OutOfBoundsException extends \OutOfBoundsException implements ExceptionInterface
+class RangeException extends \RangeException implements ExceptionInterface
 {
 
 }

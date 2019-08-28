@@ -3,20 +3,18 @@
 /**
  * This file is a part of the Pomponne version of Pbraiders
  *
- * @package Pbraiders\Login\Exception
+ * @package Pbraiders\App\Exception
  * @link    https://github.com/pbraiders/pomponne for the canonical source repository
  * @license https://github.com/pbraiders/pomponne/blob/master/LICENSE GNU General Public License v3.0 License.
  */
 
-namespace Pbraiders\Login\Exception;
+namespace Pbraiders\App\Exception;
 
 /**
- * Exception thrown to indicate range errors during program execution.
- * Normally this means there was an arithmetic error other than under/overflow.
- * This is the runtime version of DomainException.
+ * Exception thrown when performing an invalid operation on an empty container, such as removing an element.
  * This represents errors that cannot be detected at compile time.
  */
-class RangeException extends \RangeException implements ExceptionInterface
+class UnderflowException extends \UnderflowException implements ExceptionInterface
 {
 
 }

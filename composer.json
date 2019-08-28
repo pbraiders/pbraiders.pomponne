@@ -19,8 +19,8 @@
     ],
     "require": {
         "php": "^7.3",
-        "ext-json": "*",
         "ext-intl": "*",
+        "ext-json": "*",
         "filp/whoops": "^2.5",
         "league/container": "^3.3",
         "league/uri-parser": "^1.4",
