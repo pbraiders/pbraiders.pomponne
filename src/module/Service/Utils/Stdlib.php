@@ -31,4 +31,18 @@ class Stdlib
             @ini_set($option, (string) $newvalue);
         });
     }
+
+    /**
+     * Sort an array by key, recursively.
+     *
+     * @see https://www.php.net/manual/en/function.ksort.php
+     * @param mixed $array
+     */
+    public static function sortArrayByKey(&$array)
+    {
+        if (is_array($array)) {
+            ksort($array, SORT_STRING);
+            array_walk($array, '\Pbraiders\Service\Utils\Stdlib::sortArrayByKey');
+        }
+    }
 }

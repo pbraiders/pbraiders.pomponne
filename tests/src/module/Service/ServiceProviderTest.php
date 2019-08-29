@@ -8,42 +8,11 @@ use Slim\App;
 use Pbraiders\Service\Exception;
 use Pbraiders\Service\ServiceProvider;
 use Pbraiders\Service\Utils\Stdlib;
-use ReflectionClass;
-use ReflectionMethod;
-use ReflectionProperty;
+use PbraidersTest\Utils\ReflectionTraits;
 
 class ServiceProviderTest extends \PHPUnit\Framework\TestCase
 {
-
-    /**
-     * get private and protected method.
-     *
-     * @param string $className
-     * @param string $methodName
-     * @return \ReflectionMethod
-     */
-    public function getPrivateMethod(string $className, string $methodName): ReflectionMethod
-    {
-        $pReflector = new ReflectionClass($className);
-        $pMethod = $pReflector->getMethod($methodName);
-        $pMethod->setAccessible(true);
-        return $pMethod;
-    }
-
-    /**
-     * get private and protected property.
-     *
-     * @param string $className
-     * @param string $propertyName
-     * @return \ReflectionProperty
-     */
-    public function getPrivateProperty(string $className, string $propertyName): ReflectionProperty
-    {
-        $pReflector = new ReflectionClass($className);
-        $pProperty = $pReflector->getProperty($propertyName);
-        $pProperty->setAccessible(true);
-        return $pProperty;
-    }
+    use ReflectionTraits;
 
     /**
      * @covers \Pbraiders\Service\ServiceProvider

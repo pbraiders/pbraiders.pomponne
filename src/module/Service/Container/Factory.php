@@ -3,7 +3,9 @@
 declare(strict_types=1);
 
 /**
- * Container factory
+ * Container factory.
+ *
+ * Creates and populates a Psr\Container with invokables or factories.
  *
  * @package Pbraiders\Service\Container
  * @link    https://github.com/pbraiders/pomponne for the canonical source repository

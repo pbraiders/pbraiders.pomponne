@@ -16,15 +16,7 @@ declare(strict_types=1);
 
 return [
 
-    'application' => [
-
-        // Configure PBRaiders website URL. If PBRaiders is installed into a directory called "pbraiders" for the
-        //  domain www.example.com, define ['website']['url'] like this:
-        'website' => [
-            'url' => 'https://www.example.com/pbraiders/',
-        ],
-
-    ],
+    'application' => [],
 
     'service' => [
 

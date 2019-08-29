@@ -79,8 +79,8 @@ class ServiceProvider extends AbstractServiceProvider
     protected function registerSettings(): void
     {
         $pFactory = new ConfigFactory();
-        $this->getContainer()->share('settings', $pFactory->create());
-        unset($pFactory);
+        $aSettings =  $pFactory->create();
+        $this->getContainer()->share('settings', $aSettings);
     }
 
     /**

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Contains configuration parameters.
  *
@@ -10,20 +12,26 @@
 
 return [
 
-    // Configure PBRaiders website URL. If PBRaiders is installed into a directory called "pbraiders" for the
-    //  domain www.example.com, define ['website']['url'] like this:
-    'website' => [
-        'url' => 'https://www.pbraiders.fr/v2.0.0/',
-    ],
+    'application' => [],
 
-    // Configure database settings.
-    'database' => [
-        // Database Name used by PBRaiders.
-        'name' => 'pbraidersdb',
-        // Username used to access Database.
-        'username' => 'pbraidersdbuser',
-        // Password used by Username to access Database.
-        'password' => 'px4bEcncp8327eeW',
+    'service' => [
+
+        // Configure database settings.
+        'database' => [
+            // Database Name used by PBRaiders.
+            'name' => 'pbraidersdb',
+            // Username used to access Database.
+            'username' => 'pbraidersdbuser',
+            // Password used by Username to access Database.
+            'password' => 'px4bEcncp8327eeW',
+        ],
+
+        'error' => [
+            // If set to 1, the application will use 'whoops error handling library' instead of the default PHP one.
+            // Usefull during development
+            'use_whoops' => true,
+        ],
+
     ],
 
     // These are various options for php

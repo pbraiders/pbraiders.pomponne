@@ -5,6 +5,9 @@ declare(strict_types=1);
 /**
  * Config factory.
  *
+ * Reads the main config file and return it as a sorted array.
+ * If the local.config.php file exists, its content replace the main config file content.
+ *
  * @package Pbraiders\Service\Config
  * @link    https://github.com/pbraiders/pomponne for the canonical source repository
  * @license https://github.com/pbraiders/pomponne/blob/master/LICENSE GNU General Public License v3.0 License.
@@ -13,6 +16,7 @@ declare(strict_types=1);
 namespace Pbraiders\Service\Config;
 
 use Pbraiders\Service\Exception;
+use Pbraiders\Service\Utils\Stdlib;
 use League\Uri\Parser;
 
 /**
@@ -41,37 +45,73 @@ class Factory
      * @throws Exception\RuntimeException
      * @return void
      */
-    public static function create(string $main = '', string $local = ''): array
+    public function create(string $main = '', string $local = ''): array
+    {
+        // Reads the files.
+        $aSettings = $this->readMainConfig($main);
+        $aLocalSettings = $this->readLocalConfig()($local);
+
+        // Replace main settings with local settings.
+        if (!empty($aLocalSettings)) {
+            $aSettings = array_replace_recursive($aSettings, $aLocalSettings);
+        }
+
+        // Parse the url according to RFC3986
+        if (empty($aSettings['application']['website']['url'])) {
+            throw new Exception\RuntimeException('The website.url setting is missing in the config file.');
+        }
+        $aWebsite = &$aSettings['application']['website'];
+        $pParser = new Parser();
+        $aWebsite = array_merge($aWebsite, $pParser($aWebsite['url']));
+
+        // Sorts
+        Stdlib::sortArrayByKey($aSettings);
+
+        return $aSettings;
+    }
+
+    /**
+     * Reads the main config file.
+     *
+     * @param string $filename
+     * @throws Exception\RuntimeException If file does not exist
+     * @return array
+     */
+    protected function readMainConfig(string $filename = ''): array
     {
         // Init
-        $main = trim($main);
-        $local = trim($local);
-        $sConfigFileMain = empty($main) ? static::DEFAULT_FILENAME_MAIN : $main;
-        $sConfigFileLocal = empty($local) ? static::DEFAULT_FILENAME_LOCAL : $local;
+        $filename = trim($filename);
+        $sFilename = empty($filename) ? static::DEFAULT_FILENAME_MAIN : $filename;
 
         // File must exists
-        if (! is_readable($sConfigFileMain)) {
-            throw new Exception\RuntimeException(sprintf('The config file "%s" cannot be found.', $sConfigFileMain));
+        if (!is_readable($sFilename)) {
+            throw new Exception\RuntimeException(sprintf('The config file "%s" cannot be found.', $sFilename));
         }
 
         // Reads the main config file
-        $aSettings = require $sConfigFileMain;
+        $aSettings = require $sFilename;
 
-        // Reads the local config file
-        if (is_readable($sConfigFileLocal)) {
-            $aSettings = array_replace_recursive($aSettings, require $sConfigFileLocal);
-        }
-
-        // Parse the url
-        if (! empty($aSettings['website']['url'])) {
-            $aWebsite = &$aSettings['website'];
-            $pParser = new Parser();
-            $aWebsite = array_merge($aWebsite, $pParser($aWebsite['url']));
-        }
-
-        ksort($aSettings);
-
-        // Register
         return $aSettings;
     }
-};
+
+    /**
+     * If exists, reads the local config file.
+     *
+     * @param string $filename
+     * @return array
+     */
+    protected function readLocalConfig(string $filename = ''): array
+    {
+        // Init
+        $aSettings = [];
+        $filename = trim($filename);
+        $sFilename = empty($filename) ? static::DEFAULT_FILENAME_LOCAL : $filename;
+
+        // Reads the local config file if exists.
+        if (is_readable($sFilename)) {
+            $aSettings = require $sFilename;
+        }
+
+        return $aSettings;
+    }
+}

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Contains configuration parameters.
  *
@@ -14,7 +16,7 @@
 
 return [
 
-    'app' => [
+    'application' => [
 
         // Configure PBRaiders website URL. If PBRaiders is installed into a directory called "pbraiders" for the
         //  domain www.example.com, define ['website']['url'] like this:
@@ -48,13 +50,13 @@ return [
             // If set to 1, the application will use 'whoops error handling library' instead of the default PHP one.
             // Usefull during development.
             'use_whoops' => false,
-            // Temprorary directory.
+            // Temporary directory.
             'temporary_path' => \PBR_PATH . \DIRECTORY_SEPARATOR . 'tmp',
         ],
 
         'logger' => [
             // Name of the file where application errors should be logged.
-            'error_log' => sprintf('%s/log/%s_pbraiders_error.log', \PBR_PATH, date("Ymd")),
+            'error_log' => sprintf('%s/var/log/%s_pbraiders_error.log', \PBR_PATH, date("Ymd")),
         ],
 
     ],
@@ -125,7 +127,7 @@ return [
         'log_errors' => '1',
 
         // Name of the file where script errors should be logged.
-        'error_log' => sprintf('%s/log/%s_php_error.log', \PBR_PATH, date("Ymd")),
+        'error_log' => sprintf('%s/var/log/%s_php_error.log', \PBR_PATH, date("Ymd")),
 
         /*
 session.save_path                = /path/PHP-session/
