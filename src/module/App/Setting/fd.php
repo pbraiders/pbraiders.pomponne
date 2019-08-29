@@ -37,8 +37,8 @@
 
     /** Defines
      **********/
-    define('PBR_VERSION',' ');
-    define('PBR_PATH',dirname(__FILE__));
+    define('PBR_VERSION', ' ');
+    define('PBR_PATH', dirname(__FILE__));
 
     /** Include config
      *****************/
@@ -60,25 +60,26 @@
      *************/
     require(PBR_PATH.'/includes/class/coption.php');
     $pOption = new COption('1', 0, 1);
-    $bForceDesktop = FALSE;
+    $bForceDesktop = false;
 
     /** Read input parameters
      ************************/
     $pOption->ReadInput(INPUT_GET);
-    if( $pOption->GetValue()==1 )
-    {
-        $bForceDesktop = TRUE;
-    }
+if ($pOption->GetValue() == 1) {
+    $bForceDesktop = true;
+}
 
     /** Write cookie
      ***************/
-    if( CCookie::GetInstance()->Write( CAuth::GetInstance()->GetUsername()
-                                     , CAuth::GetInstance()->GetSession()
-                                     , CAuth::GetInstance()->GetLanguage(), $bForceDesktop)===FALSE )
-    {
-        $sTitle = 'fichier: '.basename(__FILE__).', ligne:'.__LINE__;
-        ErrorLog( CAuth::GetInstance()->GetUsername(), $sTitle, 'impossible d\'écrire le cookie', E_USER_NOTICE, FALSE);
-    }// if( CCookie::GetInstance()->Write(...
+if (CCookie::GetInstance()->Write(
+    CAuth::GetInstance()->GetUsername(),
+    CAuth::GetInstance()->GetSession(),
+    CAuth::GetInstance()->GetLanguage(),
+    $bForceDesktop
+) === false ) {
+    $sTitle = 'fichier: '.basename(__FILE__).', ligne:'.__LINE__;
+    ErrorLog(CAuth::GetInstance()->GetUsername(), $sTitle, 'impossible d\'écrire le cookie', E_USER_NOTICE, false);
+}// if( CCookie::GetInstance()->Write(...
 
     /** Delete objects
      *****************/
@@ -87,6 +88,4 @@
     /** redirect to page
      *******************/
     header('Location: '.PBR_URL);
-    exit
-
-?>
+    exit;

@@ -39,8 +39,8 @@
 
     /** Defines
      **********/
-    define('PBR_VERSION','1.2.1');
-    define('PBR_PATH',dirname(__FILE__));
+    define('PBR_VERSION', '1.2.1');
+    define('PBR_PATH', dirname(__FILE__));
 
     /** Include config
      *****************/
@@ -60,12 +60,11 @@
 
     /** Cancel
      *********/
-    if( filter_has_var( INPUT_POST, 'can') )
-    {
-        include(PBR_PATH.'/includes/init/clean.php');
-        header('Location: '.PBR_URL.'logs.php');
-        exit;
-    }//Cancel
+if (filter_has_var(INPUT_POST, 'can')) {
+    include(PBR_PATH.'/includes/init/clean.php');
+    header('Location: '.PBR_URL.'logs.php');
+    exit;
+}//Cancel
 
     /** Create session
      *****************/
@@ -74,27 +73,27 @@
 
     /** Delete
      *********/
-    if( filter_has_var( INPUT_POST, 'con') && (CPHPSession::GetInstance()->ValidInput(INPUT_POST)===TRUE) )
-    {
-        // Clean SESSION
-        CPHPSession::CleanToken();
-        CPHPSession::Clean();
-        // Delete
-        require(PBR_PATH.'/includes/db/function/logsdel.php');
-        $iReturn = LogsDel( CAuth::GetInstance()->GetUsername()
-                          , CAuth::GetInstance()->GetSession()
-                          , GetIP().GetUserAgent() );
-        // Failed
-        if( ($iReturn===FALSE) || ($iReturn<0) )
-        {
-            RedirectError( $iReturn, __FILE__, __LINE__ );
-            exit;
-        }//if( $iReturn<1 )
-        // Succeeded
-        include(PBR_PATH.'/includes/init/clean.php');
-        header('Location: '.PBR_URL.'logs.php?error=3');
+if (filter_has_var(INPUT_POST, 'con') && (CPHPSession::GetInstance()->ValidInput(INPUT_POST) === true)) {
+    // Clean SESSION
+    CPHPSession::CleanToken();
+    CPHPSession::Clean();
+    // Delete
+    require(PBR_PATH.'/includes/db/function/logsdel.php');
+    $iReturn = LogsDel(
+        CAuth::GetInstance()->GetUsername(),
+        CAuth::GetInstance()->GetSession(),
+        GetIP().GetUserAgent()
+    );
+    // Failed
+    if (($iReturn === false) || ($iReturn < 0)) {
+        RedirectError($iReturn, __FILE__, __LINE__);
         exit;
-    }//Delete
+    }//if( $iReturn<1 )
+    // Succeeded
+    include(PBR_PATH.'/includes/init/clean.php');
+    header('Location: '.PBR_URL.'logs.php?error=3');
+    exit;
+}//Delete
 
     // Clean SESSION token
     CPHPSession::CleanToken();
@@ -102,15 +101,14 @@
     /** Generate and write SESSION token
      ***********************************/
     $sToken = CPHPSession::GetInstance()->WriteToken();
-    if( $sToken===FALSE )
-    {
-        $sTitle = 'fichier: '.basename(__FILE__).', ligne:'.__LINE__;
-        ErrorLog( CAuth::GetInstance()->GetUsername(), $sTitle, 'impossible de fixer le jeton de la session', E_USER_ERROR, TRUE);
-        CPHPSession::CleanToken();
-        CPHPSession::Clean();
-        RedirectError( 1, __FILE__, __LINE__ );
-        exit;
-    }//if( $sToken===FALSE )
+if ($sToken === false) {
+    $sTitle = 'fichier: '.basename(__FILE__).', ligne:'.__LINE__;
+    ErrorLog(CAuth::GetInstance()->GetUsername(), $sTitle, 'impossible de fixer le jeton de la session', E_USER_ERROR, true);
+    CPHPSession::CleanToken();
+    CPHPSession::Clean();
+    RedirectError(1, __FILE__, __LINE__);
+    exit;
+}//if( $sToken===FALSE )
 
     /** Build header
      ***************/
@@ -132,4 +130,3 @@
      *****************/
     unset($pHeader);
     include(PBR_PATH.'/includes/init/clean.php');
-?>

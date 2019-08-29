@@ -40,8 +40,8 @@
 
     /** Defines
      **********/
-    define('PBR_VERSION','1.2.1');
-    define('PBR_PATH',dirname(__FILE__));
+    define('PBR_VERSION', '1.2.1');
+    define('PBR_PATH', dirname(__FILE__));
 
     /** Include config
      *****************/
@@ -73,124 +73,118 @@
      ************************/
 
     // Delete
-    if( filter_has_var( INPUT_POST, 'del') )
-    {
-        // Read contact identifier
-        $pContact->ReadInputIdentifier(INPUT_POST);
+if (filter_has_var(INPUT_POST, 'del')) {
+    // Read contact identifier
+    $pContact->ReadInputIdentifier(INPUT_POST);
 
-        // Redirect
-        $sBuffer = CContact::IDENTIFIERTAG.'='.$pContact->GetIdentifier();
-        unset( $pPaging, $pContact );
-        include(PBR_PATH.'/includes/init/clean.php');
-        header('Location: '.PBR_URL.'contactdelete.php?'.$sBuffer);
-        exit;
-    }
+    // Redirect
+    $sBuffer = CContact::IDENTIFIERTAG.'='.$pContact->GetIdentifier();
+    unset($pPaging, $pContact);
+    include(PBR_PATH.'/includes/init/clean.php');
+    header('Location: '.PBR_URL.'contactdelete.php?'.$sBuffer);
+    exit;
+}
     // Update
-    elseif( filter_has_var( INPUT_POST, 'upd') )
-    {
-        // Read contact data
-        $pContact->ReadInput(INPUT_POST);
+elseif (filter_has_var(INPUT_POST, 'upd')) {
+    // Read contact data
+    $pContact->ReadInput(INPUT_POST);
 
-        // Update database
-        if( $pContact->IsValid()===TRUE )
-        {
-            require(PBR_PATH.'/includes/db/function/contactupdate.php');
-            $iReturn = ContactUpdate( CAuth::GetInstance()->GetUsername()
-                                    , CAuth::GetInstance()->GetSession()
-                                    , GetIP().GetUserAgent()
-                                    , $pContact );
+    // Update database
+    if ($pContact->IsValid() === true) {
+        require(PBR_PATH.'/includes/db/function/contactupdate.php');
+        $iReturn = ContactUpdate(
+            CAuth::GetInstance()->GetUsername(),
+            CAuth::GetInstance()->GetSession(),
+            GetIP().GetUserAgent(),
+            $pContact
+        );
 
-            // Error
-            if( ($iReturn===FALSE) || ($iReturn<0) )
-            {
-                unset( $pPaging, $pContact );
-                RedirectError( $iReturn, __FILE__, __LINE__ );
-                exit;
-            }//if( ($iReturn===FALSE) || ($iReturn<0) )
+        // Error
+        if (($iReturn === false) || ($iReturn < 0)) {
+            unset($pPaging, $pContact);
+            RedirectError($iReturn, __FILE__, __LINE__);
+            exit;
+        }//if( ($iReturn===FALSE) || ($iReturn<0) )
 
-            // Succeeded
-            $iMessageCode = 2;
-        }
-        else
-        {
-            // Missing values
-            $iMessageCode = 1;
-        }//if( $pContact->IsValid()===TRUE )
+        // Succeeded
+        $iMessageCode = 2;
+    } else {
+        // Missing values
+        $iMessageCode = 1;
+    }//if( $pContact->IsValid()===TRUE )
 
-        // Clean the old data
-        $iReturn = $pContact->GetIdentifier();
-        $pContact->ResetMe();
-        $pContact->SetIdentifier($iReturn);
+    // Clean the old data
+    $iReturn = $pContact->GetIdentifier();
+    $pContact->ResetMe();
+    $pContact->SetIdentifier($iReturn);
+} else {
+    // Read contact identifier
+    $pContact->ReadInputIdentifier(INPUT_GET);
 
-    }
-    else
-    {
-        // Read contact identifier
-        $pContact->ReadInputIdentifier(INPUT_GET);
+    // Read the message code
+    $iMessageCode = GetMessageCode();
 
-        // Read the message code
-        $iMessageCode = GetMessageCode();
-
-        // Read the page
-        $pPaging->ReadInput();
-
-    }//Read action
+    // Read the page
+    $pPaging->ReadInput();
+}//Read action
 
     /** Build the page
      *****************/
 
     // Get contact
     require(PBR_PATH.'/includes/db/function/contactget.php');
-    $iReturn = ContactGet( CAuth::GetInstance()->GetUsername()
-                         , CAuth::GetInstance()->GetSession()
-                         , GetIP().GetUserAgent()
-                         , $pContact );
+    $iReturn = ContactGet(
+        CAuth::GetInstance()->GetUsername(),
+        CAuth::GetInstance()->GetSession(),
+        GetIP().GetUserAgent(),
+        $pContact
+    );
 
     // Error
-    if( ($iReturn===FALSE) || ($iReturn<=0) )
-    {
-        unset( $pPaging, $pContact );
-        if( $iReturn===0 )
-        {
-            $sTitle='fichier: '.basename(__FILE__).', ligne:'.__LINE__;
-            ErrorLog( CAuth::GetInstance()->GetUsername(), $sTitle, 'identifiant inconnu', E_USER_ERROR, TRUE);
-            $iReturn=-2;
+    if (($iReturn === false) || ($iReturn <= 0)) {
+        unset($pPaging, $pContact);
+        if ($iReturn === 0) {
+            $sTitle = 'fichier: '.basename(__FILE__).', ligne:'.__LINE__;
+            ErrorLog(CAuth::GetInstance()->GetUsername(), $sTitle, 'identifiant inconnu', E_USER_ERROR, true);
+            $iReturn = -2;
         }//if( $iReturn==0 )
-        RedirectError( $iReturn, __FILE__, __LINE__ );
+        RedirectError($iReturn, __FILE__, __LINE__);
         exit;
     }//if( ($iReturn===FALSE) || ($iReturn<=0) )
 
     // Get the reservations count
     require(PBR_PATH.'/includes/db/function/contactrentsgetcount.php');
-    $iReturn = ContactRentsGetCount( CAuth::GetInstance()->GetUsername()
-                                   , CAuth::GetInstance()->GetSession()
-                                   , GetIP().GetUserAgent()
-                                   , $pContact );
+    $iReturn = ContactRentsGetCount(
+        CAuth::GetInstance()->GetUsername(),
+        CAuth::GetInstance()->GetSession(),
+        GetIP().GetUserAgent(),
+        $pContact
+    );
 
     // Error
-    if( ($iReturn===FALSE) || ($iReturn<0) )
-    {
-        unset( $pPaging, $pContact );
-        RedirectError( $iReturn, __FILE__, __LINE__ );
+    if (($iReturn === false) || ($iReturn < 0)) {
+        unset($pPaging, $pContact);
+        RedirectError($iReturn, __FILE__, __LINE__);
         exit;
     }//if( ($iReturn===FALSE) || ($iReturn<0) )
 
     // Succeeded
-    $pPaging->Compute( PBR_PAGE_RENTS, $iReturn );
+    $pPaging->Compute(PBR_PAGE_RENTS, $iReturn);
 
     // Get rents
     require(PBR_PATH.'/includes/db/function/contactrentsget.php');
-    $tRecordset = ContactRentsGet( CAuth::GetInstance()->GetUsername()
-                                 , CAuth::GetInstance()->GetSession()
-                                 , GetIP().GetUserAgent()
-                                 , $pContact
-                                 , $pPaging );
+    $tRecordset = ContactRentsGet(
+        CAuth::GetInstance()->GetUsername(),
+        CAuth::GetInstance()->GetSession(),
+        GetIP().GetUserAgent(),
+        $pContact,
+        $pPaging
+    );
 
     // Error
-    if( !is_array($tRecordset) )
-    {
-        unset( $pPaging, $pContact );
-        RedirectError( $tRecordset, __FILE__, __LINE__ );
+    if (! is_array($tRecordset)) {
+        unset($pPaging, $pContact);
+        RedirectError($tRecordset, __FILE__, __LINE__);
         exit;
     }//if( !is_array($tRecordset) )
 
@@ -213,6 +207,5 @@
 
     /** Delete objects
      *****************/
-    unset( $pPaging, $pContact, $pHeader, $pDate );
+    unset($pPaging, $pContact, $pHeader, $pDate);
     include(PBR_PATH.'/includes/init/clean.php');
-?>

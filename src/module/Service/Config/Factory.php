@@ -52,7 +52,7 @@ class Factory
         $aLocalSettings = $this->readLocalConfig()($local);
 
         // Replace main settings with local settings.
-        if (!empty($aLocalSettings)) {
+        if (! empty($aLocalSettings)) {
             $aSettings = array_replace_recursive($aSettings, $aLocalSettings);
         }
 
@@ -84,7 +84,7 @@ class Factory
         $sFilename = empty($filename) ? static::DEFAULT_FILENAME_MAIN : $filename;
 
         // File must exists
-        if (!is_readable($sFilename)) {
+        if (! is_readable($sFilename)) {
             throw new Exception\RuntimeException(sprintf('The config file "%s" cannot be found.', $sFilename));
         }
 

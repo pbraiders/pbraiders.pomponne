@@ -40,8 +40,8 @@
 
     /** Defines
      **********/
-    define('PBR_VERSION','1.2.1');
-    define('PBR_PATH',dirname(__FILE__));
+    define('PBR_VERSION', '1.2.1');
+    define('PBR_PATH', dirname(__FILE__));
 
     /** Include config
      *****************/
@@ -61,12 +61,11 @@
 
     /** Cancel
      *********/
-    if( filter_has_var( INPUT_POST, 'can') )
-    {
-        include(PBR_PATH.'/includes/init/clean.php');
-        header('Location: '.PBR_URL.'parameters.php');
-        exit;
-    }//Cancel
+if (filter_has_var(INPUT_POST, 'can')) {
+    include(PBR_PATH.'/includes/init/clean.php');
+    header('Location: '.PBR_URL.'parameters.php');
+    exit;
+}//Cancel
 
     /** Read input date
      ******************/
@@ -74,19 +73,17 @@
     $pDate = new CDate();
     $iYear = 0;
 
-    if( filter_has_var( INPUT_POST, CDate::YEARTAG)===TRUE )
-    {
-        $iYear = filter_input( INPUT_POST, CDate::YEARTAG, FILTER_VALIDATE_INT);
-    }//if( filter_has_var(...
+if (filter_has_var(INPUT_POST, CDate::YEARTAG) === true) {
+    $iYear = filter_input(INPUT_POST, CDate::YEARTAG, FILTER_VALIDATE_INT);
+}//if( filter_has_var(...
 
-    if( is_null($iYear) || ($iYear===FALSE) || ($iYear>$pDate->GetCurrentYear()) || ($iYear<CDate::MINYEAR) )
-    {
-        // Date is not valid
-        unset($pDate);
-        include(PBR_PATH.'/includes/init/clean.php');
-        header('Location: '.PBR_URL.'parameters.php?error=3');
-        exit;
-    }//if( $pDate->GetRequestYear()>=$pDate->GetCurrentYear() )
+if (is_null($iYear) || ($iYear === false) || ($iYear > $pDate->GetCurrentYear()) || ($iYear < CDate::MINYEAR)) {
+    // Date is not valid
+    unset($pDate);
+    include(PBR_PATH.'/includes/init/clean.php');
+    header('Location: '.PBR_URL.'parameters.php?error=3');
+    exit;
+}//if( $pDate->GetRequestYear()>=$pDate->GetCurrentYear() )
 
     /** Create session
      *****************/
@@ -95,31 +92,31 @@
 
     /** Delete
      *********/
-    if( filter_has_var( INPUT_POST, 'con') && (CPHPSession::GetInstance()->ValidInput(INPUT_POST)===TRUE) )
-    {
-        // Clean SESSION
-        CPHPSession::CleanToken();
-        CPHPSession::Clean();
-        // Delete
-        require(PBR_PATH.'/includes/db/function/rentsdel.php');
-        $iReturn = RentsDel( CAuth::GetInstance()->GetUsername()
-                           , CAuth::GetInstance()->GetSession()
-                           , GetIP().GetUserAgent()
-                           , $iYear );
+if (filter_has_var(INPUT_POST, 'con') && (CPHPSession::GetInstance()->ValidInput(INPUT_POST) === true)) {
+    // Clean SESSION
+    CPHPSession::CleanToken();
+    CPHPSession::Clean();
+    // Delete
+    require(PBR_PATH.'/includes/db/function/rentsdel.php');
+    $iReturn = RentsDel(
+        CAuth::GetInstance()->GetUsername(),
+        CAuth::GetInstance()->GetSession(),
+        GetIP().GetUserAgent(),
+        $iYear
+    );
 
-        unset($pDate);
+    unset($pDate);
 
-        // Failed
-        if( ($iReturn===FALSE) || ($iReturn<0) )
-        {
-            RedirectError( $iReturn, __FILE__, __LINE__ );
-            exit;
-        }//if( ($iReturn===FALSE) || ($iReturn<0) )
-        // Succeeded
-        include(PBR_PATH.'/includes/init/clean.php');
-        header('Location: '.PBR_URL.'parameters.php?error=2');
+    // Failed
+    if (($iReturn === false) || ($iReturn < 0)) {
+        RedirectError($iReturn, __FILE__, __LINE__);
         exit;
-    }//Delete
+    }//if( ($iReturn===FALSE) || ($iReturn<0) )
+    // Succeeded
+    include(PBR_PATH.'/includes/init/clean.php');
+    header('Location: '.PBR_URL.'parameters.php?error=2');
+    exit;
+}//Delete
 
     // Clean SESSION token
     CPHPSession::CleanToken();
@@ -127,16 +124,15 @@
     /** Generate and write SESSION token
      ***********************************/
     $sToken = CPHPSession::GetInstance()->WriteToken();
-    if( $sToken===FALSE )
-    {
-        $sTitle = 'fichier: '.basename(__FILE__).', ligne:'.__LINE__;
-        ErrorLog( CAuth::GetInstance()->GetUsername(), $sTitle, 'impossible de fixer le jeton de la session', E_USER_ERROR, TRUE);
-        CPHPSession::CleanToken();
-        CPHPSession::Clean();
-        unset($pDate);
-        RedirectError( 1, __FILE__, __LINE__ );
-        exit;
-    }//if( $sToken===FALSE )
+if ($sToken === false) {
+    $sTitle = 'fichier: '.basename(__FILE__).', ligne:'.__LINE__;
+    ErrorLog(CAuth::GetInstance()->GetUsername(), $sTitle, 'impossible de fixer le jeton de la session', E_USER_ERROR, true);
+    CPHPSession::CleanToken();
+    CPHPSession::Clean();
+    unset($pDate);
+    RedirectError(1, __FILE__, __LINE__);
+    exit;
+}//if( $sToken===FALSE )
 
     /** Build header
      ***************/
@@ -159,4 +155,3 @@
     unset($pHeader);
     unset($pDate);
     include(PBR_PATH.'/includes/init/clean.php');
-?>

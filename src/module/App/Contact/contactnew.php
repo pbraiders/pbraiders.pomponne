@@ -38,8 +38,8 @@
 
     /** Defines
      **********/
-    define('PBR_VERSION','1.2.1');
-    define('PBR_PATH',dirname(__FILE__));
+    define('PBR_VERSION', '1.2.1');
+    define('PBR_PATH', dirname(__FILE__));
 
     /** Include config
      *****************/
@@ -66,41 +66,38 @@
     /** Read input parameters
      ************************/
     require(PBR_PATH.'/includes/class/caction.php');
-    if( filter_has_var( INPUT_POST, 'new' ) )
-    {
-        // Read data
-        $pContact->ReadInput(INPUT_POST);
-        if( $pContact->MandatoriesAreFilled()===TRUE )
-        {
-            require(PBR_PATH.'/includes/db/function/contactadd.php');
-            $iReturn = ContactAdd( CAuth::GetInstance()->GetUsername()
-                                 , CAuth::GetInstance()->GetSession()
-                                 , GetIP().GetUserAgent()
-                                 , $pContact );
+if (filter_has_var(INPUT_POST, 'new')) {
+    // Read data
+    $pContact->ReadInput(INPUT_POST);
+    if ($pContact->MandatoriesAreFilled() === true) {
+        require(PBR_PATH.'/includes/db/function/contactadd.php');
+        $iReturn = ContactAdd(
+            CAuth::GetInstance()->GetUsername(),
+            CAuth::GetInstance()->GetSession(),
+            GetIP().GetUserAgent(),
+            $pContact
+        );
 
-            // Error
-            if( ($iReturn===FALSE) || ($iReturn<=0) )
-            {
-                unset($pContact);
-                RedirectError( $iReturn, __FILE__, __LINE__ );
-                exit;
-            }//if( ($iReturn===FALSE) || ($iReturn<=0) )
-
-            // Succeed
-            $sBuffer  = PBR_URL.'contacts.php?'.CAction::ACTIONTAG.'=search';
-            $sBuffer .= '&'.CContact::LASTNAMETAG.'='.$pContact->GetLastName(2);
-            $sBuffer .= '&error=1';
+        // Error
+        if (($iReturn === false) || ($iReturn <= 0)) {
             unset($pContact);
-            include(PBR_PATH.'/includes/init/clean.php');
-            header('Location: '.$sBuffer);
+            RedirectError($iReturn, __FILE__, __LINE__);
             exit;
-        }
-        else
-        {
-            // Missing values
-            $iMessageCode = 1;
-        }//if( $pContact->MandatoriesAreFilled()===TRUE )
-    }//if( CAction::IsValid(...
+        }//if( ($iReturn===FALSE) || ($iReturn<=0) )
+
+        // Succeed
+        $sBuffer  = PBR_URL.'contacts.php?'.CAction::ACTIONTAG.'=search';
+        $sBuffer .= '&'.CContact::LASTNAMETAG.'='.$pContact->GetLastName(2);
+        $sBuffer .= '&error=1';
+        unset($pContact);
+        include(PBR_PATH.'/includes/init/clean.php');
+        header('Location: '.$sBuffer);
+        exit;
+    } else {
+        // Missing values
+        $iMessageCode = 1;
+    }//if( $pContact->MandatoriesAreFilled()===TRUE )
+}//if( CAction::IsValid(...
 
     /** Build header
      ***************/
@@ -120,6 +117,5 @@
 
     /** Delete objects
      *****************/
-    unset( $pContact, $pHeader );
+    unset($pContact, $pHeader);
     include(PBR_PATH.'/includes/init/clean.php');
-?>

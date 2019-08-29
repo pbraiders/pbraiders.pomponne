@@ -38,8 +38,8 @@
 
     /** Defines
      **********/
-    define('PBR_VERSION',' ');
-    define('PBR_PATH',dirname(__FILE__));
+    define('PBR_VERSION', ' ');
+    define('PBR_PATH', dirname(__FILE__));
 
     /** Include config
      *****************/
@@ -64,16 +64,17 @@
     /** Logout
      *********/
     require(PBR_PATH.'/includes/db/function/sessionlogoff.php');
-    SessionLogOff( CAuth::GetInstance()->GetUsername()
-                 , CAuth::GetInstance()->GetSession()
-                 , GetIP().GetUserAgent() );
+    SessionLogOff(
+        CAuth::GetInstance()->GetUsername(),
+        CAuth::GetInstance()->GetSession(),
+        GetIP().GetUserAgent()
+    );
 
     /** Erase cookie
      ***************/
-    if( CCookie::GetInstance()->Write( CAuth::GetInstance()->GetUsername(), CAuth::DEFAULT_SESSION,CAuth::DEFAULT_LANGUAGE,FALSE)===FALSE )
-    {
+    if (CCookie::GetInstance()->Write(CAuth::GetInstance()->GetUsername(), CAuth::DEFAULT_SESSION, CAuth::DEFAULT_LANGUAGE, false) === false) {
         $sTitle = 'fichier: '.basename(__FILE__).', ligne:'.__LINE__;
-        ErrorLog( CAuth::GetInstance()->GetUsername(), $sTitle, 'impossible d\'écrire le cookie', E_USER_NOTICE, FALSE);
+        ErrorLog(CAuth::GetInstance()->GetUsername(), $sTitle, 'impossible d\'écrire le cookie', E_USER_NOTICE, false);
     }// if( CCookie::GetInstance()->Write(...
 
     /** Invalidate authentication
@@ -99,4 +100,3 @@
      *****************/
     unset($pHeader);
     include(PBR_PATH.'/includes/init/clean.php');
-?>

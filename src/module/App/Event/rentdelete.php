@@ -40,8 +40,8 @@
 
     /** Defines
      **********/
-    define('PBR_VERSION','1.2.1');
-    define('PBR_PATH',dirname(__FILE__));
+    define('PBR_VERSION', '1.2.1');
+    define('PBR_PATH', dirname(__FILE__));
 
     /** Include config
      *****************/
@@ -63,15 +63,14 @@
      ************************/
     require(PBR_PATH.'/includes/class/crent.php');
     $pRent = new CRent();
-    if( ($pRent->ReadInputIdentifier(INPUT_GET)===FALSE) && ($pRent->ReadInputIdentifier(INPUT_POST)===FALSE) )
-    {
-        //Error
-        unset($pRent);
-        $sTitle='fichier: '.basename(__FILE__).', ligne:'.__LINE__;
-        ErrorLog( CAuth::GetInstance()->GetUsername(), $sTitle, 'identifiant inconnu', E_USER_ERROR, TRUE);
-        RedirectError( -2, __FILE__, __LINE__ );
-        exit;
-    }//if( ($pRent->ReadInputIdentifier(
+if (($pRent->ReadInputIdentifier(INPUT_GET) === false) && ($pRent->ReadInputIdentifier(INPUT_POST) === false)) {
+    //Error
+    unset($pRent);
+    $sTitle = 'fichier: '.basename(__FILE__).', ligne:'.__LINE__;
+    ErrorLog(CAuth::GetInstance()->GetUsername(), $sTitle, 'identifiant inconnu', E_USER_ERROR, true);
+    RedirectError(-2, __FILE__, __LINE__);
+    exit;
+}//if( ($pRent->ReadInputIdentifier(
 
     /** Initialize
      *************/
@@ -83,33 +82,32 @@
 
     // Get rent
     require(PBR_PATH.'/includes/db/function/rentget.php');
-    $iReturn = RentGet( CAuth::GetInstance()->GetUsername()
-                      , CAuth::GetInstance()->GetSession()
-                      , GetIP().GetUserAgent()
-                      , $pRent
-                      , $pDate
-                      , $pContact );
+    $iReturn = RentGet(
+        CAuth::GetInstance()->GetUsername(),
+        CAuth::GetInstance()->GetSession(),
+        GetIP().GetUserAgent(),
+        $pRent,
+        $pDate,
+        $pContact
+    );
 
     // Error
-    if( ($iReturn===FALSE) || ($iReturn<=0) )
-    {
-        unset( $pRent, $pDate, $pContact );
-        if( $iReturn===0 )
-        {
-            $sTitle='fichier: '.basename(__FILE__).', ligne:'.__LINE__;
-            ErrorLog( CAuth::GetInstance()->GetUsername(), $sTitle, 'identifiant inconnu', E_USER_ERROR, TRUE);
-            $iReturn=-2;
+    if (($iReturn === false) || ($iReturn <= 0)) {
+        unset($pRent, $pDate, $pContact);
+        if ($iReturn === 0) {
+            $sTitle = 'fichier: '.basename(__FILE__).', ligne:'.__LINE__;
+            ErrorLog(CAuth::GetInstance()->GetUsername(), $sTitle, 'identifiant inconnu', E_USER_ERROR, true);
+            $iReturn = -2;
         }//if( $iReturn==0 )
-        RedirectError( $iReturn, __FILE__, __LINE__ );
+        RedirectError($iReturn, __FILE__, __LINE__);
         exit;
     }//if( ($iReturn===FALSE) || ($iReturn<=0) )
 
     /** Cancel
      *********/
-    if( filter_has_var( INPUT_POST, 'can') )
-    {
+    if (filter_has_var(INPUT_POST, 'can')) {
         $sBuffer = CRent::IDENTIFIERTAG.'='.$pRent->GetIdentifier();
-        unset( $pRent, $pDate, $pContact );
+        unset($pRent, $pDate, $pContact);
         include(PBR_PATH.'/includes/init/clean.php');
         header('Location: '.PBR_URL.'rent.php?'.$sBuffer);
         exit;
@@ -122,8 +120,7 @@
 
     /** Delete
      *********/
-    if( filter_has_var( INPUT_POST, 'con') && (CPHPSession::GetInstance()->ValidInput(INPUT_POST)===TRUE) )
-    {
+    if (filter_has_var(INPUT_POST, 'con') && (CPHPSession::GetInstance()->ValidInput(INPUT_POST) === true)) {
         // Clean SESSION
         CPHPSession::CleanToken();
         CPHPSession::Clean();
@@ -136,24 +133,24 @@
 
         /** Delete
          *********/
-        require( PBR_PATH.'/includes/db/function/rentdel.php');
-        $iReturn = RentDel( CAuth::GetInstance()->GetUsername()
-                          , CAuth::GetInstance()->GetSession()
-                          , GetIP().GetUserAgent()
-                          , $pRent );
+        require(PBR_PATH.'/includes/db/function/rentdel.php');
+        $iReturn = RentDel(
+            CAuth::GetInstance()->GetUsername(),
+            CAuth::GetInstance()->GetSession(),
+            GetIP().GetUserAgent(),
+            $pRent
+        );
 
-        unset( $pRent, $pDate, $pContact );
+        unset($pRent, $pDate, $pContact);
 
         // Failed
-        if( ($iReturn===FALSE) || ($iReturn<=0) )
-        {
-            if( $iReturn===0 )
-            {
-                $sTitle='fichier: '.basename(__FILE__).', ligne:'.__LINE__;
-                ErrorLog( CAuth::GetInstance()->GetUsername(), $sTitle, 'identifiant inconnu', E_USER_ERROR, TRUE);
-                $iReturn=-2;
+        if (($iReturn === false) || ($iReturn <= 0)) {
+            if ($iReturn === 0) {
+                $sTitle = 'fichier: '.basename(__FILE__).', ligne:'.__LINE__;
+                ErrorLog(CAuth::GetInstance()->GetUsername(), $sTitle, 'identifiant inconnu', E_USER_ERROR, true);
+                $iReturn = -2;
             }//if( $iReturn==0 )
-            RedirectError( $iReturn, __FILE__, __LINE__ );
+            RedirectError($iReturn, __FILE__, __LINE__);
             exit;
         }//if( ($iReturn===FALSE) || ($iReturn<0) )
 
@@ -161,7 +158,6 @@
         include(PBR_PATH.'/includes/init/clean.php');
         header('Location: '.$sCalendarHRef.'&error=3');
         exit;
-
     }//Delete
 
     // Clean SESSION token
@@ -170,14 +166,13 @@
     /** Generate and write SESSION token
      ***********************************/
     $sToken = CPHPSession::GetInstance()->WriteToken();
-    if( $sToken===FALSE )
-    {
+    if ($sToken === false) {
         $sTitle = 'fichier: '.basename(__FILE__).', ligne:'.__LINE__;
-        ErrorLog( CAuth::GetInstance()->GetUsername(), $sTitle, 'impossible de fixer le jeton de la session', E_USER_ERROR, TRUE);
+        ErrorLog(CAuth::GetInstance()->GetUsername(), $sTitle, 'impossible de fixer le jeton de la session', E_USER_ERROR, true);
         CPHPSession::CleanToken();
         CPHPSession::Clean();
-        unset( $pRent, $pDate, $pContact );
-        RedirectError( 1, __FILE__, __LINE__ );
+        unset($pRent, $pDate, $pContact);
+        RedirectError(1, __FILE__, __LINE__);
         exit;
     }//if( $sToken===FALSE )
 
@@ -199,6 +194,5 @@
 
     /** Delete objects
      *****************/
-    unset( $pRent, $pDate, $pContact );
+    unset($pRent, $pDate, $pContact);
     include(PBR_PATH.'/includes/init/clean.php');
-?>

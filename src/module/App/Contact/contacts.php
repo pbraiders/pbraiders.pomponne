@@ -39,8 +39,8 @@
 
     /** Defines
      **********/
-    define('PBR_VERSION','1.2.1');
-    define('PBR_PATH',dirname(__FILE__));
+    define('PBR_VERSION', '1.2.1');
+    define('PBR_PATH', dirname(__FILE__));
 
     /** Include config
      *****************/
@@ -72,9 +72,9 @@
     $pCCSV = null;
     $pHeader = null;
     $iMessageCode = 0;
-    $bSended = FALSE;
+    $bSended = false;
 
-	/** Read input parameters
+    /** Read input parameters
      ************************/
 
     // Read the options
@@ -83,116 +83,109 @@
 
     // Read action
     require(PBR_PATH.'/includes/class/caction.php');
-    if( CAction::IsValid( INPUT_GET, 'export' ) === CAction::VALID )
-    {
-        // Search
+if (CAction::IsValid(INPUT_GET, 'export') === CAction::VALID) {
+    // Search
+    $pSearch->ReadInputLastName(INPUT_GET);
+    // Export
+    $pCCSV = new CCSV();
+} else {
+    // Search
+    if (CAction::IsValid(INPUT_GET, 'search') === CAction::VALID) {
         $pSearch->ReadInputLastName(INPUT_GET);
-        // Export
-        $pCCSV = new CCSV();
-    }
-    else
-    {
-        // Search
-        if( CAction::IsValid( INPUT_GET, 'search' ) === CAction::VALID )
-        {
-            $pSearch->ReadInputLastName(INPUT_GET);
-        }//if( (CAction::IsValid(...
+    }//if( (CAction::IsValid(...
 
-        // Read the message code
-        $iMessageCode = GetMessageCode();
+    // Read the message code
+    $iMessageCode = GetMessageCode();
 
-        // Read the page
-        $pPaging->ReadInput();
-
-    }//if( CAction::IsValid(...
+    // Read the page
+    $pPaging->ReadInput();
+}//if( CAction::IsValid(...
 
     /** Get data
      ***********/
 
     // Get contact count
     require(PBR_PATH.'/includes/db/function/contactsgetcount.php');
-    $iReturn = ContactsGetCount( CAuth::GetInstance()->GetUsername()
-                               , CAuth::GetInstance()->GetSession()
-                               , GetIP().GetUserAgent()
-                               , $pSearch );
+    $iReturn = ContactsGetCount(
+        CAuth::GetInstance()->GetUsername(),
+        CAuth::GetInstance()->GetSession(),
+        GetIP().GetUserAgent(),
+        $pSearch
+    );
 
     // Error
-    if( ($iReturn===FALSE) || ($iReturn<0) )
-    {
-        unset( $pPaging, $pSearch, $pCCSV, $pOrder, $pSort );
-        RedirectError( $iReturn, __FILE__, __LINE__ );
+    if (($iReturn === false) || ($iReturn < 0)) {
+        unset($pPaging, $pSearch, $pCCSV, $pOrder, $pSort);
+        RedirectError($iReturn, __FILE__, __LINE__);
         exit;
     }//if( ($iReturn===FALSE) || ($iReturn<0) )
 
     /** Build page
      *************/
 
-    if( isset($pCCSV) )
-    {
+    if (isset($pCCSV)) {
 
         /** Export case
          **************/
 
         // Open file
-        $iReturn = ExportInit( $pCCSV, array('nom','prénom','téléphone','email','adresse','ville','code postal','commentaire','date de création') );
+        $iReturn = ExportInit($pCCSV, ['nom','prénom','téléphone','email','adresse','ville','code postal','commentaire','date de création']);
 
         // Write contact list
-        if( ($iReturn!==FALSE) && $pCCSV->IsOpen() )
-        {
+        if (($iReturn !== false) && $pCCSV->IsOpen()) {
             require(PBR_PATH.'/includes/db/function/contactsgetexport.php');
-            $iReturn = ContactsGetExport( CAuth::GetInstance()->GetUsername()
-                                        , CAuth::GetInstance()->GetSession()
-                                        , GetIP().GetUserAgent()
-                                        , $pSearch
-                                        , $pPaging
-                                        , $pOrder
-                                        , $pSort
-                                        , $pCCSV );
+            $iReturn = ContactsGetExport(
+                CAuth::GetInstance()->GetUsername(),
+                CAuth::GetInstance()->GetSession(),
+                GetIP().GetUserAgent(),
+                $pSearch,
+                $pPaging,
+                $pOrder,
+                $pSort,
+                $pCCSV
+            );
         }//if( $pCCSV->IsOpen() )
 
         // Close the file
-        if( $pCCSV->IsOpen() )
+        if ($pCCSV->IsOpen()) {
             $pCCSV->Close();
+        }
 
         // Error
-        if( ($iReturn===FALSE) || ($iReturn<0) )
-        {
-            unset( $pPaging, $pSearch, $pCCSV, $pOrder, $pSort );
-            RedirectError( $iReturn, __FILE__, __LINE__ );
+        if (($iReturn === false) || ($iReturn < 0)) {
+            unset($pPaging, $pSearch, $pCCSV, $pOrder, $pSort);
+            RedirectError($iReturn, __FILE__, __LINE__);
             exit;
         }//if( ($iReturn===FALSE) || ($iReturn<0) )
 
         // Send
-        if( ExportSend( $pCCSV )===FALSE )
-        {
+        if (ExportSend($pCCSV) === false) {
             require(PBR_PATH.'/includes/display/contactsexport.php');
         }//Send
-
-    }
-    else
-    {
+    } else {
 
         /** Normal case
          **************/
 
         // Paging
-    	$pPaging->Compute( PBR_PAGE_CONTACTS, $iReturn );
+        $pPaging->Compute(PBR_PAGE_CONTACTS, $iReturn);
 
         // Get contact list
         require(PBR_PATH.'/includes/db/function/contactsget.php');
-        $tRecordset = ContactsGet( CAuth::GetInstance()->GetUsername()
-                                 , CAuth::GetInstance()->GetSession()
-                                 , GetIP().GetUserAgent()
-                                 , $pSearch
-                                 , $pPaging
-                                 , $pOrder
-                                 , $pSort );
+        $tRecordset = ContactsGet(
+            CAuth::GetInstance()->GetUsername(),
+            CAuth::GetInstance()->GetSession(),
+            GetIP().GetUserAgent(),
+            $pSearch,
+            $pPaging,
+            $pOrder,
+            $pSort
+        );
 
-        if( !is_array($tRecordset) )
-        {
+        if (! is_array($tRecordset)) {
             // Error
-            unset( $pPaging, $pSearch, $pCCSV, $pOrder, $pSort );
-            RedirectError( $tRecordset, __FILE__, __LINE__ );
+            unset($pPaging, $pSearch, $pCCSV, $pOrder, $pSort);
+            RedirectError($tRecordset, __FILE__, __LINE__);
             exit;
         }//if( !is_array($tRecordset) )
 
@@ -205,8 +198,7 @@
         $pHeader->SetTitle($sBuffer);
         $pHeader->SetDescription($sBuffer);
         $pHeader->SetKeywords($sBuffer);
-        if( strlen($pSearch->GetLastName())>0 )
-        {
+        if (strlen($pSearch->GetLastName()) > 0) {
             $pHeader->SetTitle($pSearch->GetLastName());
             $pHeader->SetDescription($pSearch->GetLastName());
             $pHeader->SetKeywords($pSearch->GetLastName());
@@ -217,12 +209,9 @@
         require(PBR_PATH.'/includes/display/header.php');
         require(PBR_PATH.'/includes/display/contacts.php');
         require(PBR_PATH.'/includes/display/footer.php');
-
     }//Display
 
     /** Delete objects
      *****************/
-    unset( $pPaging, $pSearch, $pCCSV, $pHeader, $pOrder, $pSort );
+    unset($pPaging, $pSearch, $pCCSV, $pHeader, $pOrder, $pSort);
     include(PBR_PATH.'/includes/init/clean.php');
-
-?>

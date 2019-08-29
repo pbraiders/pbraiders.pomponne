@@ -39,8 +39,8 @@
 
     /** Defines
      **********/
-    define('PBR_VERSION',' ');
-    define('PBR_PATH',dirname(__FILE__));
+    define('PBR_VERSION', ' ');
+    define('PBR_PATH', dirname(__FILE__));
 
     /** Include config
      *****************/
@@ -68,76 +68,66 @@
     /** Read input parameters
      ************************/
     require(PBR_PATH.'/includes/class/caction.php');
-    if( (CAction::IsValid( INPUT_POST, 'login')===CAction::VALID)
-     && (CPHPSession::GetInstance()->ValidInput(INPUT_POST)===TRUE) )
-    {
-        /** Login case
-         *************/
+if ((CAction::IsValid(INPUT_POST, 'login') === CAction::VALID)
+     && (CPHPSession::GetInstance()->ValidInput(INPUT_POST) === true) ) {
+    /** Login case
+     *************/
 
-        // Read and check user input parameters
-        $pUser->ReadInput(INPUT_POST);
-        if( $pUser->IsValidLogin() )
-        {
-            // Open database
-            require(PBR_PATH.'/includes/db/class/cdblayer.php');
-            if( CDBLayer::GetInstance()->Open( PBR_DB_DSN.PBR_DB_DBN, PBR_DB_USR, PBR_DB_PWD, $pUser->GetUsername() )===FALSE )
-            {
+    // Read and check user input parameters
+    $pUser->ReadInput(INPUT_POST);
+    if ($pUser->IsValidLogin()) {
+        // Open database
+        require(PBR_PATH.'/includes/db/class/cdblayer.php');
+        if (CDBLayer::GetInstance()->Open(PBR_DB_DSN.PBR_DB_DBN, PBR_DB_USR, PBR_DB_PWD, $pUser->GetUsername()) === false) {
+            $sTitle = 'fichier: '.basename(__FILE__).', ligne:'.__LINE__;
+            ErrorLog($pUser->GetUsername(), $sTitle, 'impossible d\'ouvrir la base de données', E_USER_ERROR, false);
+        } else {
+            // Generate a new session id
+            $sSession = CPHPSession::GetInstance()->GenerateSessionId();
+
+            // Login
+            require(PBR_PATH.'/includes/db/function/sessionset.php');
+            $iReturn = SessionSet(
+                $pUser->GetUsername(),
+                $sSession,
+                $pUser->GetPassword(),
+                GetIP().GetUserAgent()
+            );
+            if ($iReturn > 0) {
+                // Set cookie
+                if (CCookie::GetInstance()->Write($pUser->GetUsername(), $sSession, CAuth::DEFAULT_LANGUAGE, false) === false) {
+                    $sTitle = 'fichier: '.basename(__FILE__).', ligne:'.__LINE__;
+                    ErrorLog($pUser->GetUsername(), $sTitle, 'impossible d\'écrire le cookie', E_USER_WARNING, true);
+                }//if(...
+
+                // Redirect
+                unset($pUser);
+                CPHPSession::CleanToken();
+                CPHPSession::Clean();
+                include(PBR_PATH.'/includes/init/clean.php');
+                header('Location: '.PBR_URL);
+                exit;
+            }//if( $iReturn>0 )
+
+            // Trace
+            if (($iReturn == -2)||($iReturn == -3)) {
                 $sTitle = 'fichier: '.basename(__FILE__).', ligne:'.__LINE__;
-                ErrorLog( $pUser->GetUsername(), $sTitle, 'impossible d\'ouvrir la base de données', E_USER_ERROR, FALSE);
-            }
-            else
-            {
-                // Generate a new session id
-                $sSession = CPHPSession::GetInstance()->GenerateSessionId();
+                ErrorLog($pUser->GetUsername(), $sTitle, 'possible tentative de piratage', E_USER_WARNING, false);
+            }//if( ($iReturn==-2)||($iReturn==-3) )
+        }//if( CDBLayer::GetInstance()->Open(PBR_DB_DSN,PBR_DB_USR,PBR_DB_PWD)===FALSE )
+    }//if( $pUser->IsValidLogin() )
 
-                // Login
-                require(PBR_PATH.'/includes/db/function/sessionset.php');
-                $iReturn = SessionSet( $pUser->GetUsername()
-                                     , $sSession
-                                     , $pUser->GetPassword()
-                                     , GetIP().GetUserAgent() );
-                if( $iReturn>0 )
-                {
-				    // Set cookie
-				    if( CCookie::GetInstance()->Write( $pUser->GetUsername(), $sSession, CAuth::DEFAULT_LANGUAGE, FALSE  )===FALSE )
-                    {
-		                $sTitle = 'fichier: '.basename(__FILE__).', ligne:'.__LINE__;
-			            ErrorLog( $pUser->GetUsername(), $sTitle, 'impossible d\'écrire le cookie', E_USER_WARNING, TRUE);
-                    }//if(...
-
-                    // Redirect
-                    unset($pUser);
-                    CPHPSession::CleanToken();
-                    CPHPSession::Clean();
-	    			include(PBR_PATH.'/includes/init/clean.php');
-                    header('Location: '.PBR_URL);
-                    exit;
-
-                }//if( $iReturn>0 )
-
-                // Trace
-	    		if( ($iReturn==-2)||($iReturn==-3) )
-                {
-	                $sTitle = 'fichier: '.basename(__FILE__).', ligne:'.__LINE__;
-		            ErrorLog( $pUser->GetUsername(), $sTitle, 'possible tentative de piratage', E_USER_WARNING, FALSE);
-    			}//if( ($iReturn==-2)||($iReturn==-3) )
-
-            }//if( CDBLayer::GetInstance()->Open(PBR_DB_DSN,PBR_DB_USR,PBR_DB_PWD)===FALSE )
-        }//if( $pUser->IsValidLogin() )
-
-        // Set Message
-        $iMessageCode = 1;
-
-    }//Read input parameters
+    // Set Message
+    $iMessageCode = 1;
+}//Read input parameters
 
     /** Generate and write SESSION token
      ***********************************/
     $sToken = CPHPSession::GetInstance()->WriteToken();
-    if( $sToken===FALSE )
-    {
-        $sTitle = 'fichier: '.basename(__FILE__).', ligne:'.__LINE__;
-        ErrorLog( 'visitor', $sTitle, 'impossible de fixer le jeton de la session', E_USER_ERROR, FALSE);
-    }//if( $sToken===FALSE )
+if ($sToken === false) {
+    $sTitle = 'fichier: '.basename(__FILE__).', ligne:'.__LINE__;
+    ErrorLog('visitor', $sTitle, 'impossible de fixer le jeton de la session', E_USER_ERROR, false);
+}//if( $sToken===FALSE )
 
     /** Build header
      ***************/
@@ -158,4 +148,3 @@
     unset($pUser);
     unset($pHeader);
     include(PBR_PATH.'/includes/init/clean.php');
-?>

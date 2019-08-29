@@ -42,8 +42,8 @@
 
     /** Defines
      **********/
-    define('PBR_VERSION','1.2.1');
-    define('PBR_PATH',dirname(__FILE__));
+    define('PBR_VERSION', '1.2.1');
+    define('PBR_PATH', dirname(__FILE__));
 
     /** Include config
      *****************/
@@ -70,123 +70,109 @@
     /** Read input parameters
      ************************/
     require(PBR_PATH.'/includes/class/caction.php');
-    if( CAction::IsValid( INPUT_POST, 'new')===CAction::VALID )
-    {
-        /** Add new user
-         ***************/
-        $pUser = new CUser();
-        $pUser->ReadInput(INPUT_POST);
-        if( $pUser->IsValidNew()===FALSE )
-        {
-            // Not valid for creation
-            $iMessageCode = 1;
-        }
-        else
-        {
-            require(PBR_PATH.'/includes/db/function/useradd.php');
-            $iReturn = UserAdd( CAuth::GetInstance()->GetUsername()
-                              , CAuth::GetInstance()->GetSession()
-                              , GetIP().GetUserAgent()
-                              , $pUser );
-            if( $iReturn>0 )
-            {
-                // Succeeded
-                $iMessageCode = 2;
-                unset($pUser);
-            }
-            elseif( $iReturn==-4 )
-            {
-                // Failed: duplicate user
-                $iMessageCode = 3;
-            }
-            else
-            {
-                // Failed
-                unset($pUser);
-                RedirectError( $iReturn, __FILE__, __LINE__ );
-                exit;
-            }//if( $iReturn>0 )
-        }//if( $pUser->IsValidNew()===FALSE )
-    }
-    elseif( CAction::IsValid( INPUT_POST, 'update')===CAction::VALID )
-    {
-        /** Update user
-         **************/
-        $pUser = new CUser();
-        $pUser->ReadInput(INPUT_POST);
-        if( $pUser->IsValidUpdate()===FALSE )
-        {
-            // Not valid for update
-            $iMessageCode = 1;
-        }
-        else
-        {
-            require(PBR_PATH.'/includes/db/function/userupdate.php');
-            $iReturn = UserUpdate( CAuth::GetInstance()->GetUsername()
-                                 , CAuth::GetInstance()->GetSession()
-                                 , GetIP().GetUserAgent()
-                                 , $pUser );
-            unset($pUser);
-
-            // Failed
-            if( ($iReturn===FALSE) || ($iReturn<0) )
-            {
-                RedirectError( $iReturn, __FILE__, __LINE__ );
-                exit;
-            }// if( ($iReturn===FALSE) || ($iReturn<0) )
-
+if (CAction::IsValid(INPUT_POST, 'new') === CAction::VALID) {
+    /** Add new user
+     ***************/
+    $pUser = new CUser();
+    $pUser->ReadInput(INPUT_POST);
+    if ($pUser->IsValidNew() === false) {
+        // Not valid for creation
+        $iMessageCode = 1;
+    } else {
+        require(PBR_PATH.'/includes/db/function/useradd.php');
+        $iReturn = UserAdd(
+            CAuth::GetInstance()->GetUsername(),
+            CAuth::GetInstance()->GetSession(),
+            GetIP().GetUserAgent(),
+            $pUser
+        );
+        if ($iReturn > 0) {
             // Succeeded
             $iMessageCode = 2;
+            unset($pUser);
+        } elseif ($iReturn == -4) {
+            // Failed: duplicate user
+            $iMessageCode = 3;
+        } else {
+            // Failed
+            unset($pUser);
+            RedirectError($iReturn, __FILE__, __LINE__);
+            exit;
+        }//if( $iReturn>0 )
+    }//if( $pUser->IsValidNew()===FALSE )
+} elseif (CAction::IsValid(INPUT_POST, 'update') === CAction::VALID) {
+    /** Update user
+     **************/
+    $pUser = new CUser();
+    $pUser->ReadInput(INPUT_POST);
+    if ($pUser->IsValidUpdate() === false) {
+        // Not valid for update
+        $iMessageCode = 1;
+    } else {
+        require(PBR_PATH.'/includes/db/function/userupdate.php');
+        $iReturn = UserUpdate(
+            CAuth::GetInstance()->GetUsername(),
+            CAuth::GetInstance()->GetSession(),
+            GetIP().GetUserAgent(),
+            $pUser
+        );
+        unset($pUser);
 
-        }//if( $pUser->IsValidUpdate()===FALSE )
-    }
-    elseif( CAction::IsValid( INPUT_GET, 'select')===CAction::VALID )
-    {
-        // Read the user identifier
-        $pUser = new CUser();
-        $pUser->ReadInput(INPUT_GET);
-    }
-    else
-    {
-        // Read the message code
-        $iMessageCode = GetMessageCode();
-    }//if( CAction::IsValid(...
+        // Failed
+        if (($iReturn === false) || ($iReturn < 0)) {
+            RedirectError($iReturn, __FILE__, __LINE__);
+            exit;
+        }// if( ($iReturn===FALSE) || ($iReturn<0) )
+
+        // Succeeded
+        $iMessageCode = 2;
+    }//if( $pUser->IsValidUpdate()===FALSE )
+} elseif (CAction::IsValid(INPUT_GET, 'select') === CAction::VALID) {
+    // Read the user identifier
+    $pUser = new CUser();
+    $pUser->ReadInput(INPUT_GET);
+} else {
+    // Read the message code
+    $iMessageCode = GetMessageCode();
+}//if( CAction::IsValid(...
 
     /** Get the user
     ****************/
-    if( isset($pUser) && ($pUser->GetIdentifier()>0) )
-    {
-        require(PBR_PATH.'/includes/db/function/userget.php');
-        $iReturn = UserGet( CAuth::GetInstance()->GetUsername()
-                          , CAuth::GetInstance()->GetSession()
-                          , GetIP().GetUserAgent()
-                          , $pUser );
-        if( ($iReturn===FALSE) || ($iReturn<=0) )
-        {
-            // Failed
-            unset($pUser);
-            if( $iReturn===0 )
-            {
-                $sTitle='fichier: '.basename(__FILE__).', ligne:'.__LINE__;
-                ErrorLog(CAuth::GetInstance()->GetUsername(),$sTitle,'identifiant inconnu',E_USER_ERROR,TRUE);
-                $iReturn=-2;
-            }//if( $iReturn==0 )
-			RedirectError( $iReturn, __FILE__, __LINE__ );
-			exit;
-        }//if( ($iReturn===FALSE) || ($iReturn<=0) )
-    }//if( isset($pUser) && ($pUser->GetIdentifier()>0) )
+if (isset($pUser) && ($pUser->GetIdentifier() > 0)) {
+    require(PBR_PATH.'/includes/db/function/userget.php');
+    $iReturn = UserGet(
+        CAuth::GetInstance()->GetUsername(),
+        CAuth::GetInstance()->GetSession(),
+        GetIP().GetUserAgent(),
+        $pUser
+    );
+    if (($iReturn === false) || ($iReturn <= 0)) {
+        // Failed
+        unset($pUser);
+        if ($iReturn === 0) {
+            $sTitle = 'fichier: '.basename(__FILE__).', ligne:'.__LINE__;
+            ErrorLog(CAuth::GetInstance()->GetUsername(), $sTitle, 'identifiant inconnu', E_USER_ERROR, true);
+            $iReturn = -2;
+        }//if( $iReturn==0 )
+        RedirectError($iReturn, __FILE__, __LINE__);
+        exit;
+    }//if( ($iReturn===FALSE) || ($iReturn<=0) )
+}//if( isset($pUser) && ($pUser->GetIdentifier()>0) )
 
     /** Get the users
      ****************/
     require(PBR_PATH.'/includes/db/function/usersget.php');
-    $tRecordset = UsersGet( CAuth::GetInstance()->GetUsername()
-                          , CAuth::GetInstance()->GetSession()
-                          , GetIP().GetUserAgent());
-    if( !is_array($tRecordset) )
-    {
+    $tRecordset = UsersGet(
+        CAuth::GetInstance()->GetUsername(),
+        CAuth::GetInstance()->GetSession(),
+        GetIP().GetUserAgent()
+    );
+    if (! is_array($tRecordset)) {
         // Failed
-        if( isset($pUser) ) unset($pUser);
-        RedirectError( $tRecordset, __FILE__, __LINE__ );
+        if (isset($pUser)) {
+            unset($pUser);
+        }
+        RedirectError($tRecordset, __FILE__, __LINE__);
         exit;
     }//if( !is_array($tRecordset) )
 
@@ -208,6 +194,5 @@
 
     /** Delete objects
      *****************/
-    unset($pHeader,$pUser);
+    unset($pHeader, $pUser);
     include(PBR_PATH.'/includes/init/clean.php');
-?>

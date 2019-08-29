@@ -39,8 +39,8 @@
 
     /** Defines
      **********/
-    define('PBR_VERSION','1.2.1');
-    define('PBR_PATH',dirname(__FILE__));
+    define('PBR_VERSION', '1.2.1');
+    define('PBR_PATH', dirname(__FILE__));
 
     /** Include config
      *****************/
@@ -74,21 +74,19 @@
      ************************/
 
     // Read date values
-    if( $pDate->ReadInput( INPUT_GET, TRUE )===FALSE )
-    {
-        // mandatory parameters are not valid
-        unset( $pDate, $pSearch, $pPaging, $pOrder, $pSort );
-        $sTitle='fichier: '.basename(__FILE__).', ligne:'.__LINE__;
-        ErrorLog( CAuth::GetInstance()->GetUsername(), $sTitle, 'date invalide', E_USER_WARNING, FALSE);
-        RedirectError( -2, __FILE__, __LINE__ );
-        exit;
-    }//Read date values
+if ($pDate->ReadInput(INPUT_GET, true) === false) {
+    // mandatory parameters are not valid
+    unset($pDate, $pSearch, $pPaging, $pOrder, $pSort);
+    $sTitle = 'fichier: '.basename(__FILE__).', ligne:'.__LINE__;
+    ErrorLog(CAuth::GetInstance()->GetUsername(), $sTitle, 'date invalide', E_USER_WARNING, false);
+    RedirectError(-2, __FILE__, __LINE__);
+    exit;
+}//Read date values
 
     // Read contact lastname
-    if( filter_has_var(INPUT_GET, CContact::LASTNAMETAG) )
-    {
-        $pSearch->ReadInputLastName(INPUT_GET);
-    }//Read contact lastname
+if (filter_has_var(INPUT_GET, CContact::LASTNAMETAG)) {
+    $pSearch->ReadInputLastName(INPUT_GET);
+}//Read contact lastname
 
     // Read the page
     $pPaging->ReadInput();
@@ -98,37 +96,39 @@
 
     // Get contact count
     require(PBR_PATH.'/includes/db/function/contactsgetcount.php');
-    $iReturn = ContactsGetCount( CAuth::GetInstance()->GetUsername()
-                               , CAuth::GetInstance()->GetSession()
-                               , GetIP().GetUserAgent()
-                               , $pSearch );
+    $iReturn = ContactsGetCount(
+        CAuth::GetInstance()->GetUsername(),
+        CAuth::GetInstance()->GetSession(),
+        GetIP().GetUserAgent(),
+        $pSearch
+    );
 
     // Error
-    if( ($iReturn===FALSE) || ($iReturn<0) )
-    {
-        unset( $pPaging, $pSearch, $pDate, $pOrder, $pSort );
-        RedirectError( $iReturn, __FILE__, __LINE__ );
+    if (($iReturn === false) || ($iReturn < 0)) {
+        unset($pPaging, $pSearch, $pDate, $pOrder, $pSort);
+        RedirectError($iReturn, __FILE__, __LINE__);
         exit;
     }//if( ($iReturn===FALSE) || ($iReturn<0) )
 
     // Succeeded
-    $pPaging->Compute( PBR_PAGE_CONTACTS, $iReturn );
+    $pPaging->Compute(PBR_PAGE_CONTACTS, $iReturn);
 
     // Get contact list
     require(PBR_PATH.'/includes/db/function/contactsget.php');
-    $tRecordset = ContactsGet( CAuth::GetInstance()->GetUsername()
-                             , CAuth::GetInstance()->GetSession()
-                             , GetIP().GetUserAgent()
-                             , $pSearch
-                             , $pPaging
-                             , $pOrder
-                             , $pSort );
+    $tRecordset = ContactsGet(
+        CAuth::GetInstance()->GetUsername(),
+        CAuth::GetInstance()->GetSession(),
+        GetIP().GetUserAgent(),
+        $pSearch,
+        $pPaging,
+        $pOrder,
+        $pSort
+    );
 
-    if( !is_array($tRecordset) )
-    {
+    if (! is_array($tRecordset)) {
         // Error
-        unset( $pPaging, $pSearch, $pDate, $pOrder, $pSort );
-        RedirectError( $tRecordset, __FILE__, __LINE__ );
+        unset($pPaging, $pSearch, $pDate, $pOrder, $pSort);
+        RedirectError($tRecordset, __FILE__, __LINE__);
         exit;
     }//if( !is_array($tRecordset) )
 
@@ -141,8 +141,7 @@
     $pHeader->SetTitle($sBuffer);
     $pHeader->SetDescription($sBuffer);
     $pHeader->SetKeywords($sBuffer);
-    if( strlen($pSearch->GetLastName())>0 )
-    {
+    if (strlen($pSearch->GetLastName()) > 0) {
         $pHeader->SetTitle($pSearch->GetLastName());
         $pHeader->SetDescription($pSearch->GetLastName());
         $pHeader->SetKeywords($pSearch->GetLastName());
@@ -156,6 +155,5 @@
 
     /** Delete objects
      *****************/
-    unset( $pPaging, $pSearch, $pDate, $pHeader, $pOrder, $pSort);
+    unset($pPaging, $pSearch, $pDate, $pHeader, $pOrder, $pSort);
     include(PBR_PATH.'/includes/init/clean.php');
-?>

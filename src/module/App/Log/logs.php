@@ -38,8 +38,8 @@
 
     /** Defines
      **********/
-    define('PBR_VERSION','1.2.1');
-    define('PBR_PATH',dirname(__FILE__));
+    define('PBR_VERSION', '1.2.1');
+    define('PBR_PATH', dirname(__FILE__));
 
     /** Include config
      *****************/
@@ -63,7 +63,7 @@
     $pPaging = null;
     $iMessageCode = 0;
 
-	/** Read input parameters
+    /** Read input parameters
      ************************/
 
     // Read the message code
@@ -78,33 +78,35 @@
 
     // Get log count
     require(PBR_PATH.'/includes/db/function/logsgetcount.php');
-    $iReturn = LogsGetCount( CAuth::GetInstance()->GetUsername()
-                           , CAuth::GetInstance()->GetSession()
-                           , GetIP().GetUserAgent() );
+    $iReturn = LogsGetCount(
+        CAuth::GetInstance()->GetUsername(),
+        CAuth::GetInstance()->GetSession(),
+        GetIP().GetUserAgent()
+    );
 
-    if( ($iReturn===FALSE) || ($iReturn<0) )
-    {
+    if (($iReturn === false) || ($iReturn < 0)) {
         // Error
         unset($pPaging);
-        RedirectError( $iReturn, __FILE__, __LINE__ );
+        RedirectError($iReturn, __FILE__, __LINE__);
         exit;
     }//if( ($iReturn===FALSE) || ($iReturn<0) )
 
     // Succeeded
-    $pPaging->Compute( PBR_PAGE_LOGS, $iReturn );
+    $pPaging->Compute(PBR_PAGE_LOGS, $iReturn);
 
     // Get log list
     require(PBR_PATH.'/includes/db/function/logsget.php');
-    $tRecordset = LogsGet( CAuth::GetInstance()->GetUsername()
-                         , CAuth::GetInstance()->GetSession()
-                         , GetIP().GetUserAgent()
-                         , $pPaging );
+    $tRecordset = LogsGet(
+        CAuth::GetInstance()->GetUsername(),
+        CAuth::GetInstance()->GetSession(),
+        GetIP().GetUserAgent(),
+        $pPaging
+    );
 
-    if( !is_array($tRecordset) )
-    {
+    if (! is_array($tRecordset)) {
         // Error
         unset($pPaging);
-        RedirectError( $tRecordset, __FILE__, __LINE__ );
+        RedirectError($tRecordset, __FILE__, __LINE__);
         exit;
     }//if( !is_array($tRecordset) )
 
@@ -129,4 +131,3 @@
     unset($pPaging);
     unset($pHeader);
     include(PBR_PATH.'/includes/init/clean.php');
-?>

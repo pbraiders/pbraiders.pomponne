@@ -38,8 +38,8 @@
 
     /** Defines
      **********/
-    define('PBR_VERSION','1.2.1');
-    define('PBR_PATH',dirname(__FILE__));
+    define('PBR_VERSION', '1.2.1');
+    define('PBR_PATH', dirname(__FILE__));
 
     /** Include config
      *****************/
@@ -68,47 +68,48 @@
      ************************/
 
     // Read date values
-    if( $pDate->ReadInput( INPUT_GET, TRUE )===FALSE )
-    {
-        // mandatory parameters are not valid
-        unset( $pDate, $pPaging);
-        $sTitle='fichier: '.basename(__FILE__).', ligne:'.__LINE__;
-        ErrorLog( CAuth::GetInstance()->GetUsername(), $sTitle, 'date invalide', E_USER_WARNING, FALSE);
-        RedirectError( -2, __FILE__, __LINE__ );
-        exit;
-    }//if( $pDate->ReadInput(...
+if ($pDate->ReadInput(INPUT_GET, true) === false) {
+    // mandatory parameters are not valid
+    unset($pDate, $pPaging);
+    $sTitle = 'fichier: '.basename(__FILE__).', ligne:'.__LINE__;
+    ErrorLog(CAuth::GetInstance()->GetUsername(), $sTitle, 'date invalide', E_USER_WARNING, false);
+    RedirectError(-2, __FILE__, __LINE__);
+    exit;
+}//if( $pDate->ReadInput(...
 
     /** Build the page
      *****************/
 
     // Get the reservations count
     require(PBR_PATH.'/includes/db/function/rentsgetcount.php');
-    $iReturn = RentsGetCount( CAuth::GetInstance()->GetUsername()
-                            , CAuth::GetInstance()->GetSession()
-                            , GetIP().GetUserAgent()
-                            , $pDate );
+    $iReturn = RentsGetCount(
+        CAuth::GetInstance()->GetUsername(),
+        CAuth::GetInstance()->GetSession(),
+        GetIP().GetUserAgent(),
+        $pDate
+    );
 
     // Error
-    if( ($iReturn===FALSE) || ($iReturn<0) )
-    {
-        unset( $pDate, $pPaging);
-        RedirectError( $iReturn, __FILE__, __LINE__ );
+    if (($iReturn === false) || ($iReturn < 0)) {
+        unset($pDate, $pPaging);
+        RedirectError($iReturn, __FILE__, __LINE__);
         exit;
     }//if( ($iReturn===FALSE) || ($iReturn<0) )
 
     // Get rents
     require(PBR_PATH.'/includes/db/function/rentsget.php');
-    $tRecordset = RentsGet( CAuth::GetInstance()->GetUsername()
-                          , CAuth::GetInstance()->GetSession()
-                          , GetIP().GetUserAgent()
-                          , $pDate
-                          , $pPaging );
+    $tRecordset = RentsGet(
+        CAuth::GetInstance()->GetUsername(),
+        CAuth::GetInstance()->GetSession(),
+        GetIP().GetUserAgent(),
+        $pDate,
+        $pPaging
+    );
 
     // Error
-    if( !is_array($tRecordset) )
-    {
-        unset( $pDate, $pPaging);
-        RedirectError( $tRecordset, __FILE__, __LINE__ );
+    if (! is_array($tRecordset)) {
+        unset($pDate, $pPaging);
+        RedirectError($tRecordset, __FILE__, __LINE__);
         exit;
     }//if( !is_array($tRecordset) )
 
@@ -117,7 +118,7 @@
     require(PBR_PATH.'/includes/class/cheader.php');
     $pHeader = new CHeader();
     $sFormTitle  = $pDate->GetRequestDay().' ';
-    $sFormTitle .= $pDate->GetMonthName( $pDate->GetRequestMonth() ).' ';
+    $sFormTitle .= $pDate->GetMonthName($pDate->GetRequestMonth()).' ';
     $sFormTitle .= $pDate->GetRequestYear();
     $pHeader->SetNoCache();
     $pHeader->ToPrint();
@@ -135,6 +136,5 @@
 
     /** Delete objects
      *****************/
-    unset( $pDate, $pPaging);
+    unset($pDate, $pPaging);
     include(PBR_PATH.'/includes/init/clean.php');
-?>

@@ -38,8 +38,8 @@
 
     /** Defines
      **********/
-    define('PBR_VERSION','1.2.1');
-    define('PBR_PATH',dirname(__FILE__));
+    define('PBR_VERSION', '1.2.1');
+    define('PBR_PATH', dirname(__FILE__));
 
     /** Include config
      *****************/
@@ -69,71 +69,68 @@
      ************************/
 
     // Update
-    if( filter_has_var( INPUT_POST, 'update' ) )
-    {
-        // Get the month parameters
-        $pMax = new CMaxRentPerMonthList();
-        $pMax->ReadInput();
-        if( $pMax->GetCount()!=12 )
-        {
-            unset($pMax);
-            $iMessageCode = 1;
-        }//if( $pMax->GetCount()!=12 )
-    }
-    else
-    {
-        // Get the message code
-        $iMessageCode = GetMessageCode();
-    }//if( filter_has_var( ...
+if (filter_has_var(INPUT_POST, 'update')) {
+    // Get the month parameters
+    $pMax = new CMaxRentPerMonthList();
+    $pMax->ReadInput();
+    if ($pMax->GetCount() != 12) {
+        unset($pMax);
+        $iMessageCode = 1;
+    }//if( $pMax->GetCount()!=12 )
+} else {
+    // Get the message code
+    $iMessageCode = GetMessageCode();
+}//if( filter_has_var( ...
 
     /** Update
      *********/
-    if( isset($pMax) )
-    {
-        require(PBR_PATH.'/includes/db/function/maxupdate.php');
-        $iReturn = MaxUpdate( CAuth::GetInstance()->GetUsername()
-                            , CAuth::GetInstance()->GetSession()
-                            , GetIP().GetUserAgent()
-                            , $pMax );
+if (isset($pMax)) {
+    require(PBR_PATH.'/includes/db/function/maxupdate.php');
+    $iReturn = MaxUpdate(
+        CAuth::GetInstance()->GetUsername(),
+        CAuth::GetInstance()->GetSession(),
+        GetIP().GetUserAgent(),
+        $pMax
+    );
 
-        unset($pMax);
+    unset($pMax);
 
-        // Failed
-        if( ($iReturn===FALSE) || ($iReturn<0) )
-        {
-            RedirectError( $iReturn, __FILE__, __LINE__ );
-            exit;
-        }//if( ($iReturn===FALSE) || ($iReturn<0) )
+    // Failed
+    if (($iReturn === false) || ($iReturn < 0)) {
+        RedirectError($iReturn, __FILE__, __LINE__);
+        exit;
+    }//if( ($iReturn===FALSE) || ($iReturn<0) )
 
-        // Succeeded
-        $iMessageCode = 4;
-
-    }//if( isset($pMax) )
+    // Succeeded
+    $iMessageCode = 4;
+}//if( isset($pMax) )
 
     /** Read the parameters
      **********************/
     require(PBR_PATH.'/includes/db/function/maxget.php');
-    $tRecordset = MaxGet( CAuth::GetInstance()->GetUsername()
-                        , CAuth::GetInstance()->GetSession()
-                        , GetIP().GetUserAgent() );
+    $tRecordset = MaxGet(
+        CAuth::GetInstance()->GetUsername(),
+        CAuth::GetInstance()->GetSession(),
+        GetIP().GetUserAgent()
+    );
 
-    if( !is_array($tRecordset) )
-    {
+    if (! is_array($tRecordset)) {
         // Error
-        RedirectError( $tRecordset, __FILE__, __LINE__ );
+        RedirectError($tRecordset, __FILE__, __LINE__);
         exit;
     }//if( !is_array($tRecordset) )
 
     /** Read the database status
      ***************************/
     require(PBR_PATH.'/includes/db/function/dbstatus.php');
-    $tRecordsetDB = DBStatus( CAuth::GetInstance()->GetUsername()
-                            , CAuth::GetInstance()->GetSession()
-                            , GetIP().GetUserAgent() );
+    $tRecordsetDB = DBStatus(
+        CAuth::GetInstance()->GetUsername(),
+        CAuth::GetInstance()->GetSession(),
+        GetIP().GetUserAgent()
+    );
 
-    if( !is_array($tRecordsetDB) )
-    {
-        $tRecordsetDB = array('records'=>0, 'size'=>0);
+    if (! is_array($tRecordsetDB)) {
+        $tRecordsetDB = ['records' => 0, 'size' => 0];
     }//if( !is_array($tRecordsetDB) )
 
     /** Build header
@@ -157,4 +154,3 @@
     unset($pDate);
     unset($pHeader);
     include(PBR_PATH.'/includes/init/clean.php');
-?>

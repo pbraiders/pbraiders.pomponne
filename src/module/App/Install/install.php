@@ -39,8 +39,8 @@
 
     /** Defines
      **********/
-    define('PBR_VERSION','1.3.0');
-    define('PBR_PATH',dirname(__FILE__));
+    define('PBR_VERSION', '1.3.0');
+    define('PBR_PATH', dirname(__FILE__));
 
     /** Include config
      *****************/
@@ -53,7 +53,7 @@
     /** Initialize context
      *********************/
     require(PBR_PATH.'/includes-install/context.php');
-   $tMessageCode = array();
+   $tMessageCode = [];
 
     /** Authenticate
      ***************/
@@ -66,35 +66,32 @@
     $sPHPVersionRequired   = '5.2';
     $sMYSQLVersionRequired = '5.0';
     $sPHPVersion   = phpversion();
-	if( function_exists( 'mysql_get_client_info' )) {
-	    $sMYSQLVersion = mysql_get_client_info();
-	} else {
-		$sMYSQLVersion = '5.0';
-	}
+if (function_exists('mysql_get_client_info')) {
+    $sMYSQLVersion = mysql_get_client_info();
+} else {
+    $sMYSQLVersion = '5.0';
+}
 
     /** Prerequiste test
      ******************/
-    if( !version_compare( $sPHPVersion, $sPHPVersionRequired, '>=')
-     && !version_compare( $sMYSQLVersion, $sMYSQLVersionRequired, '>=') )
-    {
-        $sTitle='fichier: '.basename(__FILE__).', ligne:'.__LINE__;
-		ErrorLog( CAuth::GetInstance()->GetUsername(), $sTitle, 'les versions ne sont pas valides', E_USER_ERROR, FALSE);
-        $tMessageCode[] = 3;
-    }//if( !version_compare( $sPHPVersion, $sPHPVersionRequired, '>=') )
+if (! version_compare($sPHPVersion, $sPHPVersionRequired, '>=')
+     && ! version_compare($sMYSQLVersion, $sMYSQLVersionRequired, '>=') ) {
+    $sTitle = 'fichier: '.basename(__FILE__).', ligne:'.__LINE__;
+    ErrorLog(CAuth::GetInstance()->GetUsername(), $sTitle, 'les versions ne sont pas valides', E_USER_ERROR, false);
+    $tMessageCode[] = 3;
+}//if( !version_compare( $sPHPVersion, $sPHPVersionRequired, '>=') )
 
     /** Read input parameters
      ************************/
-    if( filter_has_var( INPUT_POST, 'install') )
-    {
-        $pUser->ReadInput(INPUT_POST);
-        if( $pUser->IsValidNew()===FALSE )
-        {
-            // Parameters are not valid
-            $sTitle='fichier: '.basename(__FILE__).', ligne:'.__LINE__;
-	        ErrorLog( CAuth::GetInstance()->GetUsername(), $sTitle, 'les paramètres ne sont pas valides', E_USER_ERROR, FALSE);
-            $tMessageCode[] = 4;
-        }//if( $pUser->IsValidNew()===FALSE )
-    }//if( ($iMessageCode==0) && filter_has_var( INPUT_POST, 'install') )
+if (filter_has_var(INPUT_POST, 'install')) {
+    $pUser->ReadInput(INPUT_POST);
+    if ($pUser->IsValidNew() === false) {
+        // Parameters are not valid
+        $sTitle = 'fichier: '.basename(__FILE__).', ligne:'.__LINE__;
+        ErrorLog(CAuth::GetInstance()->GetUsername(), $sTitle, 'les paramètres ne sont pas valides', E_USER_ERROR, false);
+        $tMessageCode[] = 4;
+    }//if( $pUser->IsValidNew()===FALSE )
+}//if( ($iMessageCode==0) && filter_has_var( INPUT_POST, 'install') )
 
     /** Build header
      ***************/
@@ -108,21 +105,16 @@
     /** Display or install
      *********************/
     require(PBR_PATH.'/includes/display/header.php');
-    if( (count($tMessageCode)==0) && ($pUser->IsValidNew()===TRUE) )
-    {
-        // Install
-        require(PBR_PATH.'/includes-install/install.php');
-    }
-    else
-    {
-        // Display
-        require(PBR_PATH.'/includes-install/welcome.php');
-    }//if( (...
+if ((count($tMessageCode) == 0) && ($pUser->IsValidNew() === true)) {
+    // Install
+    require(PBR_PATH.'/includes-install/install.php');
+} else {
+    // Display
+    require(PBR_PATH.'/includes-install/welcome.php');
+}//if( (...
     require(PBR_PATH.'/includes/display/footer.php');
 
    /** Delete objects
     *****************/
-    unset($pUser,$pHeader);
+    unset($pUser, $pHeader);
     include(PBR_PATH.'/includes/init/clean.php');
-
-?>

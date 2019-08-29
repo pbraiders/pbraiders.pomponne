@@ -37,8 +37,8 @@
 
     /** Defines
      **********/
-    define('PBR_VERSION','1.2.1');
-    define('PBR_PATH',dirname(__FILE__));
+    define('PBR_VERSION', '1.2.1');
+    define('PBR_PATH', dirname(__FILE__));
 
     /** Include config
      *****************/
@@ -58,22 +58,22 @@
 
     /** Build graph list
      *******************/
-    $tGraphs = array();
-    $tGraphs[1] = array('Nombre de réservations par','rentsmonthcount','Réservations','mois');
-    $tGraphs[2] = array('Nombre de réservations par','rentsyearcount','Réservations','an');
-    $tGraphs[3] = array('Détail des réservations par','rentsmonthsum','Réservations','mois');
-    $tGraphs[4] = array('Détail des réservations par','rentsyearsum','Réservations','an');
-    $tGraphs[5] = array('Création de contacts par','contactsmonthcount','Contacts','mois');
-    $tGraphs[6] = array('Création de contacts par','contactsyearcount','Contacts','an');
-    $tGraphs[7] = array('Répartition des arrhes','arrhesyearcount','Arrhes','');
-    $tGraphs[8] = array('Répartition des ages','agesyearcount','Ages','');
+    $tGraphs = [];
+    $tGraphs[1] = ['Nombre de réservations par','rentsmonthcount','Réservations','mois'];
+    $tGraphs[2] = ['Nombre de réservations par','rentsyearcount','Réservations','an'];
+    $tGraphs[3] = ['Détail des réservations par','rentsmonthsum','Réservations','mois'];
+    $tGraphs[4] = ['Détail des réservations par','rentsyearsum','Réservations','an'];
+    $tGraphs[5] = ['Création de contacts par','contactsmonthcount','Contacts','mois'];
+    $tGraphs[6] = ['Création de contacts par','contactsyearcount','Contacts','an'];
+    $tGraphs[7] = ['Répartition des arrhes','arrhesyearcount','Arrhes',''];
+    $tGraphs[8] = ['Répartition des ages','agesyearcount','Ages',''];
 
     /** Initialize
      *************/
     require(PBR_PATH.'/includes/class/cdate.php');
     require(PBR_PATH.'/includes/class/coption.php');
     $pDate = new CDate();
-    $pChoice = new COption('1', 1, count($tGraphs) );
+    $pChoice = new COption('1', 1, count($tGraphs));
     $pInterval = new COption('2', 0, 60);
 
     /** Read input parameters
@@ -87,15 +87,13 @@
     $pHeader = new Cheader();
     $sBuffer = 'Graphes';
     $sTitle = $sKeywords = $tGraphs[$pChoice->GetValue()][2];
-    if( $pInterval->GetValue()>0 )
-    {
-        $sTitle .= ' de '.($pDate->GetCurrentYear()-$pInterval->GetValue()).' à '.$pDate->GetCurrentYear();
+if ($pInterval->GetValue() > 0) {
+    $sTitle .= ' de '.($pDate->GetCurrentYear() - $pInterval->GetValue()).' à '.$pDate->GetCurrentYear();
+} else {
+    if (! empty($tGraphs[$pChoice->GetValue()][3])) {
+        $sTitle .= ' par '.$tGraphs[$pChoice->GetValue()][3];
     }
-    else
-    {
-        if( !empty($tGraphs[$pChoice->GetValue()][3]) )
-            $sTitle .= ' par '.$tGraphs[$pChoice->GetValue()][3];
-    }
+}
     $sBuffer .= ' - '.$sTitle;
     $pHeader->SetNoCache();
     $pHeader->SetTitle($sBuffer);
@@ -113,4 +111,3 @@
      *****************/
     unset($pDate, $pChoice, $pInteval, $pHeader);
     include(PBR_PATH.'/includes/init/clean.php');
-?>
