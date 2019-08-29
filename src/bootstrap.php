@@ -62,7 +62,7 @@ if (!empty($aSettings['php'])) {
  * Out-of-the-box, it provides a pretty error interface that helps you debug your web projects,
  * but at heart it's a simple yet powerful stacked error handling system.
  */
-if ((!empty($aSettings['module']['error']['use_whoops']))) {
+if ((!empty($aSettings['service']['error']['use_whoops']))) {
     $pContainer->get('whoops')->register();
 }
 

@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 /**
+ * Extends the \Monolog\Formatter\LineFormatter by formatting the output.
+ *
  * @see https://github.com/Seldaek/monolog
  * @package Pbraiders\Service\Logger
  * @link    https://github.com/pbraiders/pomponne for the canonical source repository
@@ -13,7 +15,6 @@ namespace Pbraiders\Service\Logger;
 
 /**
  * Formats incoming records into a one-line apache log like string.
- *
  */
 class LineFormatter extends \Monolog\Formatter\LineFormatter
 {

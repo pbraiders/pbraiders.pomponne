@@ -49,7 +49,7 @@ class Factory
     {
         // Reads the files.
         $aSettings = $this->readMainConfig($main);
-        $aLocalSettings = $this->readLocalConfig()($local);
+        $aLocalSettings = $this->readLocalConfig($local);
 
         // Replace main settings with local settings.
         if (! empty($aLocalSettings)) {

@@ -43,4 +43,4 @@ class ServiceProvider extends AbstractServiceProvider
         $this->getContainer()->share('service1', true);
         $this->getContainer()->share('service2', true);
     }
-};
+}

@@ -24,6 +24,12 @@ return [
             'url' => 'https://www.example.com/pbraiders/',
         ],
 
+        // Temporary directory.
+        'temporary_path' => \PBR_PATH . \DIRECTORY_SEPARATOR . 'var' . \DIRECTORY_SEPARATOR . 'tmp',
+
+        // Cache directory. While developping, set it to false to deactivate all caches.
+        'cache_path' => \PBR_PATH . \DIRECTORY_SEPARATOR . 'var' . \DIRECTORY_SEPARATOR . 'cache',
+
     ],
 
     'service' => [
@@ -50,8 +56,6 @@ return [
             // If set to 1, the application will use 'whoops error handling library' instead of the default PHP one.
             // Usefull during development.
             'use_whoops' => false,
-            // Temporary directory.
-            'temporary_path' => \PBR_PATH . \DIRECTORY_SEPARATOR . 'tmp',
         ],
 
         'logger' => [

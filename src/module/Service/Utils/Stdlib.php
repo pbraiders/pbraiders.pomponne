@@ -3,8 +3,6 @@
 declare(strict_types=1);
 
 /**
- * Stdlib is a class that implements general purpose utility function for different scopes.
- *
  * @package Pbraiders\Service\Utils
  * @link    https://github.com/pbraiders/pomponne for the canonical source repository
  * @license https://github.com/pbraiders/pomponne/blob/master/LICENSE GNU General Public License v3.0 License.
@@ -12,6 +10,9 @@ declare(strict_types=1);
 
 namespace Pbraiders\Service\Utils;
 
+/**
+ * Stdlib is a class that implements general purpose utility function for different scopes.
+ */
 class Stdlib
 {
 

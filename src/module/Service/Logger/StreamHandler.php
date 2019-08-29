@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 /**
+ * Extends the \Monolog\Handler\StreamHandler to configure automaticaly the stream
+ *
  * @see https://github.com/Seldaek/monolog
  * @package Pbraiders\Service\Logger
  * @link    https://github.com/pbraiders/pomponne for the canonical source repository

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PbraidersTest\Service\Container;
 
 use Pbraiders\Service\Container\Factory;

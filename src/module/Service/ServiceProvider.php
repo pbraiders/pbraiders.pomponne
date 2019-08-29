@@ -96,11 +96,11 @@ class ServiceProvider extends AbstractServiceProvider
         // Retrieves the configuration.
         $aSettings = $pContainer->get('settings');
 
-        if (empty($aSettings['module']['logger'])) {
+        if (empty($aSettings['service']['logger'])) {
             throw new Exception\RuntimeException('Logger configuration is missing.');
         }
 
-        $aSettings = &$aSettings['module']['logger'];
+        $aSettings = &$aSettings['service']['logger'];
 
         // Registers the processor.
         $pContainer

@@ -56,6 +56,6 @@
         "cs-check": "src/vendor/bin/phpcs --standard=./phpcs.xml",
         "cs-fix": "src/vendor/bin/phpcbf --standard=./phpcs.xml",
         "test": "src/vendor/bin/phpunit --colors=always",
-        "md-check": "src/vendor/bin/phpmd src text ./phpmd.xml"
+        "md-check": "src/vendor/bin/phpmd src text ./phpmd.xml --exclude '*/vendor/*,*/old/*'"
     }
 }
