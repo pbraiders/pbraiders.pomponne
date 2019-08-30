@@ -29,6 +29,7 @@ return static function (App $pApplication) {
     if (empty($aSettings['application']['website']['url'])) {
         throw new Exception\RuntimeException('The website.url setting is missing in the config file.');
     }
+
     /** @var string $sRootPath Path of the website */
     $sRootPath = $aSettings['application']['website']['path'];
 
@@ -36,7 +37,7 @@ return static function (App $pApplication) {
      * Set the cache file for the routes. Note that you have to delete this file
      * whenever you change the routes.
      */
-    if (!empty($aSettings['application']['cache_path'])) {
+    if (! empty($aSettings['application']['cache_path'])) {
         $pApplication->getRouteCollector()->setCacheFile(
             $aSettings['application']['cache_path'] . \DIRECTORY_SEPARATOR . 'routes.cache'
         );
@@ -45,6 +46,9 @@ return static function (App $pApplication) {
     /**
      * Defines the routes.
      */
+    echo '<pre>', \PHP_EOL;
+    print_r($aSettings);
+    echo '</pre>', \PHP_EOL;
 
     // home
     $pApplication->get($sRootPath, function (
@@ -57,6 +61,7 @@ return static function (App $pApplication) {
         //$a = 1 / 0;
         //trigger_error("notice triggered", E_USER_NOTICE);
         //trigger_error("error triggered", E_USER_ERROR);
+
         return $response;
     });
 };

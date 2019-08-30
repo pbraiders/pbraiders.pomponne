@@ -12,7 +12,12 @@ declare(strict_types=1);
 
 return [
 
-    'application' => [],
+    'application' => [
+
+        // Cache directory. While developping, set it to false to deactivate all caches.
+        'cache_path' => false,
+
+    ],
 
     'service' => [
 

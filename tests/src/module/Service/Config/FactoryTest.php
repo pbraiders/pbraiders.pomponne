@@ -129,4 +129,46 @@ class FactoryTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(is_array($aActual));
         $this->assertFalse(empty($aActual));
     }
+
+    /**
+     * @covers \Pbraiders\Service\Config\Factory
+     * @group specification
+     */
+    public function testUpdateSessionSettingsException()
+    {
+        $aExpected = [
+            'application' => [],
+        ];
+        $pFactory = new Factory();
+        $pMethod = $this->getPrivateMethod('\Pbraiders\Service\Config\Factory', 'updateSessionSettings');
+        $this->expectException(Exception\RuntimeException::class);
+        $pMethod->invokeArgs($pFactory, [&$aExpected]);
+    }
+
+    /**
+     * @covers \Pbraiders\Service\Config\Factory
+     * @group specification
+     */
+    public function testUpdateSessionSettings()
+    {
+        $aSettings = [
+            'application' => [
+                'website' => [
+                    'host' => 'www.domain.tld',
+                    'scheme' => 'https',
+                ],
+                'temporary_path' => '/tmp',
+            ],
+            'php' => [],
+        ];
+        $pFactory = new Factory();
+        $pMethod = $this->getPrivateMethod('\Pbraiders\Service\Config\Factory', 'updateSessionSettings');
+        $pMethod->invokeArgs($pFactory, [&$aSettings]);
+        $this->assertFalse(empty($aSettings['php']['session.cookie_domain']));
+        $this->assertSame('www.domain.tld', $aSettings['php']['session.cookie_domain']);
+        $this->assertFalse(empty($aSettings['php']['session.save_path']));
+        $this->assertSame('/tmp', $aSettings['php']['session.save_path']);
+        $this->assertFalse(empty($aSettings['php']['session.cookie_secure']));
+        $this->assertSame('1', $aSettings['php']['session.cookie_secure']);
+    }
 }

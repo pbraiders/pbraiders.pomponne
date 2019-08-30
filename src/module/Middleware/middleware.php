@@ -50,7 +50,7 @@ return static function (App $pApplication) {
      * Note: This middleware should be added last. It will not handle any exceptions/errors
      * for middleware added after it.
      */
-    if ((empty($aSettings['module']['error']['use_whoops']))) {
+    if ((empty($aSettings['service']['error']['use_whoops']))) {
         $pApplication->addErrorMiddleware(false, true, true);
     }
 };

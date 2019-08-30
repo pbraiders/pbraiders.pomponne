@@ -16,7 +16,15 @@ declare(strict_types=1);
 
 return [
 
-    'application' => [],
+    'application' => [
+
+        // Temporary directory.
+        'temporary_path' => \PBR_PATH . \DIRECTORY_SEPARATOR . 'var' . \DIRECTORY_SEPARATOR . 'tmp',
+
+        // Cache directory. While developping, set it to false to deactivate all caches.
+        'cache_path' => \PBR_PATH . \DIRECTORY_SEPARATOR . 'var' . \DIRECTORY_SEPARATOR . 'cache',
+
+    ],
 
     'service' => [
 
@@ -92,6 +100,51 @@ return [
         // Name of the file where script errors should be logged.
         'error_log' => sprintf('%s/var/log/%s_php_error.log', \PBR_PATH, date("Ymd")),
 
+        // Session cache expire.
+        'session.cache_expire' => '180',
+
+        // Session cache limiter.
+        'session.cache_limiter' => '',
+
+        // Domain to set in the session cookie. The app will update this option according to the website url.
+        'session.cookie_domain' => '',
+
+        // Marks the cookie as accessible only through the HTTP protocol.
+        'session.cookie_httponly' => '1',
+
+        // Lifetime of the cookie in seconds which is sent to the browser.
+        'session.cookie_lifetime' => '14400', // 4 hours
+
+        // Path to set in the session cookie.
+        'session.cookie_path' => '/',
+
+        // Cookies should only be sent over secure connections.
+        // The app will update this option according to the website url.
+        'session.cookie_secure' => '',
+
+        // Session name.
+        'session.name' => 'PBRAIDERS',
+
+        // Save path. The app will update this option according to the website url.
+        'session.save_path' => '/var/lib/php/sessions',
+
+        // Enabling session.use_strict_mode is mandatory for general session security.
+        'session.use_strict_mode' => '1',
+
+        // Yhe module will use cookies to store the session id on the client side.
+        'session.use_cookies' => '1',
+
+        // Module will only use cookies to store the session id on the client side.
+        'session.use_only_cookies' => '1',
+
+        // New protection against cross-site request forgery attacks.
+        'session.cookie_samesite' => 'Strict',
+
+        // Length of session ID string.
+        'session.sid_length' => '256',
+
+        // Number of bits in encoded session ID character.
+        'session.sid_bits_per_character' => '5',
     ],
 
 ];

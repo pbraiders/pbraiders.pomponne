@@ -20,6 +20,9 @@ return [
             'url' => 'https://www.pbraiders.fr/v2.0.0/',
         ],
 
+        // Cache directory. While developping, set it to false to deactivate all caches.
+        'cache_path' => false,
+
     ],
 
     'service' => [

@@ -42,7 +42,7 @@
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">./src/module</directory>
             <exclude>
-                <directory suffix="Interface.php">./src</directory>
+                <directory suffix="index.php">./src/module</directory>
                 <directory suffix="Interface.php">./src/Exception</directory>
                 <directory suffix=".php">./src/old</directory>
             </exclude>

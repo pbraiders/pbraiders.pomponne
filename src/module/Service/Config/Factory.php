@@ -52,22 +52,55 @@ class Factory
         $aLocalSettings = $this->readLocalConfig($local);
 
         // Replace main settings with local settings.
-        if (! empty($aLocalSettings)) {
+        if (!empty($aLocalSettings)) {
             $aSettings = array_replace_recursive($aSettings, $aLocalSettings);
         }
 
-        // Parse the url according to RFC3986
-        if (empty($aSettings['application']['website']['url'])) {
-            throw new Exception\RuntimeException('The website.url setting is missing in the config file.');
-        }
-        $aWebsite = &$aSettings['application']['website'];
-        $pParser = new Parser();
-        $aWebsite = array_merge($aWebsite, $pParser($aWebsite['url']));
+        // Update many settings
+        $this->updateWebsiteSettings($aSettings);
+        $this->updateSessionSettings($aSettings);
 
         // Sorts
         Stdlib::sortArrayByKey($aSettings);
 
         return $aSettings;
+    }
+
+    /**
+     * Update the application wabsite settings
+     *
+     * @param array $aSettings The settings
+     * @return void
+     */
+    protected function updateWebsiteSettings(array &$aSettings): void
+    {
+        // Parse the url according to RFC3986
+        if (empty($aSettings['application']['website']['url'])) {
+            throw new Exception\RuntimeException('The application.website.url setting is missing in the config file.');
+        }
+        $aWebsite = &$aSettings['application']['website'];
+        $pParser = new Parser();
+        $aWebsite = array_merge($aWebsite, $pParser($aWebsite['url']));
+    }
+
+    /**
+     * Update the php session settings
+     *
+     * @param array $aSettings The settings
+     * @return void
+     */
+    protected function updateSessionSettings(array &$aSettings): void
+    {
+        // Mandatory settings
+        if (empty($aSettings['application']['temporary_path'])) {
+            throw new Exception\RuntimeException('The application.temporary_path setting is missing in the config file.');
+        }
+        // Update
+        $aSettings['php']['session.cookie_domain'] = $aSettings['application']['website']['host'];
+        $aSettings['php']['session.save_path'] = $aSettings['application']['temporary_path'];
+        if ('https' === $aSettings['application']['website']['scheme']) {
+            $aSettings['php']['session.cookie_secure'] = '1';
+        }
     }
 
     /**
@@ -84,7 +117,7 @@ class Factory
         $sFilename = empty($filename) ? static::DEFAULT_FILENAME_MAIN : $filename;
 
         // File must exists
-        if (! is_readable($sFilename)) {
+        if (!is_readable($sFilename)) {
             throw new Exception\RuntimeException(sprintf('The config file "%s" cannot be found.', $sFilename));
         }
 
