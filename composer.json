@@ -23,6 +23,7 @@
         "ext-json": "*",
         "filp/whoops": "^2.5",
         "league/container": "^3.3",
+        "league/plates": "^4.0.0-alpha",
         "league/uri-parser": "^1.4",
         "monolog/monolog": "^1.24",
         "slim/psr7": "^0.5.0",

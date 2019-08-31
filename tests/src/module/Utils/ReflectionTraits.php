@@ -16,7 +16,7 @@ use ReflectionClass;
 use ReflectionMethod;
 use ReflectionProperty;
 
-trait ReflectionTraits
+trait ReflectionTrait
 {
 
     /**

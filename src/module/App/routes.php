@@ -37,7 +37,7 @@ return static function (App $pApplication) {
      * Set the cache file for the routes. Note that you have to delete this file
      * whenever you change the routes.
      */
-    if (! empty($aSettings['application']['cache_path'])) {
+    if (!empty($aSettings['application']['cache_path'])) {
         $pApplication->getRouteCollector()->setCacheFile(
             $aSettings['application']['cache_path'] . \DIRECTORY_SEPARATOR . 'routes.cache'
         );
@@ -46,22 +46,7 @@ return static function (App $pApplication) {
     /**
      * Defines the routes.
      */
-    echo '<pre>', \PHP_EOL;
-    print_r($aSettings);
-    echo '</pre>', \PHP_EOL;
 
     // home
-    $pApplication->get($sRootPath, function (
-        \Psr\Http\Message\ServerRequestInterface $request,
-        \Psr\Http\Message\ResponseInterface $response,
-        $args
-    ) {
-        $response->getBody()->write("Hello world!");
-
-        //$a = 1 / 0;
-        //trigger_error("notice triggered", E_USER_NOTICE);
-        //trigger_error("error triggered", E_USER_ERROR);
-
-        return $response;
-    });
+    $pApplication->get($sRootPath, 'Pbraiders\App\Home\Mediator:getAction');
 };

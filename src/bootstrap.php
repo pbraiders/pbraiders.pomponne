@@ -22,16 +22,13 @@ require \PBR_PATH . \DIRECTORY_SEPARATOR . 'vendor' . \DIRECTORY_SEPARATOR . 'au
 $pContainer = \Pbraiders\Service\Container\Factory::createFromInvokables(
     [
         // Add the services provider.
-        \Pbraiders\Service\ServiceProvider::class,
-        // Add the database handler () as service.
-        // Add middlewares
-        // -- ...
-        // -- authentication
-        // -- csrf
-        // -- session
-        // -- Routing middleware
-        // -- Error Handling Middleware
-        // Add routes
+        \Pbraiders\Service\Config\ServiceProvider::class,
+        \Pbraiders\Service\Utils\ServiceProvider::class,
+        \Pbraiders\Service\ErrorHandler\ServiceProvider::class,
+        \Pbraiders\Service\Logger\ServiceProvider::class,
+        \Pbraiders\Service\TemplatingEngine\ServiceProvider::class,
+        // Add the mediators provider.
+        \Pbraiders\App\Home\ServiceProvider::class,
     ]
 );
 
@@ -63,7 +60,7 @@ if (!empty($aSettings['php'])) {
  * but at heart it's a simple yet powerful stacked error handling system.
  */
 if ((!empty($aSettings['service']['error']['use_whoops']))) {
-    $pContainer->get('whoops')->register();
+    $pContainer->get('errorhandler')->register();
 }
 
 /**
@@ -75,7 +72,7 @@ if ((!empty($aSettings['service']['error']['use_whoops']))) {
  *
  * @var Slim\App $pApplication
  */
-$pApplication = $pContainer->get(\Slim\App::class);
+$pApplication = \Slim\Factory\AppFactory::createFromContainer($pContainer);
 
 /**
  * Register middlewares
