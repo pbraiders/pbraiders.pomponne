@@ -19,12 +19,14 @@ class ServiceProviderTest extends \PHPUnit\Framework\TestCase
     public function testRegister()
     {
         $pServiceProvider = new ServiceProvider();
-        $pServiceProvider->setContainer(new Container());
+        $pContainer = new Container();
+        $pServiceProvider->setContainer($pContainer);
         $pProperty = $this->getPrivateProperty('\Pbraiders\Service\ErrorHandler\ServiceProvider', 'provides');
         $aProperties = $pProperty->getValue($pServiceProvider);
+        $pServiceProvider->register();
 
         foreach ($aProperties as $sProperty) {
-            $this->assertTrue($pServiceProvider->provides($sProperty));
+            $this->assertTrue($pContainer->has($sProperty), 'Looking for:' . $sProperty);
         }
     }
 }

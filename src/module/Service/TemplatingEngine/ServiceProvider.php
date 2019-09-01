@@ -61,7 +61,7 @@ class ServiceProvider extends AbstractServiceProvider
         }
 
         $pContainer
-            ->add(Engine::class)
+            ->add('templatingengine', Engine::class)
             ->addArgument($aSettings['service']['templating_engine']['template_path']);
     }
 }

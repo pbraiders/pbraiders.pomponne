@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /**
- * view colleague trait.
+ * view colleague abstract class.
  *
  * @package Pbraiders\App\MediatorPattern
  * @link    https://github.com/pbraiders/pomponne for the canonical source repository
@@ -13,16 +13,17 @@ declare(strict_types=1);
 namespace Pbraiders\App\MediatorPattern;
 
 use League\Plates\Engine;
+use Pbraiders\App\MediatorPattern\Colleague;
 
 /**
- * Undocumented class
+ * view colleague abstract class.
  */
-trait ViewColleagueTrait
+abstract class ViewColleague extends Colleague
 {
     /**
      * Undocumented variable
      *
-     * @var Engine
+     * @var \League\Plates\Engine
      */
     protected $pEngine = null;
 

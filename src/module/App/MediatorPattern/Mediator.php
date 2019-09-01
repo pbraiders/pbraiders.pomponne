@@ -17,11 +17,12 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Exception;
 use Pbraiders\App\MediatorPattern\ColleagueInterface;
+use Pbraiders\App\MediatorPattern\HttpActionInterface;
 
 /**
  * Undocumented class
  */
-abstract class Mediator implements ActionInterface
+abstract class Mediator implements HttpActionInterface
 {
     /**
      * Undocumented variable
@@ -86,9 +87,35 @@ abstract class Mediator implements ActionInterface
      * @param array $params
      * @return \Psr\Http\Message\ResponseInterface
      */
+    public function getAction(Request $request, Response $response, array $params = []): Response
+    {
+        throw new Exception\HttpNotFoundException($request);
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param \Psr\Http\Message\ServerRequestInterface $request
+     * @param \Psr\Http\Message\ResponseInterface $response
+     * @param array $params
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function postAction(Request $request, Response $response, array $params = []): Response
+    {
+        throw new Exception\HttpNotFoundException($request);
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param \Psr\Http\Message\ServerRequestInterface $request
+     * @param \Psr\Http\Message\ResponseInterface $response
+     * @param array $params
+     * @return \Psr\Http\Message\ResponseInterface
+     */
     public function putAction(Request $request, Response $response, array $params = []): Response
     {
-        throw new Exception\NotFoundException($request, $response);
+        throw new Exception\HttpNotFoundException($request);
     }
 
     /**
@@ -101,6 +128,6 @@ abstract class Mediator implements ActionInterface
      */
     public function deleteAction(Request $request, Response $response, array $params = []): Response
     {
-        throw new Exception\NotFoundException($request, $response);
+        throw new Exception\HttpNotFoundException($request);
     }
 }

@@ -23,9 +23,10 @@ class ServiceProviderTest extends \PHPUnit\Framework\TestCase
         $pServiceProvider->setContainer($pContainer);
         $pProperty = $this->getPrivateProperty('\Pbraiders\Service\Config\ServiceProvider', 'provides');
         $aProperties = $pProperty->getValue($pServiceProvider);
+        $pServiceProvider->register();
 
         foreach ($aProperties as $sProperty) {
-            $this->assertTrue($pServiceProvider->provides($sProperty));
+            $this->assertTrue($pContainer->has($sProperty), 'Looking for:' . $sProperty);
         }
     }
 }

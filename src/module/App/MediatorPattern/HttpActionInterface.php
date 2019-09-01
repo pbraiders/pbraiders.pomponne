@@ -18,7 +18,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 /**
  * Undocumented interface
  */
-interface ActionInterface
+interface HttpActionInterface
 {
     /**
      * Undocumented function

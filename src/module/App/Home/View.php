@@ -12,17 +12,13 @@ declare(strict_types=1);
 
 namespace Pbraiders\App\Home;
 
-use Pbraiders\App\MediatorPattern\Colleague;
-use Pbraiders\App\MediatorPattern\ViewColleagueInterface;
-use Pbraiders\App\MediatorPattern\ViewColleagueTrait;
+use Pbraiders\App\MediatorPattern\ViewColleague;
 
 /**
- * Undocumented class
+ * View.
  */
-class View extends Colleague implements ViewColleagueInterface
+class View extends ViewColleague
 {
-    use ViewColleagueTrait;
-
     /**
      * Undocumented function
      *

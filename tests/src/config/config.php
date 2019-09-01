@@ -63,6 +63,11 @@ return [
             'error_log' => sprintf('%s/var/log/%s_pbraiders_error.log', \PBR_PATH, date("Ymd")),
         ],
 
+        'templating_engine' => [
+            // Common templates directory
+            'template_path' => \PBR_PATH . \DIRECTORY_SEPARATOR . 'module' . \DIRECTORY_SEPARATOR . 'template',
+        ],
+
     ],
 
     // These are various options for php.

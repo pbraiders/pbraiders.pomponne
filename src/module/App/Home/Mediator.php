@@ -49,6 +49,6 @@ final class Mediator extends AbstractMediator
      */
     public function postAction(Request $request, Response $response, array $params = []): Response
     {
-        throw new Exception\NotFoundException($request, $response);
+        throw new Exception\HttpNotFoundException($request);
     }
 }
