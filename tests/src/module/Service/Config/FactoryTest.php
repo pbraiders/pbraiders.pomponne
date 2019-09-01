@@ -6,11 +6,11 @@ namespace PbraidersTest\Service\Config;
 
 use Pbraiders\Service\Exception;
 use Pbraiders\Service\Config\Factory;
-use PbraidersTest\Utils\ReflectionTraits;
+use PbraidersTest\Utils\ReflectionTrait;
 
 class FactoryTest extends \PHPUnit\Framework\TestCase
 {
-    use ReflectionTraits;
+    use ReflectionTrait;
     /**
      * Main config filename.
      *

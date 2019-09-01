@@ -18,4 +18,6 @@ use Pbraiders\App\MediatorPattern\Colleague;
  * Undocumented class
  */
 class Model extends Colleague
-{ }
+{
+
+}
