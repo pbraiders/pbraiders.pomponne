@@ -45,7 +45,8 @@ class ServiceProvider extends AbstractServiceProvider
      * that you need to, but remember, every alias registered
      * within this method must be declared in the `$provides` array.
      *
-     * @throws Exception\RuntimeException
+     * @throws Exception\RuntimeException If settings is missing.
+     * @throws \Exception if the URI contains invalid characters
      * @return void
      */
     public function register(): void

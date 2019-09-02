@@ -37,18 +37,26 @@ class Factory
      *
      * @var string
      */
-    const DEFAULT_FILENAME_LOCAL = \PBR_PATH . \DIRECTORY_SEPARATOR . 'config' . \DIRECTORY_SEPARATOR . 'local.config.php';
+    const DEFAULT_FILENAME_LOCAL = \PBR_PATH . \DIRECTORY_SEPARATOR . 'config'
+        . \DIRECTORY_SEPARATOR . 'local.config.php';
 
     /**
      * Nuild an array from php file.
      *
-     * @throws Exception\RuntimeException
-     * @return void
+     * @param string $main Main config filename
+     * @param string $local Local config filename
+     * @throws Exception\RuntimeException If settings is missing.
+     * @throws \Exception
+     * @return array
      */
     public function create(string $main = '', string $local = ''): array
     {
         // Reads the files.
+
+        /** @var array */
         $aSettings = $this->readMainConfig($main);
+
+        /** @var array */
         $aLocalSettings = $this->readLocalConfig($local);
 
         // Replace main settings with local settings.
@@ -70,6 +78,8 @@ class Factory
      * Update the application wabsite settings
      *
      * @param array $aSettings The settings
+     * @throws Exception\RuntimeException If settings is missing.
+     * @throws \Exception if the URI contains invalid characters
      * @return void
      */
     protected function updateWebsiteSettings(array &$aSettings): void
@@ -87,13 +97,16 @@ class Factory
      * Update the php session settings
      *
      * @param array $aSettings The settings
+     * @throws Exception\RuntimeException If settings is missing.
      * @return void
      */
     protected function updateSessionSettings(array &$aSettings): void
     {
         // Mandatory settings
         if (empty($aSettings['application']['temporary_path'])) {
-            throw new Exception\RuntimeException('The application.temporary_path setting is missing in the config file.');
+            throw new Exception\RuntimeException(
+                'The application.temporary_path setting is missing in the config file.'
+            );
         }
         // Update
         $aSettings['php']['session.cookie_domain'] = $aSettings['application']['website']['host'];

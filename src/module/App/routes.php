@@ -14,13 +14,16 @@ namespace Pbraiders\App;
 use Slim\App;
 use Pbraiders\App\Exception;
 
+/**
+ * @throws Exception\RuntimeException If settings is missing.
+ */
 return static function (App $pApplication) {
 
     /**
      * Initialize usefull variables.
      */
 
-    /** @var Psr\Container\ContainerInterface $pContainer PSR-11 Container. */
+    /** @var \Psr\Container\ContainerInterface $pContainer PSR-11 Container. */
     $pContainer = $pApplication->getContainer();
 
     /** @var array $aSettings App settings */

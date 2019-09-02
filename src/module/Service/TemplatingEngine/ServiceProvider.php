@@ -46,6 +46,8 @@ class ServiceProvider extends AbstractServiceProvider
      * within this method must be declared in the `$provides` array.
      *
      * @throws Exception\RuntimeException
+     * @throws \League\Container\Exception\ContainerException
+     * @throws \League\Container\Exception\NotFoundException
      * @return void
      */
     public function register(): void

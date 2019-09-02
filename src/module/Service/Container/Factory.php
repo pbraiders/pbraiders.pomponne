@@ -22,7 +22,8 @@ class Factory
     /**
      * Creates and initializes the PSR container with service providers.
      *
-     * @param array $providers Array of class name. The class name should be class that may be directly instantiated without any constructor arguments.
+     * @param array $providers Array of class name. The class name should be class that may be directly instantiated
+     * without any constructor arguments.
      * @return ContainerInterface
      */
     public static function createFromInvokables(array $providers): ContainerInterface
@@ -37,7 +38,8 @@ class Factory
     /**
      * Creates and initializes the PSR container with factories.
      *
-     * @param array $factories an array of service name/factory class name pairs. The factories should be any PHP callbacks.
+     * @param array $factories an array of service name/factory class name pairs. The factories should be any PHP
+     * callbacks.
      * @return ContainerInterface
      */
     public static function createFromFactories(array $factories): ContainerInterface

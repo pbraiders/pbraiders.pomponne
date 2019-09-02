@@ -27,21 +27,21 @@ abstract class Mediator implements HttpActionInterface
     /**
      * Undocumented variable
      *
-     * @var ContainerInterface
+     * @var ContainerInterface|null
      */
     protected $pContainer = null;
 
     /**
      * Undocumented variable
      *
-     * @var ColleagueInterface
+     * @var ColleagueInterface|null
      */
     protected $pModel = null;
 
     /**
      * Undocumented variable
      *
-     * @var ColleagueInterface
+     * @var ColleagueInterface|null
      */
     protected $pView = null;
 
@@ -85,6 +85,7 @@ abstract class Mediator implements HttpActionInterface
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
      * @param array $params
+     * @throws Exception\HttpNotFoundException
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function getAction(Request $request, Response $response, array $params = []): Response
@@ -98,6 +99,7 @@ abstract class Mediator implements HttpActionInterface
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
      * @param array $params
+     * @throws Exception\HttpNotFoundException
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function postAction(Request $request, Response $response, array $params = []): Response
@@ -111,6 +113,7 @@ abstract class Mediator implements HttpActionInterface
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
      * @param array $params
+     * @throws Exception\HttpNotFoundException
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function putAction(Request $request, Response $response, array $params = []): Response
@@ -124,6 +127,7 @@ abstract class Mediator implements HttpActionInterface
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
      * @param array $params
+     * @throws Exception\HttpNotFoundException
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function deleteAction(Request $request, Response $response, array $params = []): Response

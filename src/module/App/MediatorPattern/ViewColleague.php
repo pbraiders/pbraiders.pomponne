@@ -23,7 +23,7 @@ abstract class ViewColleague extends Colleague
     /**
      * Undocumented variable
      *
-     * @var \League\Plates\Engine
+     * @var \League\Plates\Engine|null
      */
     protected $pEngine = null;
 

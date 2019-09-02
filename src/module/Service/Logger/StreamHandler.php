@@ -28,6 +28,8 @@ class StreamHandler extends \Monolog\Handler\StreamHandler
      * @param array $config Must contains [ 'error_log' => 'filename' ]
      *
      * @throws Exception\InvalidArgumentException If the configuration is not valid.
+     * @throws \Exception If a missing directory is not buildable
+     * @throws \InvalidArgumentException If stream is not a resource or string
      */
     public function __construct(array $config)
     {

@@ -28,7 +28,7 @@ class Stdlib
      */
     public function configurePHP(array $options): bool
     {
-        return array_walk($options, function ($newvalue, string $option) {
+        return array_walk($options, function (string $newvalue, string $option): void {
             @ini_set($option, (string) $newvalue);
         });
     }

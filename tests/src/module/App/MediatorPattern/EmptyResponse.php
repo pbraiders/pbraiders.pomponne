@@ -21,7 +21,8 @@ class EmptyResponse implements ResponseInterface
      * @return int Status code.
      */
     public function getStatusCode()
-    { }
+    {
+    }
 
     /**
      * Return an instance with the specified status code and, optionally, reason phrase.
@@ -44,7 +45,8 @@ class EmptyResponse implements ResponseInterface
      * @throws \InvalidArgumentException For invalid status code arguments.
      */
     public function withStatus($code, $reasonPhrase = '')
-    { }
+    {
+    }
 
     /**
      * Gets the response reason phrase associated with the status code.
@@ -60,7 +62,8 @@ class EmptyResponse implements ResponseInterface
      * @return string Reason phrase; must return an empty string if none present.
      */
     public function getReasonPhrase()
-    { }
+    {
+    }
     /**
      * Retrieves the HTTP protocol version as a string.
      *
@@ -69,7 +72,8 @@ class EmptyResponse implements ResponseInterface
      * @return string HTTP protocol version.
      */
     public function getProtocolVersion()
-    { }
+    {
+    }
 
     /**
      * Return an instance with the specified HTTP protocol version.
@@ -85,7 +89,8 @@ class EmptyResponse implements ResponseInterface
      * @return static
      */
     public function withProtocolVersion($version)
-    { }
+    {
+    }
 
     /**
      * Retrieves all message header values.
@@ -113,7 +118,8 @@ class EmptyResponse implements ResponseInterface
      *     for that header.
      */
     public function getHeaders()
-    { }
+    {
+    }
 
     /**
      * Checks if a header exists by the given case-insensitive name.
@@ -124,7 +130,8 @@ class EmptyResponse implements ResponseInterface
      *     no matching header name is found in the message.
      */
     public function hasHeader($name)
-    { }
+    {
+    }
 
     /**
      * Retrieves a message header value by the given case-insensitive name.
@@ -141,7 +148,8 @@ class EmptyResponse implements ResponseInterface
      *    return an empty array.
      */
     public function getHeader($name)
-    { }
+    {
+    }
 
     /**
      * Retrieves a comma-separated string of the values for a single header.
@@ -163,7 +171,8 @@ class EmptyResponse implements ResponseInterface
      *    the message, this method MUST return an empty string.
      */
     public function getHeaderLine($name)
-    { }
+    {
+    }
 
     /**
      * Return an instance with the provided value replacing the specified header.
@@ -181,7 +190,8 @@ class EmptyResponse implements ResponseInterface
      * @throws \InvalidArgumentException for invalid header names or values.
      */
     public function withHeader($name, $value)
-    { }
+    {
+    }
 
     /**
      * Return an instance with the specified header appended with the given value.
@@ -200,7 +210,8 @@ class EmptyResponse implements ResponseInterface
      * @throws \InvalidArgumentException for invalid header names or values.
      */
     public function withAddedHeader($name, $value)
-    { }
+    {
+    }
 
     /**
      * Return an instance without the specified header.
@@ -215,7 +226,8 @@ class EmptyResponse implements ResponseInterface
      * @return static
      */
     public function withoutHeader($name)
-    { }
+    {
+    }
 
     /**
      * Gets the body of the message.
@@ -223,7 +235,8 @@ class EmptyResponse implements ResponseInterface
      * @return StreamInterface Returns the body as a stream.
      */
     public function getBody()
-    { }
+    {
+    }
 
     /**
      * Return an instance with the specified message body.
@@ -239,5 +252,6 @@ class EmptyResponse implements ResponseInterface
      * @throws \InvalidArgumentException When the body is not valid.
      */
     public function withBody(StreamInterface $body)
-    { }
+    {
+    }
 }

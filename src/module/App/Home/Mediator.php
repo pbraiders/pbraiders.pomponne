@@ -25,10 +25,16 @@ final class Mediator extends AbstractMediator
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
      * @param array $params
+     * @throws \RuntimeException
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function getAction(Request $request, Response $response, array $params = []): Response
     {
+        // View must exist
+        if (is_null($this->pView)) {
+            throw new \RuntimeException('The view is missings.');
+        }
+
         $sTemplate = $this->pView->sayHello();
         $response->getBody()->write($sTemplate);
 
@@ -45,6 +51,7 @@ final class Mediator extends AbstractMediator
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
      * @param array $params
+     * @throws  Exception\HttpNotFoundException
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function postAction(Request $request, Response $response, array $params = []): Response

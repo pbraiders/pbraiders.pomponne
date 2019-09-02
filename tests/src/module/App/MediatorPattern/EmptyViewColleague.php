@@ -10,4 +10,6 @@ use Pbraiders\App\MediatorPattern\ViewColleague;
  * Undocumented class
  */
 class EmptyViewColleague extends ViewColleague
-{ }
+{
+
+}

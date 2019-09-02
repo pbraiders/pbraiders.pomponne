@@ -22,7 +22,8 @@ class LineFormatter extends \Monolog\Formatter\LineFormatter
     public function __construct()
     {
         // New formats
-        $sOutputFormat = '[%extra.ip%] [%extra.user%] [%datetime%] [%channel%:%level_name%] "%extra.http_method% %extra.url%" %message% "%extra.referrer%" %context% %extra%' . PHP_EOL;
+        $sOutputFormat = '[%extra.ip%] [%extra.user%] [%datetime%] [%channel%:%level_name%] '
+            . '"%extra.http_method% %extra.url%" %message% "%extra.referrer%" %context% %extra%' . PHP_EOL;
 
         $sDateFormat = 'Y-m-d H:i:s.u';
 

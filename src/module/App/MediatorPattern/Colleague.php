@@ -23,7 +23,7 @@ abstract class Colleague implements ColleagueInterface
     /**
      * Undocumented variable
      *
-     * @var \Pbraiders\App\MediatorPattern\Mediator
+     * @var \Pbraiders\App\MediatorPattern\Mediator|null
      */
     protected $pMediator = null;
 

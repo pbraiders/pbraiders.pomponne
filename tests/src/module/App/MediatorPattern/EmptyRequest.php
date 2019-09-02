@@ -23,7 +23,8 @@ class EmptyRequest implements ServerRequestInterface
      * @return array
      */
     public function getServerParams()
-    { }
+    {
+    }
 
     /**
      * Retrieve cookies.
@@ -36,7 +37,8 @@ class EmptyRequest implements ServerRequestInterface
      * @return array
      */
     public function getCookieParams()
-    { }
+    {
+    }
 
     /**
      * Return an instance with the specified cookies.
@@ -56,7 +58,8 @@ class EmptyRequest implements ServerRequestInterface
      * @return static
      */
     public function withCookieParams(array $cookies)
-    { }
+    {
+    }
 
     /**
      * Retrieve query string arguments.
@@ -71,7 +74,8 @@ class EmptyRequest implements ServerRequestInterface
      * @return array
      */
     public function getQueryParams()
-    { }
+    {
+    }
 
     /**
      * Return an instance with the specified query string arguments.
@@ -96,7 +100,8 @@ class EmptyRequest implements ServerRequestInterface
      * @return static
      */
     public function withQueryParams(array $query)
-    { }
+    {
+    }
 
     /**
      * Retrieve normalized file upload data.
@@ -111,7 +116,8 @@ class EmptyRequest implements ServerRequestInterface
      *     array MUST be returned if no data is present.
      */
     public function getUploadedFiles()
-    { }
+    {
+    }
 
     /**
      * Create a new instance with the specified uploaded files.
@@ -125,7 +131,8 @@ class EmptyRequest implements ServerRequestInterface
      * @throws \InvalidArgumentException if an invalid structure is provided.
      */
     public function withUploadedFiles(array $uploadedFiles)
-    { }
+    {
+    }
 
     /**
      * Retrieve any parameters provided in the request body.
@@ -143,7 +150,8 @@ class EmptyRequest implements ServerRequestInterface
      *     These will typically be an array or object.
      */
     public function getParsedBody()
-    { }
+    {
+    }
 
     /**
      * Return an instance with the specified body parameters.
@@ -174,7 +182,8 @@ class EmptyRequest implements ServerRequestInterface
      *     provided.
      */
     public function withParsedBody($data)
-    { }
+    {
+    }
 
     /**
      * Retrieve attributes derived from the request.
@@ -188,7 +197,8 @@ class EmptyRequest implements ServerRequestInterface
      * @return array Attributes derived from the request.
      */
     public function getAttributes()
-    { }
+    {
+    }
 
     /**
      * Retrieve a single derived request attribute.
@@ -206,7 +216,8 @@ class EmptyRequest implements ServerRequestInterface
      * @return mixed
      */
     public function getAttribute($name, $default = null)
-    { }
+    {
+    }
 
     /**
      * Return an instance with the specified derived request attribute.
@@ -224,7 +235,8 @@ class EmptyRequest implements ServerRequestInterface
      * @return static
      */
     public function withAttribute($name, $value)
-    { }
+    {
+    }
 
     /**
      * Return an instance that removes the specified derived request attribute.
@@ -241,7 +253,8 @@ class EmptyRequest implements ServerRequestInterface
      * @return static
      */
     public function withoutAttribute($name)
-    { }
+    {
+    }
 
     /**
      * Retrieves the message's request target.
@@ -260,7 +273,8 @@ class EmptyRequest implements ServerRequestInterface
      * @return string
      */
     public function getRequestTarget()
-    { }
+    {
+    }
 
     /**
      * Return an instance with the specific request-target.
@@ -280,7 +294,8 @@ class EmptyRequest implements ServerRequestInterface
      * @return static
      */
     public function withRequestTarget($requestTarget)
-    { }
+    {
+    }
 
     /**
      * Retrieves the HTTP method of the request.
@@ -288,7 +303,8 @@ class EmptyRequest implements ServerRequestInterface
      * @return string Returns the request method.
      */
     public function getMethod()
-    { }
+    {
+    }
 
     /**
      * Return an instance with the provided HTTP method.
@@ -306,7 +322,8 @@ class EmptyRequest implements ServerRequestInterface
      * @throws \InvalidArgumentException for invalid HTTP methods.
      */
     public function withMethod($method)
-    { }
+    {
+    }
 
     /**
      * Retrieves the URI instance.
@@ -318,7 +335,8 @@ class EmptyRequest implements ServerRequestInterface
      *     representing the URI of the request.
      */
     public function getUri()
-    { }
+    {
+    }
 
     /**
      * Returns an instance with the provided URI.
@@ -351,7 +369,8 @@ class EmptyRequest implements ServerRequestInterface
      * @return static
      */
     public function withUri(UriInterface $uri, $preserveHost = false)
-    { }
+    {
+    }
 
     /**
      * Retrieves the HTTP protocol version as a string.
@@ -361,7 +380,8 @@ class EmptyRequest implements ServerRequestInterface
      * @return string HTTP protocol version.
      */
     public function getProtocolVersion()
-    { }
+    {
+    }
 
     /**
      * Return an instance with the specified HTTP protocol version.
@@ -377,7 +397,8 @@ class EmptyRequest implements ServerRequestInterface
      * @return static
      */
     public function withProtocolVersion($version)
-    { }
+    {
+    }
 
     /**
      * Retrieves all message header values.
@@ -405,7 +426,8 @@ class EmptyRequest implements ServerRequestInterface
      *     for that header.
      */
     public function getHeaders()
-    { }
+    {
+    }
 
     /**
      * Checks if a header exists by the given case-insensitive name.
@@ -416,7 +438,8 @@ class EmptyRequest implements ServerRequestInterface
      *     no matching header name is found in the message.
      */
     public function hasHeader($name)
-    { }
+    {
+    }
 
     /**
      * Retrieves a message header value by the given case-insensitive name.
@@ -433,7 +456,8 @@ class EmptyRequest implements ServerRequestInterface
      *    return an empty array.
      */
     public function getHeader($name)
-    { }
+    {
+    }
 
     /**
      * Retrieves a comma-separated string of the values for a single header.
@@ -455,7 +479,8 @@ class EmptyRequest implements ServerRequestInterface
      *    the message, this method MUST return an empty string.
      */
     public function getHeaderLine($name)
-    { }
+    {
+    }
 
     /**
      * Return an instance with the provided value replacing the specified header.
@@ -473,7 +498,8 @@ class EmptyRequest implements ServerRequestInterface
      * @throws \InvalidArgumentException for invalid header names or values.
      */
     public function withHeader($name, $value)
-    { }
+    {
+    }
 
     /**
      * Return an instance with the specified header appended with the given value.
@@ -492,7 +518,8 @@ class EmptyRequest implements ServerRequestInterface
      * @throws \InvalidArgumentException for invalid header names or values.
      */
     public function withAddedHeader($name, $value)
-    { }
+    {
+    }
 
     /**
      * Return an instance without the specified header.
@@ -507,7 +534,8 @@ class EmptyRequest implements ServerRequestInterface
      * @return static
      */
     public function withoutHeader($name)
-    { }
+    {
+    }
 
     /**
      * Gets the body of the message.
@@ -515,7 +543,8 @@ class EmptyRequest implements ServerRequestInterface
      * @return StreamInterface Returns the body as a stream.
      */
     public function getBody()
-    { }
+    {
+    }
 
     /**
      * Return an instance with the specified message body.
@@ -531,5 +560,6 @@ class EmptyRequest implements ServerRequestInterface
      * @throws \InvalidArgumentException When the body is not valid.
      */
     public function withBody(StreamInterface $body)
-    { }
+    {
+    }
 }

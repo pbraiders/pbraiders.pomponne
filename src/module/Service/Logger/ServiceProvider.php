@@ -52,12 +52,16 @@ class ServiceProvider extends AbstractServiceProvider
      * that you need to, but remember, every alias registered
      * within this method must be declared in the `$provides` array.
      *
-     * @throws Exception\RuntimeException
+     * @throws Exception\RuntimeException Setting is missing.
+     * @throws \League\Container\Exception\ContainerException
+     * @throws \League\Container\Exception\NotFoundException
      * @return void
      */
     public function register(): void
     {
         // Retrieves the container.
+
+        /** @var \League\Container\Container $pContainer */
         $pContainer = $this->getContainer();
 
         // Retrieves the configuration.

@@ -19,7 +19,7 @@ return static function (App $pApplication) {
     /**
      * PSR-11 Container.
      *
-     * @var Psr\Container\ContainerInterface $pContainer
+     * @var \Psr\Container\ContainerInterface $pContainer
      */
     $pContainer = $pApplication->getContainer();
 
