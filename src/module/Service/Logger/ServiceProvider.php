@@ -81,28 +81,17 @@ class ServiceProvider extends AbstractServiceProvider
         $pContainer
             ->add(LineFormatter::class);
 
-        // Registers the handler.
+        // Registers and the Initializes the handler with formatter the first time is instanciated.
         $pContainer
             ->add(StreamHandler::class)
-            ->addArgument($aSettings);
+            ->addArgument($aSettings)
+            ->addMethodCall('setFormatter', [$pContainer->get(LineFormatter::class)]);
 
-        // Initializes the handler with formatter the first time is instanciated.
-        $pContainer
-            ->inflector(\Monolog\Handler\StreamHandler::class)
-            ->invokeMethod('setFormatter', [$pContainer->get(LineFormatter::class)]);
-
-        // Registers the logger.
+        // Registers and Initializes the logger with handler and processor the first time is instanciated.
         $pContainer
             ->share(LoggerInterface::class, Logger::class)
-            ->addArgument('pbraiders');
-
-        // Initializes the logger with handler and processor the first time is instanciated.
-        $pContainer
-            ->inflector(Logger::class)
-            ->invokeMethod('pushHandler', [$pContainer->get(StreamHandler::class)]);
-
-        $pContainer
-            ->inflector(Logger::class)
-            ->invokeMethod('pushProcessor', [$pContainer->get(WebProcessor::class)]);
+            ->addArgument('pbraiders')
+            ->addMethodCall('pushHandler', [$pContainer->get(StreamHandler::class)])
+            ->addMethodCall('pushProcessor', [$pContainer->get(WebProcessor::class)]);
     }
 }

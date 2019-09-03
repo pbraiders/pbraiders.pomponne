@@ -10,10 +10,10 @@ declare(strict_types=1);
  * @license https://github.com/pbraiders/pomponne/blob/master/LICENSE GNU General Public License v3.0 License.
  */
 
-namespace Pbraiders\App\MediatorPattern;
+namespace Pbraiders\Service\Utils\MediatorPattern;
 
-use Pbraiders\App\MediatorPattern\Mediator;
-use Pbraiders\App\MediatorPattern\ColleagueInterface;
+use Pbraiders\Service\Utils\MediatorPattern\Mediator;
+use Pbraiders\Service\Utils\MediatorPattern\ColleagueInterface;
 
 /**
  * Undocumented class
@@ -23,14 +23,14 @@ abstract class Colleague implements ColleagueInterface
     /**
      * Undocumented variable
      *
-     * @var \Pbraiders\App\MediatorPattern\Mediator|null
+     * @var \Pbraiders\Service\Utils\MediatorPattern\Mediator|null
      */
     protected $pMediator = null;
 
     /**
      * Undocumented function
      *
-     * @param \Pbraiders\App\MediatorPattern\Mediator $mediator
+     * @param \Pbraiders\Service\Utils\MediatorPattern\Mediator $mediator
      * @return void
      */
     public function setMediator(Mediator $mediator): void

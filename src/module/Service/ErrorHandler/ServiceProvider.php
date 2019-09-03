@@ -53,10 +53,8 @@ class ServiceProvider extends AbstractServiceProvider
     {
         $pContainer = $this->getContainer();
 
-        $pContainer->share('errorhandler', Run::class);
-
         $pContainer
-            ->inflector(Run::class)
-            ->invokeMethod('prependHandler', [new PrettyPageHandler()]);
+            ->share('errorhandler', Run::class)
+            ->addMethodCall('prependHandler', [new PrettyPageHandler()]);
     }
 }

@@ -15,6 +15,7 @@ use Slim\App;
 use Pbraiders\App\Exception;
 
 /**
+ * @param \Slim\App App $pApplication
  * @throws Exception\RuntimeException If settings is missing.
  */
 return static function (App $pApplication) {
@@ -33,8 +34,8 @@ return static function (App $pApplication) {
         throw new Exception\RuntimeException('The website.url setting is missing in the config file.');
     }
 
-    /** @var string $sRootPath Path of the website */
-    $sRootPath = $aSettings['application']['website']['path'];
+    /** @var string $sBasePath Path of the website */
+    $sBasePath = $aSettings['application']['website']['path'];
 
     /**
      * Set the cache file for the routes. Note that you have to delete this file
@@ -51,5 +52,11 @@ return static function (App $pApplication) {
      */
 
     // home
-    $pApplication->get($sRootPath, 'Pbraiders\App\Home\Mediator:getAction');
+    /** @var callable $callable */
+    $callable = require __DIR__ . \DIRECTORY_SEPARATOR . 'Home' . \DIRECTORY_SEPARATOR . 'routes.php';
+    $callable($pApplication, $sBasePath);
+
+    // debug
+    $callable = require __DIR__ . \DIRECTORY_SEPARATOR . 'Debug' . \DIRECTORY_SEPARATOR . 'routes.php';
+    $callable($pApplication, $sBasePath);
 };

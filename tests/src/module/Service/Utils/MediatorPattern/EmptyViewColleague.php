@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PbraidersTest\App\MediatorPattern;
+namespace PbraidersTest\Service\Utils\MediatorPattern;
 
-use Pbraiders\App\MediatorPattern\ViewColleague;
+use Pbraiders\Service\Utils\MediatorPattern\ViewColleague;
 
 /**
  * Undocumented class

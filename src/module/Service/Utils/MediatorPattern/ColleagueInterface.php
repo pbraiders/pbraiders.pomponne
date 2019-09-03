@@ -3,27 +3,27 @@
 declare(strict_types=1);
 
 /**
- * Interface for view colleague.
+ * Interface for colleague.
  *
- * @package Pbraiders\App\MediatorPattern
+ * @package Pbraiders\App\Mediator
  * @link    https://github.com/pbraiders/pomponne for the canonical source repository
  * @license https://github.com/pbraiders/pomponne/blob/master/LICENSE GNU General Public License v3.0 License.
  */
 
-namespace Pbraiders\App\MediatorPattern;
+namespace Pbraiders\Service\Utils\MediatorPattern;
 
-use League\Plates\Engine;
+use Pbraiders\Service\Utils\MediatorPattern\Mediator;
 
 /**
  * Undocumented interface
  */
-interface ViewColleagueInterface
+interface ColleagueInterface
 {
     /**
      * Undocumented function
      *
-     * @param \League\Plates\Engine $engine
+     * @param \Pbraiders\Service\Utils\MediatorPattern\Mediator $mediator
      * @return void
      */
-    public function setEngine(Engine $engine): void;
+    public function setMediator(Mediator $mediator): void;
 }

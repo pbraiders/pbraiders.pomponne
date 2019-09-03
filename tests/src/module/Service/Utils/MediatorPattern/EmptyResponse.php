@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PbraidersTest\App\MediatorPattern;
+namespace PbraidersTest\Service\Utils\MediatorPattern;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;

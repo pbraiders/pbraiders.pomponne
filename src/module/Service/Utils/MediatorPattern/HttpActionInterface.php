@@ -10,7 +10,7 @@ declare(strict_types=1);
  * @license https://github.com/pbraiders/pomponne/blob/master/LICENSE GNU General Public License v3.0 License.
  */
 
-namespace Pbraiders\App\MediatorPattern;
+namespace Pbraiders\Service\Utils\MediatorPattern;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;

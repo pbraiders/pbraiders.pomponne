@@ -3,25 +3,25 @@
 declare(strict_types=1);
 
 /**
- * Provides templating engine as a service.
+ * Mediators provider.
  *
  * Service providers give the benefit of organising your container definitions along with an increase in performance for
  * larger applications as definitions registered within a service provider are lazily registered at the point where a
  * service is retrieved.
  *
- * @package Pbraiders\Service\TemplatingEngine
+ * @package Pbraiders\Debug
  * @link    https://github.com/pbraiders/pomponne for the canonical source repository
  * @license https://github.com/pbraiders/pomponne/blob/master/LICENSE GNU General Public License v3.0 License.
  */
 
-namespace Pbraiders\Service\TemplatingEngine;
+namespace Pbraiders\Debug\Home;
 
 use League\Container\ServiceProvider\AbstractServiceProvider;
-use League\Plates\Engine;
-use Pbraiders\Service\Exception;
+use Pbraiders\Debug\Home\Mediator as HomeMediator;
+use \Pbraiders\Debug\Home\View as HomeView;
 
 /**
- * Provides templating engine as a service.
+ * Mediators provider.
  */
 class ServiceProvider extends AbstractServiceProvider
 {
@@ -36,7 +36,8 @@ class ServiceProvider extends AbstractServiceProvider
      * @var array
      */
     protected $provides = [
-        'templatingengine',
+        DebugMediator::class,
+        DebugView::class
     ];
 
     /**
@@ -46,24 +47,44 @@ class ServiceProvider extends AbstractServiceProvider
      * within this method must be declared in the `$provides` array.
      *
      * @throws Exception\RuntimeException
-     * @throws \League\Container\Exception\ContainerException
-     * @throws \League\Container\Exception\NotFoundException
      * @return void
      */
     public function register(): void
     {
+        $this->registerView();
+        $this->registerMediator();
+    }
+
+    /**
+     * Registers the mediator.
+     *
+     * @return void
+     */
+    protected function registerMediator(): void
+    {
         // Retrieves the container.
         $pContainer = $this->getContainer();
 
-        // Retrieves the configuration.
-        $aSettings = $pContainer->get('settings');
+        $pContainer
+            ->add(DebugMediator::class)
+            ->addArgument($pContainer)
+            ->addMethodCall('setView', [$pContainer->get(DebugView::class)]);
+    }
 
-        if (empty($aSettings['service']['templating_engine']['template_path'])) {
-            throw new Exception\RuntimeException('Templating Engine configuration is missing.');
-        }
+    /**
+     * Registers the view.
+     *
+     * @throws \League\Container\Exception\ContainerException Error while retrieving the entry.
+     * @throws \League\Container\Exception\NotFoundException No entry was found for **this** identifier.
+     * @return void
+     */
+    protected function registerView(): void
+    {
+        // Retrieves the container.
+        $pContainer = $this->getContainer();
 
         $pContainer
-            ->add('templatingengine', '\League\Plates\Engine::create')
-            ->addArgument($aSettings['service']['templating_engine']['template_path']);
+            ->add(DebugView::class);
+        //->addArgument($pContainer->get('templatingengine'));
     }
 }

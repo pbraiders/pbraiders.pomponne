@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace PbraidersTest\Service\Container;
+namespace PbraidersTest\Service\Utils\MediatorPattern;
 
 use League\Container\Container;
-use PbraidersTest\App\MediatorPattern\EmptyMediator;
-use PbraidersTest\App\MediatorPattern\EmptyModelColleague;
-use PbraidersTest\App\MediatorPattern\EmptyRequest;
-use PbraidersTest\App\MediatorPattern\EmptyResponse;
-use PbraidersTest\App\MediatorPattern\EmptyViewColleague;
+use PbraidersTest\Service\Utils\MediatorPattern\EmptyMediator;
+use PbraidersTest\Service\Utils\MediatorPattern\EmptyModelColleague;
+use PbraidersTest\Service\Utils\MediatorPattern\EmptyRequest;
+use PbraidersTest\Service\Utils\MediatorPattern\EmptyResponse;
+use PbraidersTest\Service\Utils\MediatorPattern\EmptyViewColleague;
 use PbraidersTest\Utils\ReflectionTrait;
 use Slim\Exception;
 
@@ -19,7 +19,7 @@ class MediatorTest extends \PHPUnit\Framework\TestCase
     use ReflectionTrait;
 
     /**
-     * @covers \Pbraiders\App\MediatorPattern\Mediator
+     * @covers \Pbraiders\Service\Utils\MediatorPattern\Mediator
      * @group specification
      */
     public function testSetView()
@@ -28,13 +28,13 @@ class MediatorTest extends \PHPUnit\Framework\TestCase
         $pViewCollegue = new EmptyViewColleague();
         $pMediator = new EmptyMediator($pContainer);
         $pMediator->setView($pViewCollegue);
-        $pProperty = $this->getPrivateProperty('\PbraidersTest\App\MediatorPattern\EmptyMediator', 'pView');
+        $pProperty = $this->getPrivateProperty('\PbraidersTest\Service\Utils\MediatorPattern\EmptyMediator', 'pView');
         $pActual = $pProperty->getValue($pMediator);
         $this->assertSame($pViewCollegue, $pActual);
     }
 
     /**
-     * @covers \Pbraiders\App\MediatorPattern\Mediator
+     * @covers \Pbraiders\Service\Utils\MediatorPattern\Mediator
      * @group specification
      */
     public function testSetModel()
@@ -43,13 +43,13 @@ class MediatorTest extends \PHPUnit\Framework\TestCase
         $pModelCollegue = new EmptyModelColleague();
         $pMediator = new EmptyMediator($pContainer);
         $pMediator->setModel($pModelCollegue);
-        $pProperty = $this->getPrivateProperty('\PbraidersTest\App\MediatorPattern\EmptyMediator', 'pModel');
+        $pProperty = $this->getPrivateProperty('\PbraidersTest\Service\Utils\MediatorPattern\EmptyMediator', 'pModel');
         $pActual = $pProperty->getValue($pMediator);
         $this->assertSame($pModelCollegue, $pActual);
     }
 
     /**
-     * @covers \Pbraiders\App\MediatorPattern\Mediator
+     * @covers \Pbraiders\Service\Utils\MediatorPattern\Mediator
      * @group specification
      */
     public function testGetAction()
@@ -63,7 +63,7 @@ class MediatorTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers \Pbraiders\App\MediatorPattern\Mediator
+     * @covers \Pbraiders\Service\Utils\MediatorPattern\Mediator
      * @group specification
      */
     public function testPostAction()
@@ -77,7 +77,7 @@ class MediatorTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers \Pbraiders\App\MediatorPattern\Mediator
+     * @covers \Pbraiders\Service\Utils\MediatorPattern\Mediator
      * @group specification
      */
     public function testPutAction()
@@ -91,7 +91,7 @@ class MediatorTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers \Pbraiders\App\MediatorPattern\Mediator
+     * @covers \Pbraiders\Service\Utils\MediatorPattern\Mediator
      * @group specification
      */
     public function testDeleteAction()

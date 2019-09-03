@@ -51,33 +51,40 @@ class ServiceProvider extends AbstractServiceProvider
      */
     public function register(): void
     {
-        // Home
-        $this->registerHome();
+        $this->registerView();
+        $this->registerMediator();
     }
 
     /**
-     * Registers home routes.
+     * Registers the mediator.
      *
      * @return void
      */
-    protected function registerHome(): void
+    protected function registerMediator(): void
+    {
+        // Retrieves the container.
+        $pContainer = $this->getContainer();
+
+        $pContainer
+            ->add(HomeMediator::class)
+            ->addArgument($pContainer)
+            ->addMethodCall('setView', [$pContainer->get(HomeView::class)]);
+    }
+
+    /**
+     * Registers the view.
+     *
+     * @throws \League\Container\Exception\ContainerException Error while retrieving the entry.
+     * @throws \League\Container\Exception\NotFoundException No entry was found for **this** identifier.
+     * @return void
+     */
+    protected function registerView(): void
     {
         // Retrieves the container.
         $pContainer = $this->getContainer();
 
         $pContainer
             ->add(HomeView::class);
-
-        $pContainer
-            ->add(HomeMediator::class)
-            ->addArgument($pContainer);
-
-        //        $pContainer
-        //            ->inflector(HomeView::class)
-        //            ->invokeMethod('setEngine', [$pContainer->get('templatingengine')]);
-
-        $pContainer
-            ->inflector(HomeMediator::class)
-            ->invokeMethod('setView', [$pContainer->get(HomeView::class)]);
+        //->addArgument($pContainer->get('templatingengine'));
     }
 }
