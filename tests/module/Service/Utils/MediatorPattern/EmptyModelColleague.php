@@ -10,4 +10,6 @@ use Pbraiders\Service\Utils\MediatorPattern\Colleague;
  * Undocumented class
  */
 class EmptyModelColleague extends Colleague
-{ }
+{
+
+}

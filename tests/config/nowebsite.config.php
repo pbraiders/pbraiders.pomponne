@@ -19,10 +19,10 @@ return [
     'application' => [
 
         // Temporary directory.
-        'temporary_path' => \PBR_PATH . \DIRECTORY_SEPARATOR . 'var' . \DIRECTORY_SEPARATOR . 'tmp',
+        'temporary_path' => \PBR_PATH . \DIRECTORY_SEPARATOR . 'data' . \DIRECTORY_SEPARATOR . 'tmp',
 
         // Cache directory. While developping, set it to false to deactivate all caches.
-        'cache_path' => \PBR_PATH . \DIRECTORY_SEPARATOR . 'var' . \DIRECTORY_SEPARATOR . 'cache',
+        'cache_path' => \PBR_PATH . \DIRECTORY_SEPARATOR . 'data' . \DIRECTORY_SEPARATOR . 'cache',
 
     ],
 
@@ -54,7 +54,7 @@ return [
 
         'logger' => [
             // Name of the file where application errors should be logged.
-            'error_log' => sprintf('%s/var/log/%s_pbraiders_error.log', \PBR_PATH, date("Ymd")),
+            'error_log' => sprintf('%s/data/log/%s_pbraiders_error.log', \PBR_PATH, date("Ymd")),
         ],
 
     ],
@@ -98,7 +98,7 @@ return [
         'log_errors' => '1',
 
         // Name of the file where script errors should be logged.
-        'error_log' => sprintf('%s/var/log/%s_php_error.log', \PBR_PATH, date("Ymd")),
+        'error_log' => sprintf('%s/data/log/%s_php_error.log', \PBR_PATH, date("Ymd")),
 
         // Session cache expire.
         'session.cache_expire' => '180',

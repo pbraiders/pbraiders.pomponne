@@ -23,27 +23,33 @@
     timeoutForMediumTests="10"
     timeoutForLargeTests="60"
     verbose="true"
-    bootstrap="./tests/bootstrap.php">
+    bootstrap="tests/bootstrap.php">
     <php>
     </php>
     <testsuites>
         <testsuite name="Pbraiders Test Suite">
-            <directory suffix="Test.php">./tests/</directory>
+            <directory suffix="Test.php">tests/module</directory>
         </testsuite>
     </testsuites>
     <logging>
         <log type="coverage-html"
-             target="./tests/doc/codecoverage"
+             target="doc/codecoverage"
              lowUpperBound="35"
              highLowerBound="70"/>
-        <log type="testdox-html" target="./tests/doc/testdox/testdox.html"/>
+        <log type="testdox-html" target="doc/testdox/testdox.html"/>
     </logging>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./module/</directory>
+            <directory suffix=".php">module</directory>
             <exclude>
-                <directory suffix="index.php">./module/</directory>
-                <directory suffix=".php">./old/</directory>
+                <directory>old</directory>
+                <directory>tests</directory>
+                <directory>vendor</directory>
+                <directory suffix="index.php">module</directory>
+                <file>index.php</file>
+                <file>config/index.php</file>
+                <file>data/index.php</file>
+                <file>public/index.php</file>
             </exclude>
         </whitelist>
     </filter>

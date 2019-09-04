@@ -1,6 +1,6 @@
 .vscode/
 /vendor/
-/tests/doc
+/doc/
 *.log
 local.*
 desktop.ini
