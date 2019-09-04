@@ -31,7 +31,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Pbraiders\\": "src/module/"
+            "Pbraiders\\": "module/"
         }
     },
     "require-dev": {
@@ -42,22 +42,22 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "PbraidersTest\\": "tests/src/module/"
+            "PbraidersTest\\": "tests/module/"
         }
     },
     "config": {
         "sort-packages": true,
         "optimize-autoloader": true,
-        "vendor-dir": "src/vendor/"
+        "vendor-dir": "vendor/"
     },
     "scripts": {
         "check": [
             "@cs-check",
             "@test"
         ],
-        "cs-check": "src/vendor/bin/phpcs --standard=./phpcs.xml",
-        "cs-fix": "src/vendor/bin/phpcbf --standard=./phpcs.xml",
-        "test": "src/vendor/bin/phpunit --colors=always",
-        "md-check": "src/vendor/bin/phpmd src text ./phpmd.xml --exclude '*/vendor/*,*/old/*'"
+        "cs-check": "vendor/bin/phpcs --standard=./phpcs.xml",
+        "cs-fix": "vendor/bin/phpcbf --standard=./phpcs.xml",
+        "test": "vendor/bin/phpunit --colors=always",
+        "md-check": "vendor/bin/phpmd src text ./phpmd.xml --exclude '*/vendor/*,*/old/*'"
     }
 }

@@ -1,9 +1,6 @@
 .vscode/
 /vendor/
-/src/vendor/
-/docs/
-/src/config.php
+/tests/doc
 *.log
 local.*
 desktop.ini
-composer
