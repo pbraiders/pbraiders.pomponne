@@ -26,9 +26,10 @@ return static function (\Slim\App $pApplication, string $sBasePath) {
      * Defines the routes.
      */
 
-    //$pApplication->get($sBasePath . 'debug', \Pbraiders\App\Debug\Mediator::class . ':getAction');
-    //$pApplication->get($sBasePath . 'debug', \Pbraiders\App\Debug\Mediator::class . ':getAction');
-    $pApplication->get($sBasePath . 'debug/[{id}]', \Pbraiders\App\Debug\Mediator::class . ':getAction');
+    $pApplication->get($sBasePath . 'debug', \Pbraiders\App\Debug\Mediator::class . ':getAction');
+    $pApplication->get($sBasePath . 'debug/{name}', \Pbraiders\App\Debug\Mediator::class . ':getAction');
+    $pApplication->get($sBasePath . 'module/{name}', \Pbraiders\App\Debug\Mediator::class . ':getAction');
+    #$pApplication->get($sBasePath . 'debug/[{id}]', \Pbraiders\App\Debug\Mediator::class . ':getAction');
     /*
     $pApplication->get($sBasePath . '/debug/container/', \Pbraiders\App\Debug\Mediator::class . ':getContainer');
     $pApplication->get($sBasePath . '/debug/phpini/', \Pbraiders\App\Debug\Mediator::class . ':getPhpIni');

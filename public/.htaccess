@@ -1,15 +1,28 @@
-Options -Indexes
+#
+# This file is used when you have set the DocumentRoot directive to this named "public" directory.
+# (In the case when you have access to the apache virtualhost configuration)
+#
 
-ErrorDocument 401 "An authorization is required to access to this resource. Contact your PBRaiders administrator."
-ErrorDocument 403 "The access to this resource is denied. Contact your PBRaiders administrator."
-ErrorDocument 404 "The requested resource is not found.. Contact your PBRaiders administrator."
-ErrorDocument 500 "A server error has occured. Contact your web hosting provider."
-ErrorDocument 503 "The service is unavailable. Contact your web hosting provider."
+Options -Indexes
 
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^(.*)$ index.php [QSA,L]
+    # The following rule tells Apache that if the requested filename
+    # exists, simply serve it.
+    RewriteCond %{REQUEST_FILENAME} -s [OR]
+    RewriteCond %{REQUEST_FILENAME} -l [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^.*$ - [NC,L]
+
+    # The following rewrites all other queries to index.php. The
+    # condition ensures that if you are using Apache aliases to do
+    # mass virtual hosting, the base path will be prepended to
+    # allow proper resolution of the index.php file; it will work
+    # in non-aliased environments as well, providing a safe, one-size
+    # fits all solution.
+    RewriteCond %{REQUEST_URI}::$1 ^(/.+)(.+)::\2$
+    RewriteRule ^(.*) - [E=BASE:%1]
+    RewriteRule ^(.*)$ %{ENV:BASE}index.php [NC,L,QSA]
+
 </IfModule>

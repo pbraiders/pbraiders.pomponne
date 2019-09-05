@@ -1,8 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Avoid access to this directory.
- * In case .htaccess does not work.
+ * Root entry point.
+ *
+ * @link    https://github.com/pbraiders/pomponne for the canonical source repository
+ * @license https://github.com/pbraiders/pomponne/blob/master/LICENSE GNU General Public License v3.0 License.
  */
 
-header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found");
+// @var string Root path.
+define('PBR_PATH', realpath(__DIR__));
+
+require \PBR_PATH . \DIRECTORY_SEPARATOR . 'module' . \DIRECTORY_SEPARATOR . 'bootstrap.php';
