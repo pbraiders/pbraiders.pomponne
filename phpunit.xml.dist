@@ -40,16 +40,13 @@
     </logging>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">module</directory>
+            <directory suffix=".php">pbr</directory>
             <exclude>
                 <directory>old</directory>
                 <directory>tests</directory>
                 <directory>vendor</directory>
-                <directory suffix="index.php">module</directory>
+                <directory>public</directory>
                 <file>index.php</file>
-                <file>config/index.php</file>
-                <file>data/index.php</file>
-                <file>public/index.php</file>
             </exclude>
         </whitelist>
     </filter>

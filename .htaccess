@@ -1,12 +1,11 @@
 #
 # This file is used when you cannot set the DocumentRoot directive to the named "public" directory.
-# (In the case when you don't have access to the apache virtualhost configuration)
+# (In the case you don't have access to the apache virtualhost configuration)
 # And you don't want to deal with 'rewriting rules', 'internal redirections' and subrequests.
 #
 
 DirectoryIndex index.php
 Options -Indexes
-
 RewriteEngine On
 
 # The following rule tells Apache that if the requested filename

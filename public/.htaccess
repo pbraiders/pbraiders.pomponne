@@ -1,8 +1,9 @@
 #
 # This file is used when you have set the DocumentRoot directive to this named "public" directory.
-# (In the case when you have access to the apache virtualhost configuration)
+# (In the case you have access to the apache virtualhost configuration)
 #
 
+DirectoryIndex index.php
 Options -Indexes
 
 <IfModule mod_rewrite.c>
