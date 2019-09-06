@@ -13,12 +13,21 @@ declare(strict_types=1);
 require \ROOT_PATH . \DIRECTORY_SEPARATOR . 'vendor' . \DIRECTORY_SEPARATOR . 'autoload.php';
 
 /**
- * Creates the container and loads all the needed services.
+ * Helper to create and configure a Container.
  *
+ * @var \DI\ContainerBuilder $pContainerBuilder
+ */
+$pContainerBuilder = new \DI\ContainerBuilder();
+
+/**
+ * Creates the container and loads all the needed services.
  * In order to use the dependency injection pattern.
  *
- * @var Psr\Container\ContainerInterface $pContainer
+ * @var \Psr\Container\ContainerInterface $pContainer
  */
+$pContainer = $pContainerBuilder->build();
+
+/*
 $pContainer = \Pbraiders\Service\Container\Factory::createFromInvokables(
     [
         // Add the services provider.
@@ -31,6 +40,7 @@ $pContainer = \Pbraiders\Service\Container\Factory::createFromInvokables(
         \Pbraiders\App\Home\ServiceProvider::class,
     ]
 );
+*/
 
 /**
  * Loads the settings.

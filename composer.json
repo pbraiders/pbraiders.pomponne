@@ -22,10 +22,10 @@
         "ext-intl": "*",
         "ext-json": "*",
         "filp/whoops": "^2.5",
-        "league/container": "^3.3",
         "league/plates": "^4.0.0-alpha",
         "league/uri-parser": "^1.4",
         "monolog/monolog": "^2.0",
+        "php-di/php-di": "^6.0",
         "slim/psr7": "^0.5.0",
         "slim/slim": "^4.2"
     },

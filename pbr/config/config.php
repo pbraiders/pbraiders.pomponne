@@ -34,6 +34,17 @@ return [
 
     'service' => [
 
+        // Container
+        'container' => [
+            // When a container is configured to be compiled, it will be compiled once and never be regenerated again.
+            // That allows for maximum performances in production.
+            // When you deploy new versions of your code to production you must delete the generated file
+            // (or the directory that contains it) to ensure that the container is re-compiled.
+            // @see php-di.org/doc/performances.html
+            'enable_compilation' => true,
+            'write_proxies_to_file' => true,
+        ],
+
         // Configure database settings.
         'database' => [
             // Database Name used by PBRaiders.
