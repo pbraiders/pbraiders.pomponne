@@ -34,7 +34,7 @@ return [
 
     'service' => [
 
-        // Container
+        // Configure container settings.
         'container' => [
             // When a container is configured to be compiled, it will be compiled once and never be regenerated again.
             // That allows for maximum performances in production.

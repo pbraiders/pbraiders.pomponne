@@ -32,7 +32,10 @@
     "autoload": {
         "psr-4": {
             "Pbraiders\\": "pbr/module/"
-        }
+        },
+        "files": [
+            "pbr/module/Service/Utils/Stdlib/Stdlib.php"
+        ]
     },
     "require-dev": {
         "phpmd/phpmd": "@stable",
@@ -43,7 +46,10 @@
     "autoload-dev": {
         "psr-4": {
             "PbraidersTest\\": "tests/module/"
-        }
+        },
+        "files": [
+            "pbr/module/Service/Utils/Stdlib/Stdlib.php"
+        ]
     },
     "config": {
         "sort-packages": true,

@@ -3,7 +3,8 @@
 namespace League\Container\ServiceProvider;
 
 use Generator;
-use League\Container\{ContainerAwareInterface, ContainerAwareTrait};
+use League\Container\ContainerAwareInterface;
+use League\Container\ContainerAwareTrait;
 use League\Container\Exception\ContainerException;
 
 class ServiceProviderAggregate implements ServiceProviderAggregateInterface

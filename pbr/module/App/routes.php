@@ -32,7 +32,7 @@ return static function (\Slim\App $pApplication) {
      * Set the cache file for the routes. Note that you have to delete this file
      * whenever you change the routes.
      */
-    if (!empty($aSettings['application']['cache_path'])) {
+    if (! empty($aSettings['application']['cache_path'])) {
         $pApplication->getRouteCollector()->setCacheFile(
             $aSettings['application']['cache_path'] . \DIRECTORY_SEPARATOR . 'routes.cache'
         );

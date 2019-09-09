@@ -22,7 +22,7 @@
     <rule ref="Generic.CodeAnalysis.UnusedFunctionParameter"/>
     <rule ref="Generic.Strings.UnnecessaryStringConcat"/>
     </rule-->
-    <file>module</file>
+    <file>pbr</file>
     <file>tests/module</file>
     <exclude-pattern>*/vendor/*</exclude-pattern>
     <exclude-pattern>*.js</exclude-pattern>
