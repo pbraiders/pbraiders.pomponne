@@ -17,28 +17,36 @@
             "email": "contact@pbraiders.fr"
         }
     ],
+    "repositories": [
+        {
+            "type": "github",
+            "url": "https://github.com/pbraiders/stdlib"
+        }
+    ],
     "require": {
         "php": "^7.3",
-        "ext-intl": "*",
-        "ext-json": "*",
         "filp/whoops": "^2.5",
         "league/plates": "^4.0.0-alpha",
         "league/uri-parser": "^1.4",
         "monolog/monolog": "^2.0",
+        "pbraiders/stdlib": "^1.0",
         "php-di/php-di": "^6.0",
         "slim/psr7": "^0.5.0",
         "slim/slim": "^4.2"
     },
     "autoload": {
         "psr-4": {
+            "Pbraiders\\Stdlib\\": "pbr/Service/Stdlib",
             "Pbraiders\\": "pbr/module/"
         },
         "files": [
-            "pbr/module/Service/Utils/Stdlib/Stdlib.php"
+            "pbr/Service/Utils/Stdlib/Stdlib.php"
         ]
     },
     "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.15",
         "phpmd/phpmd": "@stable",
+        "phpstan/phpstan": "^0.11.15",
         "phpunit/phpunit": "^8",
         "squizlabs/php_codesniffer": "*",
         "vimeo/psalm": "^3.4"
@@ -57,13 +65,11 @@
         "vendor-dir": "vendor/"
     },
     "scripts": {
-        "check": [
-            "@cs-check",
-            "@test"
-        ],
-        "cs-check": "vendor/bin/phpcs --standard=./phpcs.xml",
-        "cs-fix": "vendor/bin/phpcbf --standard=./phpcs.xml",
-        "test": "vendor/bin/phpunit --colors=always",
-        "md-check": "vendor/bin/phpmd src text ./phpmd.xml --exclude '*/vendor/*,*/old/*'"
+        "check": "vendor/bin/phpcs --standard=./phpcs.xml",
+        "fix": "vendor/bin/phpcbf --standard=./phpcs.xml",
+        "fixer": "vendor/bin/php-cs-fixer fix --verbose src",
+        "mess": "vendor/bin/phpmd src text ./phpmd.xml --exclude '*/vendor/*,*/old/*'",
+        "analyse": "vendor/bin/phpstan analyse src --level=max -c ./phpstan.neon --no-progress",
+        "test": "vendor/bin/phpunit --colors=always"
     }
 }
