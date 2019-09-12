@@ -21,27 +21,28 @@
         {
             "type": "github",
             "url": "https://github.com/pbraiders/stdlib"
+        },
+        {
+            "type": "github",
+            "url": "https://github.com/pbraiders/container"
         }
     ],
     "require": {
         "php": "^7.3",
-        "filp/whoops": "^2.5",
+        "filp/whoops": "~2.5",
         "league/plates": "^4.0.0-alpha",
-        "league/uri-parser": "^1.4",
-        "monolog/monolog": "^2.0",
-        "pbraiders/stdlib": "^1.0",
-        "php-di/php-di": "^6.0",
-        "slim/psr7": "^0.5.0",
-        "slim/slim": "^4.2"
+        "league/uri-parser": "~1.4",
+        "monolog/monolog": "~2.0",
+        "pbraiders/stdlib": "~1.0",
+        "pbraiders/container": "~1.0",
+        "php-di/php-di": "~6.0",
+        "slim/psr7": "~0.5",
+        "slim/slim": "~4.2"
     },
     "autoload": {
         "psr-4": {
-            "Pbraiders\\Stdlib\\": "pbr/Service/Stdlib",
-            "Pbraiders\\": "pbr/module/"
-        },
-        "files": [
-            "pbr/Service/Utils/Stdlib/Stdlib.php"
-        ]
+            "Pbraiders\\Pomponne\\": "pbr/module/"
+        }
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.15",
@@ -54,10 +55,7 @@
     "autoload-dev": {
         "psr-4": {
             "PbraidersTest\\": "tests/module/"
-        },
-        "files": [
-            "pbr/module/Service/Utils/Stdlib/Stdlib.php"
-        ]
+        }
     },
     "config": {
         "sort-packages": true,
