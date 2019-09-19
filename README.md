@@ -1,4 +1,4 @@
-# PBRaiders Pomponne
+# PBRaiders Pomponne **WORK IN PROGRESS**
 
 [![Build Status](https://travis-ci.com/pbraiders/pomponne.svg?branch=master)](https://travis-ci.com/pbraiders/pomponne)
 [![Coverage Status](https://coveralls.io/repos/github/pbraiders/pomponne/badge.svg?branch=master)](https://coveralls.io/github/pbraiders/pomponne?branch=master)

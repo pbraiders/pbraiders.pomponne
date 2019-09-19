@@ -17,5 +17,4 @@ namespace Pbraiders\Middleware\Exception;
  */
 class LengthException extends \LengthException implements ExceptionInterface
 {
-
 }

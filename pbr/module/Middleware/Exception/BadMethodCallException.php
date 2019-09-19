@@ -17,5 +17,4 @@ namespace Pbraiders\Middleware\Exception;
  */
 class BadMethodCallException extends \BadMethodCallException implements ExceptionInterface
 {
-
 }

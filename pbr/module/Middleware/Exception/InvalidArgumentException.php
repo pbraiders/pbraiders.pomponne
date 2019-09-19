@@ -17,5 +17,4 @@ namespace Pbraiders\Middleware\Exception;
  */
 class InvalidArgumentException extends \InvalidArgumentException implements ExceptionInterface
 {
-
 }

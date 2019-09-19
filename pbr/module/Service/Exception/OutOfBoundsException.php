@@ -16,5 +16,4 @@ namespace Pbraiders\Service\Exception;
  */
 class OutOfBoundsException extends \OutOfBoundsException implements ExceptionInterface
 {
-
 }

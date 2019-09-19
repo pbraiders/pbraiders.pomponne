@@ -15,5 +15,4 @@ namespace Pbraiders\App\Exception;
  */
 interface ExceptionInterface
 {
-
 }

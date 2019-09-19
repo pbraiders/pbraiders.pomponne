@@ -19,5 +19,4 @@ namespace Pbraiders\App\Exception;
  */
 class BadFunctionCallException extends \BadFunctionCallException implements ExceptionInterface
 {
-
 }

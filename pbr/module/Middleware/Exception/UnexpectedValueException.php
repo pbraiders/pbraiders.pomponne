@@ -18,5 +18,4 @@ namespace Pbraiders\Middleware\Exception;
  */
 class UnexpectedValueException extends \UnexpectedValueException implements ExceptionInterface
 {
-
 }

@@ -13,5 +13,4 @@ namespace Pbraiders\Middleware\Session;
 
 class SessionMiddleware
 {
-
 }

@@ -15,5 +15,4 @@ namespace Pbraiders\App\Exception;
  */
 class RuntimeException extends \RuntimeException implements ExceptionInterface
 {
-
 }

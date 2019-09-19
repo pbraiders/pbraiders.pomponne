@@ -16,5 +16,4 @@ namespace Pbraiders\Service\Exception;
  */
 class OverflowException extends \OverflowException implements ExceptionInterface
 {
-
 }

@@ -6,5 +6,4 @@ namespace Pbraiders\Service\RouteProvider;
 
 abstract class AbstractRouteProvider implements RouteProviderInterface
 {
-
 }

@@ -15,5 +15,4 @@ namespace Pbraiders\Middleware\Exception;
  */
 interface ExceptionInterface
 {
-
 }

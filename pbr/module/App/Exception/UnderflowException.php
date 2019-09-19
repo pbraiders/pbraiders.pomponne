@@ -16,5 +16,4 @@ namespace Pbraiders\App\Exception;
  */
 class UnderflowException extends \UnderflowException implements ExceptionInterface
 {
-
 }

@@ -18,5 +18,4 @@ namespace Pbraiders\Service\Exception;
  */
 class RangeException extends \RangeException implements ExceptionInterface
 {
-
 }

@@ -17,5 +17,4 @@ namespace Pbraiders\App\Exception;
  */
 class OutOfRangeException extends \OutOfRangeException implements ExceptionInterface
 {
-
 }

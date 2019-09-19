@@ -33,11 +33,11 @@ abstract class ViewColleague extends Colleague
      *
      * @param \League\Plates\Engine $engine
      */
-/*    public function __construct(Engine $engine)
-    {
-        $this->pEngine = $engine;
-    }
-*/
+    /*    public function __construct(Engine $engine)
+        {
+            $this->pEngine = $engine;
+        }
+    */
     /**
      * Undocumented function
      *

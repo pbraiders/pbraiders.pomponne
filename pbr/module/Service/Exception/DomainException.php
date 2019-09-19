@@ -17,5 +17,4 @@ namespace Pbraiders\Service\Exception;
  */
 class DomainException extends \DomainException implements ExceptionInterface
 {
-
 }

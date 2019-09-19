@@ -18,7 +18,6 @@ namespace Pbraiders\Service\Logger;
  */
 class LineFormatter extends \Monolog\Formatter\LineFormatter
 {
-
     public function __construct()
     {
         // New formats

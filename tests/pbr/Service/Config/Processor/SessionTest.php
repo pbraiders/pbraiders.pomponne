@@ -5,45 +5,9 @@ declare(strict_types=1);
 namespace PbraidersTest\Pomponne\Service\Config\Processor;
 
 use Pbraiders\Pomponne\Service\Config\Processor\Session;
-use Pbraiders\Stdlib\ReflectionTrait;
 
 class SessionTest  extends \PHPUnit\Framework\TestCase
 {
-    use ReflectionTrait;
-
-    /**
-     * @covers \Pbraiders\Pomponne\Service\Config\Processor\Session
-     * @group specification
-     */
-    public function TestProcessCookieDomain()
-    {
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @covers \Pbraiders\Pomponne\Service\Config\Processor\Session
-     * @group specification
-     */
-    public function testProcessSessionSavePath()
-    {
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @covers \Pbraiders\Pomponne\Service\Config\Processor\Session
-     * @group specification
-     */
-    public function testProcessCookieSecure()
-    {
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
-    }
-
 
     /**
      * @covers \Pbraiders\Pomponne\Service\Config\Processor\Session
@@ -51,8 +15,36 @@ class SessionTest  extends \PHPUnit\Framework\TestCase
      */
     public function testProcess()
     {
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $aSettings = [
+            'application' => [
+                'temporary_path' => __DIR__,
+                'website' => [
+                    'host' => 'www.domain.tld',
+                    'scheme' => 'https',
+                ],
+            ],
+            'php' => [
+                'session.cookie_domain' => '',
+                'session.cookie_secure' => '0',
+                'session.save_path' => '',
+            ],
+        ];
+        $aExpected = [
+            'application' => [
+                'temporary_path' => __DIR__,
+                'website' => [
+                    'host' => 'www.domain.tld',
+                    'scheme' => 'https',
+                ],
+            ],
+            'php' => [
+                'session.cookie_domain' => 'www.domain.tld',
+                'session.cookie_secure' => '1',
+                'session.save_path' => __DIR__,
+            ],
+        ];
+        $pProcessor = new Session();
+        $aActual = $pProcessor->process($aSettings);
+        $this->assertEquals($aExpected, $aActual);
     }
 }

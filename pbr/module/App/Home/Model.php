@@ -19,5 +19,4 @@ use Pbraiders\Service\Utils\MediatorPattern\Colleague;
  */
 class Model extends Colleague
 {
-
 }
