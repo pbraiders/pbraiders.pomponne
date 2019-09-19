@@ -110,6 +110,7 @@ return [
 
     // These are various options for php.
     // Do not change unless you know what you are doing!
+    // All value must be string.
     'php' => [
 
         // Default timezone used by all date/time functions
