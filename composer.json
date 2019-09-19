@@ -46,7 +46,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Pbraiders\\Pomponne\\": "pbr/module/"
+            "Pbraiders\\Pomponne\\": "pbr/"
         }
     },
     "require-dev": {
@@ -61,7 +61,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "PbraidersTest\\": "tests/module/"
+            "PbraidersTest\\Pomponne\\": "tests/pbr/"
         }
     },
     "config": {
@@ -75,17 +75,17 @@
             "@analysebymd",
             "@analysebypsalm"
         ],
-        "analysebyphpstan": "vendor/bin/phpstan analyse src --level=max -c ./phpstan.neon --no-progress",
-        "analysebymd": "vendor/bin/phpmd src text ./phpmd.xml --exclude '*/vendor/*,*/old/*'",
-        "analysebypsalm": "vendor/bin/psalm --config=./psalm.xml",
-        "check": "vendor/bin/phpcs --standard=./phpcs.xml",
+        "analysebyphpstan": "lib/bin/phpstan analyse pbr --level=max -c ./phpstan.neon --no-progress",
+        "analysebymd": "lib/bin/phpmd pbr text ./phpmd.xml --exclude '*/lib/*,*/old/*'",
+        "analysebypsalm": "lib/bin/psalm --config=./psalm.xml",
+        "check": "lib/bin/phpcs --standard=./phpcs.xml",
         "fix": [
             "@fixbysquizlabs",
             "@fixbyfriendsofphp"
         ],
-        "fixbysquizlabs": "vendor/bin/phpcbf --standard=./phpcs.xml",
-        "fixbyfriendsofphp": "vendor/bin/php-cs-fixer fix --verbose --diff src",
-        "test": "vendor/bin/phpunit --configuration ./phpunit.xml.dist --colors=always --coverage-clover build/logs/clover.xml",
-        "testcover": "vendor/bin/phpunit --configuration ./phpunit.xml.dist --colors=always --coverage-html build/logs/codecoverage"
+        "fixbysquizlabs": "lib/bin/phpcbf --standard=./phpcs.xml",
+        "fixbyfriendsofphp": "lib/bin/php-cs-fixer fix --verbose --diff pbr",
+        "test": "lib/bin/phpunit --configuration ./phpunit.xml.dist --colors=always --coverage-clover build/logs/clover.xml",
+        "testcover": "lib/bin/phpunit --configuration ./phpunit.xml.dist --colors=always --coverage-html build/logs/codecoverage"
     }
 }

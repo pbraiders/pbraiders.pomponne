@@ -23,13 +23,13 @@
     timeoutForMediumTests="10"
     timeoutForLargeTests="60"
     verbose="true"
-    bootstrap="vendor/autoload.php">
+    bootstrap="lib/autoload.php">
     <php>
         <const name="PBR_PATH" value="."/>
     </php>
     <testsuites>
         <testsuite name="Pbraiders Test Suite">
-            <directory suffix="Test.php">tests</directory>
+            <directory suffix="Test.php">tests/pbr/Service</directory>
         </testsuite>
     </testsuites>
     <logging>
@@ -37,7 +37,7 @@
     </logging>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">pbr</directory>
+            <directory suffix=".php">pbr/Service</directory>
             <exclude>
                 <directory>lib</directory>
                 <directory>old</directory>
