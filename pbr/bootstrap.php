@@ -2,10 +2,8 @@
 
 declare(strict_types=1);
 
-use Pbraiders\Config\ArrayFactory;
-use Pbraiders\Config\Reader\FileMandatory;
-use Pbraiders\Config\Reader\FileOptional;
 use Pbraiders\Container\PhpDiFactory;
+use Pbraiders\Pomponne\Service\Config\Factory;
 
 /**
  * Loads and configures the application environment.
@@ -17,17 +15,26 @@ use Pbraiders\Container\PhpDiFactory;
 // Includes the Composer autoloader
 require 'lib' . \DIRECTORY_SEPARATOR . 'autoload.php';
 
-// Loads the settings
+/** @var string $sDir Working dir. */
+$sWorkingDir = getcwd();
+if (false === $sWorkingDir) {
+    die('Working dir is not defined');
+}
 
+/** @var Factory $pConfigFactory Config factory. */
+$pConfigFactory = new Factory();
+
+/** @var array $aSetting Settings. */
+$aSettings = $pConfigFactory->create($sWorkingDir);
 
 /**
- * Helper to create and configure a Container.
+ * Helper to create and configure the PSR-11 container.
  *
- * @var \DI\ContainerBuilder $pContainerBuilder
+ * @var PhpDiFactory $pContainerFactory
  */
-//$pContainerBuilder = new PhpDiFactory();
+//$pContainerFactory = new PhpDiFactory();
 
-exit('OK');
+exit(print_r($aSettings, true));
 
 
 

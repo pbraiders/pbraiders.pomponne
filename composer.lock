@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "57b8bd1794c08f1a2bcc0f349de2ed55",
+    "content-hash": "d20cfd3b7594e5863b4cf4773bd7896a",
     "packages": [
         {
             "name": "fig/http-message-util",
@@ -558,16 +558,16 @@
         },
         {
             "name": "pbraiders/config",
-            "version": "v1.0.4",
+            "version": "v1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pbraiders/config.git",
-                "reference": "5db76ade661a7f70aaed1a0c5dfb6d8f9becda19"
+                "reference": "99894634ec1a1e1997eeaa819d59b80d6b4ef34b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pbraiders/config/zipball/5db76ade661a7f70aaed1a0c5dfb6d8f9becda19",
-                "reference": "5db76ade661a7f70aaed1a0c5dfb6d8f9becda19",
+                "url": "https://api.github.com/repos/pbraiders/config/zipball/99894634ec1a1e1997eeaa819d59b80d6b4ef34b",
+                "reference": "99894634ec1a1e1997eeaa819d59b80d6b4ef34b",
                 "shasum": ""
             },
             "require": {
@@ -607,7 +607,7 @@
             "description": "PBRaiders Config component",
             "homepage": "https://github.com/pbraiders/config",
             "support": {
-                "source": "https://github.com/pbraiders/config/tree/v1.0.4",
+                "source": "https://github.com/pbraiders/config/tree/v1.0.5",
                 "issues": "https://github.com/pbraiders/config/issues"
             },
             "time": "2019-09-10T00:00:00+00:00"
@@ -3374,6 +3374,107 @@
             "time": "2018-02-15T16:58:55+00:00"
         },
         {
+            "name": "php-cs-fixer/phpunit-constraint-isidenticalstring",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PHP-CS-Fixer/phpunit-constraint-isidenticalstring.git",
+                "reference": "94e6d1032557253892b4797bc8b6262aac72d5f9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/phpunit-constraint-isidenticalstring/zipball/94e6d1032557253892b4797bc8b6262aac72d5f9",
+                "reference": "94e6d1032557253892b4797bc8b6262aac72d5f9",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.5 || ^7.0",
+                "phpunit/phpunit": "^5.7.23 || ^6.4.3 || ^7.0 || ^8.0",
+                "phpunitgoodpractices/polyfill": "^1.1"
+            },
+            "conflict": {
+                "hhvm": "*"
+            },
+            "require-dev": {
+                "johnkary/phpunit-speedtrap": "^1.1 || ^2.0 || ^3.0",
+                "symfony/phpunit-bridge": "^3.2.2 || ^4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PhpCsFixer\\PhpunitConstraintIsIdenticalString\\": "src/"
+                },
+                "files": [
+                    "src/Constraint/IsIdenticalString.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dariusz Rumiński",
+                    "email": "dariusz.ruminski@gmail.com"
+                }
+            ],
+            "description": "Constraint for testing strings considering not-same line endings.",
+            "time": "2019-03-25T08:22:50+00:00"
+        },
+        {
+            "name": "php-cs-fixer/phpunit-constraint-xmlmatchesxsd",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PHP-CS-Fixer/phpunit-constraint-xmlmatchesxsd.git",
+                "reference": "92e0ca8fd30b257a993a66511198267ca7d9d8eb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/phpunit-constraint-xmlmatchesxsd/zipball/92e0ca8fd30b257a993a66511198267ca7d9d8eb",
+                "reference": "92e0ca8fd30b257a993a66511198267ca7d9d8eb",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "ext-libxml": "*",
+                "php": "^5.5 || ^7.0",
+                "phpunit/phpunit": "^5.7.23 || ^6.4.3 || ^7.0 || ^8.0",
+                "phpunitgoodpractices/polyfill": "^1.1"
+            },
+            "conflict": {
+                "hhvm": "*"
+            },
+            "require-dev": {
+                "johnkary/phpunit-speedtrap": "^1.1 || ^2.0 || ^3.0",
+                "symfony/phpunit-bridge": "^3.2.2 || ^4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PhpCsFixer\\PhpunitConstraintXmlMatchesXsd\\": "src/"
+                },
+                "files": [
+                    "src/Constraint/XmlMatchesXsd.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dariusz Rumiński",
+                    "email": "dariusz.ruminski@gmail.com"
+                },
+                {
+                    "name": "SpacePossum"
+                }
+            ],
+            "description": "Constraint for testing XML against XSD.",
+            "time": "2019-03-25T12:51:00+00:00"
+        },
+        {
             "name": "phpdocumentor/reflection-common",
             "version": "2.0.0",
             "source": {
@@ -3940,6 +4041,56 @@
             "time": "2018-09-13T20:33:42+00:00"
         },
         {
+            "name": "phpunit/php-invoker",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/php-invoker.git",
+                "reference": "4a01883f660b10d4a19a14de5efd19b22eac2d93"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-invoker/zipball/4a01883f660b10d4a19a14de5efd19b22eac2d93",
+                "reference": "4a01883f660b10d4a19a14de5efd19b22eac2d93",
+                "shasum": ""
+            },
+            "require": {
+                "ext-pcntl": "*",
+                "php": "^7.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sebastian@phpunit.de",
+                    "role": "lead"
+                }
+            ],
+            "description": "Invoke callables with a timeout",
+            "homepage": "https://github.com/sebastianbergmann/php-invoker/",
+            "keywords": [
+                "process"
+            ],
+            "time": "2018-01-27T06:52:17+00:00"
+        },
+        {
             "name": "phpunit/php-text-template",
             "version": "1.2.1",
             "source": {
@@ -4160,6 +4311,52 @@
                 "xunit"
             ],
             "time": "2019-09-14T09:12:03+00:00"
+        },
+        {
+            "name": "phpunitgoodpractices/polyfill",
+            "version": "v1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PHPUnitGoodPractices/polyfill.git",
+                "reference": "1613c59be473c6b238c119607de820b9274c81fd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PHPUnitGoodPractices/polyfill/zipball/1613c59be473c6b238c119607de820b9274c81fd",
+                "reference": "1613c59be473c6b238c119607de820b9274c81fd",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.5 || ^7.0",
+                "phpunit/phpunit": "^4.0 || ^5.3 || ^6.0 || ^7.0 || ^8.0"
+            },
+            "conflict": {
+                "hhvm": "*"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.12"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/aliases.php"
+                ],
+                "psr-4": {
+                    "PHPUnitGoodPractices\\Polyfill\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dariusz Rumiński",
+                    "email": "dariusz.ruminski@gmail.com"
+                }
+            ],
+            "description": "Lacking future-compat polyfills for PHPUnit.",
+            "time": "2019-02-11T22:28:06+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",

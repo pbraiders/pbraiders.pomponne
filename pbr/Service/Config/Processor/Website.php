@@ -12,6 +12,8 @@ namespace Pbraiders\Pomponne\Service\Config\Processor;
 
 use League\Uri\Parser;
 use Pbraiders\Config\Processor\Processor;
+use Pbraiders\Pomponne\Service\Config\Exception\MissingSettingException;
+use Pbraiders\Pomponne\Service\Config\Exception\SettingNotValidException;
 
 use function Pbraiders\Stdlib\extractDepthKeyInArray;
 
@@ -34,7 +36,8 @@ class Website extends Processor
      * Process the setting structure and call the next processor.
      *
      * @param mixed $settings. Usely an array
-     * @throws \RuntimeException If settings is missing.
+     * @throws MissingSettingException If settings is missing.
+     * @throws SettingNotValidException If settings is not valid.
      * @throws \InvalidArgumentException If URl is not valid.
      * @return mixed Returns the modified config.
      */
@@ -45,11 +48,11 @@ class Website extends Processor
         /** @var mixed|null */
         $sValue = extractDepthKeyInArray($settings, $this->aFilter);
         if (! is_string($sValue)) {
-            throw new \RuntimeException('The application.website.url setting is missing in the config file.');
+            throw new MissingSettingException('The application.website.url setting is missing in the config file.');
         }
         $sValue = trim($sValue);
         if (strlen($sValue) == 0) {
-            throw new \RuntimeException('The application.website.url setting is not valid.');
+            throw new SettingNotValidException('The application.website.url setting is not valid.');
         }
 
         // Parse the url according to RFC3986

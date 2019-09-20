@@ -18,49 +18,20 @@ return [
 
     'application' => [
 
+        // Configure PBRaiders website URL. If PBRaiders is installed into a directory called "pbraiders" for the
+        //  domain www.example.com, define ['website']['url'] like this:
+        'website' => [
+            'url' => 'https://www.example.com/pbraiders/',
+        ],
+
         // Temporary directory.
-        'temporary_path' => \PBR_PATH . \DIRECTORY_SEPARATOR . 'data' . \DIRECTORY_SEPARATOR . 'tmp',
-
-        // Cache directory. While developping, set it to false to deactivate all caches.
-        'cache_path' => \PBR_PATH . \DIRECTORY_SEPARATOR . 'data' . \DIRECTORY_SEPARATOR . 'cache',
-
-    ],
-
-    'service' => [
-
-        // Configure database settings.
-        'database' => [
-            // Database Name used by PBRaiders.
-            'name' => 'the_database_name',
-            // Username used to access Database.
-            'username' => 'the_user_name',
-            // Password used by Username to access Database.
-            'password' => 'the_password',
-            // The hostname of your Database Server. A port number, Unix socket file path or pipe may be needed as well.
-            'host' => 'localhost',
-            // Driver
-            'driver' => 'mysql',
-            // Charset
-            'charset' => 'utf8mb4',
-            // Collation
-            'collation' => 'utf8mb4_unicode_ci',
-        ],
-
-        'error' => [
-            // If set to 1, the application will use 'whoops error handling library' instead of the default PHP one.
-            // Usefull during development.
-            'use_whoops' => false,
-        ],
-
-        'logger' => [
-            // Name of the file where application errors should be logged.
-            'error_log' => sprintf('%s/data/log/%s_pbraiders_error.log', \PBR_PATH, date("Ymd")),
-        ],
+        'temporary_path' => 'var' . \DIRECTORY_SEPARATOR . 'tmp',
 
     ],
 
     // These are various options for php.
     // Do not change unless you know what you are doing!
+    // All value must be string.
     'php' => [
 
         // Default timezone used by all date/time functions
@@ -96,9 +67,6 @@ return [
 
         // Tells whether script error messages should be logged to the server's error log or error_log.
         'log_errors' => '1',
-
-        // Name of the file where script errors should be logged.
-        'error_log' => sprintf('%s/data/log/%s_php_error.log', \PBR_PATH, date("Ymd")),
 
         // Session cache expire.
         'session.cache_expire' => '180',

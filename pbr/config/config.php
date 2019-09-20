@@ -25,10 +25,10 @@ return [
         ],
 
         // Temporary directory.
-        'temporary_path' => 'var' . \DIRECTORY_SEPARATOR . 'tmp',
+        'temporary_path' => sprintf('%s/var/tmp', getcwd()),
 
         // Cache directory. While developping, set it to false to deactivate all caches.
-        'cache_path' => \PBR_PATH . \DIRECTORY_SEPARATOR . 'data' . \DIRECTORY_SEPARATOR . 'cache',
+        'cache_path' => sprintf('%s/var/cache', getcwd()),
 
     ],
 
@@ -71,39 +71,12 @@ return [
 
         'logger' => [
             // Name of the file where application errors should be logged.
-            'error_log' => sprintf('%s/data/log/%s_pbraiders_error.log', \PBR_PATH, date("Ymd")),
+            'error_log' => sprintf('%s/var/log/%s_pbraiders_error.log', getcwd(), date("Ymd")),
         ],
 
         'templating_engine' => [
             // Common templates directory
-            'template_path' => \PBR_PATH . \DIRECTORY_SEPARATOR . 'module' . \DIRECTORY_SEPARATOR . 'template',
-        ],
-
-    ],
-
-    // These are various options for the modules used in this application.
-    'module' => [
-
-        'cookie' => [
-            'domain' => 'localhost',
-            'httpOnly' => true,
-            'path' => '/',
-            'secure' => false,
-        ],
-
-        'contact' => [
-            // Number of items to display per page.
-            'paging' => 50,
-        ],
-
-        'rent' => [
-            // Number of items to display per page.
-            'paging' => 50,
-        ],
-
-        'print' => [
-            // Number of items to print before break page.
-            'paging' => 6,
+            //'template_path' => \PBR_PATH . \DIRECTORY_SEPARATOR . 'module' . \DIRECTORY_SEPARATOR . 'template',
         ],
 
     ],
@@ -148,7 +121,7 @@ return [
         'log_errors' => '1',
 
         // Name of the file where script errors should be logged.
-        'error_log' => sprintf('%s/data/log/%s_php_error.log', \PBR_PATH, date("Ymd")),
+        'error_log' => sprintf('%s/var/log/%s_php_error.log', getcwd(), date("Ymd")),
 
         // Session cache expire.
         'session.cache_expire' => '180',

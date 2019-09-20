@@ -11,6 +11,9 @@ declare(strict_types=1);
 namespace Pbraiders\Pomponne\Service\Config\Processor;
 
 use Pbraiders\Config\Processor\Processor;
+use Pbraiders\Pomponne\Service\Config\Exception\DirectoryNotExistNorWritableException;
+use Pbraiders\Pomponne\Service\Config\Exception\MissingSettingException;
+use Pbraiders\Pomponne\Service\Config\Exception\SettingNotValidException;
 
 use function Pbraiders\Stdlib\extractDepthKeyInArray;
 
@@ -24,7 +27,8 @@ class Session extends Processor
      * Update the session.cookie_domain setting.
      *
      * @param array $aSettings
-     * @throws \RuntimeException If settings is missing.
+     * @throws MissingSettingException If settings is missing.
+     * @throws SettingNotValidException If settings is not valid.
      * @return void
      */
     protected function processCookieDomain(array &$aSettings): void
@@ -45,11 +49,11 @@ class Session extends Processor
         /** @var mixed|null */
         $sValue = extractDepthKeyInArray($aSettings, $aFilter);
         if (! is_string($sValue)) {
-            throw new \RuntimeException('The application.website.host setting is missing in the config file.');
+            throw new MissingSettingException('The application.website.host setting is missing in the config file.');
         }
         $sValue = trim($sValue);
         if (strlen($sValue) == 0) {
-            throw new \RuntimeException('The application.website.host setting is not a valid.');
+            throw new SettingNotValidException('The application.website.host setting is not a valid.');
         }
 
         // Update php session settings
@@ -60,7 +64,9 @@ class Session extends Processor
      * Update the session.save_path setting.
      *
      * @param array $aSettings
-     * @throws \RuntimeException If settings is missing.
+     * @throws MissingSettingException If settings is missing.
+     * @throws SettingNotValidException If settings is not valid.
+     * @throws DirectoryNotExistNorWritableException If directory does not exist nor writable.
      * @return void
      */
     protected function processSessionSavePath(array &$aSettings): void
@@ -79,14 +85,14 @@ class Session extends Processor
         /** @var mixed|null */
         $sValue = extractDepthKeyInArray($aSettings, $aFilter);
         if (! is_string($sValue)) {
-            throw new \RuntimeException('The application.temporary_path setting is missing in the config file.');
+            throw new MissingSettingException('The application.temporary_path setting is missing in the config file.');
         }
         $sValue = trim($sValue);
         if (strlen($sValue) == 0) {
-            throw new \RuntimeException('The application.temporary_path setting is not valid.');
+            throw new SettingNotValidException('The application.temporary_path setting is not valid.');
         }
         if (! is_dir($sValue) || ! is_writable($sValue)) {
-            throw new \RuntimeException('The application.temporary_path setting is not a directory nor writeable.');
+            throw new DirectoryNotExistNorWritableException('The application.temporary_path setting is not a directory nor writeable.');
         }
         // Update php session settings
         $aSettings['php']['session.save_path'] = $sValue;
@@ -96,7 +102,8 @@ class Session extends Processor
      * Update the session.cookie_secure setting.
      *
      * @param array $aSettings
-     * @throws \RuntimeException If settings is missing.
+     * @throws MissingSettingException If settings is missing.
+     * @throws SettingNotValidException If settings is not valid.
      * @return void
      */
     protected function processCookieSecure(array &$aSettings): void
@@ -120,11 +127,11 @@ class Session extends Processor
         /** @var mixed|null */
         $sValue = extractDepthKeyInArray($aSettings, $aFilter);
         if (! is_string($sValue)) {
-            throw new \RuntimeException('The application.website.scheme setting is missing in the config file.');
+            throw new MissingSettingException('The application.website.scheme setting is missing in the config file.');
         }
         $sValue = strtolower($sValue);
         if (! in_array($sValue, $aSchemes, true)) {
-            throw new \RuntimeException('The application.website.scheme setting is not valid.');
+            throw new SettingNotValidException('The application.website.scheme setting is not valid.');
         }
 
         // Update php session settings
@@ -139,7 +146,9 @@ class Session extends Processor
      * Process the setting structure and call the next processor.
      *
      * @param mixed $settings. Usely an array
-     * @throws \RuntimeException If settings is missing or is not valid.
+     * @throws MissingSettingException If settings is missing.
+     * @throws SettingNotValidException If settings is not valid.
+     * @throws DirectoryNotExistNorWritableException If directory does not exist nor writable.
      * @return mixed Returns the modified config.
      */
     public function process($settings)

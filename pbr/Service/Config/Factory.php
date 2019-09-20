@@ -13,7 +13,8 @@ namespace Pbraiders\Pomponne\Service\Config;
 use Pbraiders\Config\ArrayFactory;
 use Pbraiders\Config\Reader\FileMandatory;
 use Pbraiders\Config\Reader\FileOptional;
-use Pbraiders\Pomponne\Service\Config\Exception;
+use Pbraiders\Pomponne\Service\Config\Exception\DirectoryNotExistNorWritableException;
+use Pbraiders\Config\Exception\FileDoNotExistNorReadableException;
 use Pbraiders\Pomponne\Service\Config\Processor\Session;
 use Pbraiders\Pomponne\Service\Config\Processor\Website;
 
@@ -26,20 +27,19 @@ class Factory
      * Build an array from php file.
      *
      * @param string $dir Current working directory.
-     * @throws Exception\InvalidWorkingDirException If the current working dir is not valid
-     * @throws \RuntimeException If file does not exist.
+     * @throws DirectoryNotExistNorWritableException If the current working dir is not valid
+     * @throws FileDoNotExistNorReadableException If file does not exist.
      * @return array
      */
     public function create(string $dir): array
     {
         // Init
         $sCurrentWorkingDirectory = trim($dir);
-        if (
-            (strlen($sCurrentWorkingDirectory) == 0)
-            || !is_dir($sCurrentWorkingDirectory)
-            || !is_readable($sCurrentWorkingDirectory)
+        if ((strlen($sCurrentWorkingDirectory) == 0)
+            || ! is_dir($sCurrentWorkingDirectory)
+            || ! is_readable($sCurrentWorkingDirectory)
         ) {
-            throw new Exception\InvalidWorkingDirException(
+            throw new DirectoryNotExistNorWritableException(
                 \sprintf(
                     "the directory %s does not exist or is not writable.",
                     $sCurrentWorkingDirectory
@@ -58,7 +58,7 @@ class Factory
 
         // Local reader
         $pReaderLocal = new FileOptional();
-        $pReaderMain->setSource(
+        $pReaderLocal->setSource(
             $sCurrentWorkingDirectory
                 . \DIRECTORY_SEPARATOR . 'pbr'
                 . \DIRECTORY_SEPARATOR . 'config'
