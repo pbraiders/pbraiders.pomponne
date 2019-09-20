@@ -25,7 +25,7 @@ return [
         ],
 
         // Temporary directory.
-        'temporary_path' => \PBR_PATH . \DIRECTORY_SEPARATOR . 'data' . \DIRECTORY_SEPARATOR . 'tmp',
+        'temporary_path' => 'var' . \DIRECTORY_SEPARATOR . 'tmp',
 
         // Cache directory. While developping, set it to false to deactivate all caches.
         'cache_path' => \PBR_PATH . \DIRECTORY_SEPARATOR . 'data' . \DIRECTORY_SEPARATOR . 'cache',

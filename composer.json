@@ -50,8 +50,14 @@
         }
     },
     "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.15",
         "php-coveralls/php-coveralls": "^2.1",
-        "phpunit/phpunit": "^8"
+        "phpmd/phpmd": "@stable",
+        "phpstan/phpstan": "^0.11",
+        "phpstan/phpstan-strict-rules": "^0.11",
+        "phpunit/phpunit": "^8",
+        "squizlabs/php_codesniffer": "*",
+        "vimeo/psalm": "^3.4"
     },
     "autoload-dev": {
         "psr-4": {
@@ -64,6 +70,22 @@
         "vendor-dir": "lib"
     },
     "scripts": {
-        "test": "lib/bin/phpunit --configuration ./phpunit.xml.dist --colors=always --coverage-clover build/logs/clover.xml"
+        "analyse": [
+            "@analysebyphpstan",
+            "@analysebymd",
+            "@analysebypsalm"
+        ],
+        "analysebyphpstan": "lib/bin/phpstan analyse pbr --level=max -c ./phpstan.neon --no-progress",
+        "analysebymd": "lib/bin/phpmd pbr text ./phpmd.xml --exclude '*/lib/*,*/old/*'",
+        "analysebypsalm": "lib/bin/psalm --config=./psalm.xml",
+        "check": "lib/bin/phpcs --standard=./phpcs.xml",
+        "fix": [
+            "@fixbysquizlabs",
+            "@fixbyfriendsofphp"
+        ],
+        "fixbysquizlabs": "lib/bin/phpcbf --standard=./phpcs.xml",
+        "fixbyfriendsofphp": "lib/bin/php-cs-fixer fix --verbose --diff pbr",
+        "test": "lib/bin/phpunit --configuration ./phpunit.xml.dist --colors=always --coverage-clover build/logs/clover.xml",
+        "testcover": "lib/bin/phpunit --configuration ./phpunit.xml.dist --colors=always --coverage-html build/logs/codecoverage"
     }
 }

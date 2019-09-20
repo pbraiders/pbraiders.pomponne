@@ -9,10 +9,10 @@ declare(strict_types=1);
  * @license https://github.com/pbraiders/pomponne/blob/master/LICENSE GNU General Public License v3.0 License.
  */
 
-/** @var ROOT_PATH document root path */
-define('ROOT_PATH', realpath(__DIR__));
+/**
+ * This makes our life easier when dealing with paths. Everything is relative
+ * to the application root now.
+ */
+chdir(__DIR__) || exit(31);
 
-/** @var PBR_PATH PBR path */
-define('PBR_PATH', \ROOT_PATH . \DIRECTORY_SEPARATOR . 'pbr');
-
-require \PBR_PATH . \DIRECTORY_SEPARATOR . 'bootstrap.php';
+require 'pbr' . \DIRECTORY_SEPARATOR . 'bootstrap.php';

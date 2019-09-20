@@ -2,6 +2,11 @@
 
 declare(strict_types=1);
 
+use Pbraiders\Config\ArrayFactory;
+use Pbraiders\Config\Reader\FileMandatory;
+use Pbraiders\Config\Reader\FileOptional;
+use Pbraiders\Container\PhpDiFactory;
+
 /**
  * Loads and configures the application environment.
  *
@@ -10,14 +15,36 @@ declare(strict_types=1);
  */
 
 // Includes the Composer autoloader
-require \ROOT_PATH . \DIRECTORY_SEPARATOR . 'vendor' . \DIRECTORY_SEPARATOR . 'autoload.php';
+require 'lib' . \DIRECTORY_SEPARATOR . 'autoload.php';
+
+// Loads the settings
+
 
 /**
  * Helper to create and configure a Container.
  *
  * @var \DI\ContainerBuilder $pContainerBuilder
  */
-$pContainerBuilder = new \DI\ContainerBuilder();
+//$pContainerBuilder = new PhpDiFactory();
+
+exit('OK');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /**
  * Creates the container and loads all the needed services.
@@ -58,7 +85,7 @@ $aSettings = $pContainer->get('settings');
  * These options will keep there new values during the script's execution,
  * and will be restored at the script's ending.
  */
-if (! empty($aSettings['php'])) {
+if (!empty($aSettings['php'])) {
     $pContainer->get(\Pbraiders\Service\Utils\Stdlib::class)->configurePHP($aSettings['php']);
 }
 
@@ -69,7 +96,7 @@ if (! empty($aSettings['php'])) {
  * Out-of-the-box, it provides a pretty error interface that helps you debug your web projects,
  * but at heart it's a simple yet powerful stacked error handling system.
  */
-if ((! empty($aSettings['service']['error']['use_whoops']))) {
+if ((!empty($aSettings['service']['error']['use_whoops']))) {
     $pContainer->get('errorhandler')->register();
 }
 
