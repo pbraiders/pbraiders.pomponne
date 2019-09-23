@@ -3,7 +3,10 @@
 declare(strict_types=1);
 
 use Pbraiders\Container\PhpDiFactory;
-use Pbraiders\Pomponne\Service\Config\Factory;
+use Pbraiders\Pomponne\Service\Config\Factory as ConfigFactory;
+use Pbraiders\Pomponne\Service\Container\Factory as ContainerFactory;
+
+use function Pbraiders\Stdlib\configurePHP;
 
 /**
  * Loads and configures the application environment.
@@ -15,24 +18,41 @@ use Pbraiders\Pomponne\Service\Config\Factory;
 // Includes the Composer autoloader
 require 'lib' . \DIRECTORY_SEPARATOR . 'autoload.php';
 
-/** @var string $sDir Working dir. */
+/**
+ * Defines the working directory.
+ *
+ * We keep the actual working directory.
+ * This method works well in production and development environment.
+ *
+ * @var string $sDir Working dir.
+ */
 $sWorkingDir = getcwd();
 if (false === $sWorkingDir) {
-    die('Working dir is not defined');
+    die('The working directory is not defined. Stop.');
 }
 
-/** @var Factory $pConfigFactory Config factory. */
-$pConfigFactory = new Factory();
-
-/** @var array $aSetting Settings. */
-$aSettings = $pConfigFactory->create($sWorkingDir);
+/**
+ * Loads the settings from the configuration files.
+ *
+ * We use the config factory helper to loads and merges the configuration files.
+ *
+ * @var array $aSetting Settings.
+ */
+$aSettings = (new ConfigFactory())->create($sWorkingDir);
 
 /**
- * Helper to create and configure the PSR-11 container.
+ * Configures PHP.
  *
- * @var PhpDiFactory $pContainerFactory
+ * We modify the configuration options using the ini_set php command.
+ * These options will keep there new values during the script's execution,
+ * and will be restored at the script's ending.
  */
-//$pContainerFactory = new PhpDiFactory();
+if (!empty($aSettings['php'])) {
+    configurePHP($aSettings['php']);
+}
+
+/** @var PhpDiFactory $pContainerFactory Helper to create and configure the PSR-11 container. */
+$pContainerFactory = (new ContainerFactory())->create($aSettings);
 
 exit(print_r($aSettings, true));
 
@@ -85,16 +105,6 @@ $pContainer = \Pbraiders\Service\Container\Factory::createFromInvokables(
  */
 $aSettings = $pContainer->get('settings');
 
-/**
- * Configures PHP.
- *
- * We modify the configuration options using the ini_set php command.
- * These options will keep there new values during the script's execution,
- * and will be restored at the script's ending.
- */
-if (!empty($aSettings['php'])) {
-    $pContainer->get(\Pbraiders\Service\Utils\Stdlib::class)->configurePHP($aSettings['php']);
-}
 
 /**
  * In debug mode / development environment we activate Whoops globally, not as a middleware.
