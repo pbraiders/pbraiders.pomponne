@@ -2,54 +2,68 @@
 
 declare(strict_types=1);
 
-use Pbraiders\Container\PhpDiFactory;
-use Pbraiders\Pomponne\Service\Config\Factory as ConfigFactory;
-use Pbraiders\Pomponne\Service\Container\Factory as ContainerFactory;
-
-use function Pbraiders\Stdlib\configurePHP;
-
 /**
- * Loads and configures the application environment.
- *
+ * @package Pbraiders\Pomponne\Application
  * @link    https://github.com/pbraiders/pomponne for the canonical source repository
  * @license https://github.com/pbraiders/pomponne/blob/master/LICENSE GNU General Public License v3.0 License.
  */
 
-// Includes the Composer autoloader
-require 'lib' . \DIRECTORY_SEPARATOR . 'autoload.php';
+namespace Pbraiders\Pomponne\Application;
 
-/**
- * Defines the working directory.
- *
- * We keep the actual working directory.
- * This method works well in production and development environment.
- *
- * @var string $sDir Working dir.
- */
-$sWorkingDir = getcwd();
-if (false === $sWorkingDir) {
-    die('The working directory is not defined. Stop.');
+use Pbraiders\Pomponne\Service\Config\Factory as ConfigFactory;
+
+use function Pbraiders\Stdlib\configurePHP;
+
+class Application
+{
+
+    /**
+     * Constructor.
+     *
+     * @param string|null $dir Working dir.
+     */
+    public function __construct(?string $dir = null)
+    { }
+
+    public static function init(?string $dir = null)
+    {
+        /**
+         * Defines the working directory.
+         *
+         * We keep the actual working directory.
+         * This method works well in production and development environment.
+         *
+         * @var string|bool $sWorkingDir Working dir.
+         */
+        $sWorkingDir = is_null($dir) ? getcwd() : trim($dir);
+        if ((false === $sWorkingDir) || (strlen($sWorkingDir) == 0)) {
+            die('The working directory is not defined. Stop.');
+        }
+
+        /**
+         * Loads the settings from the configuration files.
+         *
+         * We use the config factory helper to loads and merges the configuration files.
+         *
+         * @var array $aSetting Settings.
+         */
+        $aSettings = (new ConfigFactory())->create($sWorkingDir);
+
+        /**
+         * Configures PHP.
+         *
+         * We modify the configuration options using the ini_set php command.
+         * These options will keep there new values during the script's execution,
+         * and will be restored at the script's ending.
+         */
+        if (!empty($aSettings['php'])) {
+            configurePHP($aSettings['php']);
+        }
+    }
 }
 
-/**
- * Loads the settings from the configuration files.
- *
- * We use the config factory helper to loads and merges the configuration files.
- *
- * @var array $aSetting Settings.
- */
-$aSettings = (new ConfigFactory())->create($sWorkingDir);
 
-/**
- * Configures PHP.
- *
- * We modify the configuration options using the ini_set php command.
- * These options will keep there new values during the script's execution,
- * and will be restored at the script's ending.
- */
-if (!empty($aSettings['php'])) {
-    configurePHP($aSettings['php']);
-}
+
 
 /** @var PhpDiFactory $pContainerFactory Helper to create and configure the PSR-11 container. */
 $pContainerFactory = (new ContainerFactory())->create($aSettings);

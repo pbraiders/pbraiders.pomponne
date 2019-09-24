@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace PbraidersTest\Pomponne\Service\Container;
 
-use Pbraiders\Pomponne\Service\Container\Factory;
+use Pbraiders\Container\PhpDiFactory;
+use Pbraiders\Pomponne\Service\Config\Exception\MissingSettingException;
+use Pbraiders\Pomponne\Service\Container\Factory as ContainerFactory;
 
 class FactoryTest extends \PHPUnit\Framework\TestCase
 {
@@ -14,15 +16,81 @@ class FactoryTest extends \PHPUnit\Framework\TestCase
      */
     public function testCreate()
     {
-        $this->markTestIncomplete('This test has not been implemented yet.');
+        $aData = [
+            'application' => [
+                'cache_path' => sprintf('%s/var/cache', getcwd()),
+            ],
+            'service' => [
+                'container' => [
+                    'enable_compilation' => true,
+                    'write_proxies_to_file' => true
+                ],
+            ],
+        ];
+        $pFactory = new ContainerFactory();
+        $pPHPDIFactory = $pFactory->create($aData);
+        $this->assertTrue($pPHPDIFactory instanceof PhpDiFactory);
     }
 
     /**
      * @covers \Pbraiders\Pomponne\Service\Container\Factory
      * @group specification
      */
-    public function testCreateException()
+    public function testCachePathException()
     {
-        $this->markTestIncomplete('This test has not been implemented yet.');
+        $aData = [
+            'application' => [],
+            'service' => [
+                'container' => [
+                    'enable_compilation' => true,
+                    'write_proxies_to_file' => true
+                ],
+            ],
+        ];
+        $pFactory = new ContainerFactory();
+        $this->expectException(MissingSettingException::class);
+        $pFactory->create($aData);
+    }
+
+    /**
+     * @covers \Pbraiders\Pomponne\Service\Container\Factory
+     * @group specification
+     */
+    public function testCompilationException()
+    {
+        $aData = [
+            'application' => [
+                'cache_path' => 'here',
+            ],
+            'service' => [
+                'container' => [
+                    'write_proxies_to_file' => true
+                ],
+            ],
+        ];
+        $pFactory = new ContainerFactory();
+        $this->expectException(MissingSettingException::class);
+        $pFactory->create($aData);
+    }
+
+    /**
+     * @covers \Pbraiders\Pomponne\Service\Container\Factory
+     * @group specification
+     */
+    public function testProxyException()
+    {
+        $aData = [
+            'application' => [
+                'cache_path' => 'here',
+            ],
+            'service' => [
+                'container' => [
+                    'enable_compilation' => true,
+                ],
+            ],
+        ];
+        $pFactory = new ContainerFactory();
+        $this->expectException(MissingSettingException::class);
+        $pFactory->create($aData);
     }
 }

@@ -15,4 +15,7 @@ declare(strict_types=1);
  */
 chdir(dirname(__DIR__)) || exit(30);
 
+// Includes the Composer autoloader
+require 'lib' . \DIRECTORY_SEPARATOR . 'autoload.php';
+
 require 'pbr' . \DIRECTORY_SEPARATOR . 'bootstrap.php';

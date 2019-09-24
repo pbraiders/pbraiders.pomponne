@@ -614,16 +614,16 @@
         },
         {
             "name": "pbraiders/container",
-            "version": "v1.0.3",
+            "version": "v1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pbraiders/container.git",
-                "reference": "0e0e757caff335b2eebadb3371a4ed69474d87ce"
+                "reference": "6444a744192a06456b5ff1297372967fd6fba4d3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pbraiders/container/zipball/0e0e757caff335b2eebadb3371a4ed69474d87ce",
-                "reference": "0e0e757caff335b2eebadb3371a4ed69474d87ce",
+                "url": "https://api.github.com/repos/pbraiders/container/zipball/6444a744192a06456b5ff1297372967fd6fba4d3",
+                "reference": "6444a744192a06456b5ff1297372967fd6fba4d3",
                 "shasum": ""
             },
             "require": {
@@ -665,7 +665,7 @@
             "description": "PSR-11 dependency injection container factory",
             "homepage": "https://github.com/pbraiders/container",
             "support": {
-                "source": "https://github.com/pbraiders/container/tree/v1.0.3",
+                "source": "https://github.com/pbraiders/container/tree/v1.0.4",
                 "issues": "https://github.com/pbraiders/container/issues"
             },
             "time": "2019-09-10T00:00:00+00:00"
@@ -1494,16 +1494,16 @@
     "packages-dev": [
         {
             "name": "amphp/amp",
-            "version": "v2.2.0",
+            "version": "v2.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/amphp/amp.git",
-                "reference": "c6a775a6c9fdd9ca4c909647a19b02d2d11a0568"
+                "reference": "49a0bf693d5e60e578e5518d87fe7025244f9db5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/amphp/amp/zipball/c6a775a6c9fdd9ca4c909647a19b02d2d11a0568",
-                "reference": "c6a775a6c9fdd9ca4c909647a19b02d2d11a0568",
+                "url": "https://api.github.com/repos/amphp/amp/zipball/49a0bf693d5e60e578e5518d87fe7025244f9db5",
+                "reference": "49a0bf693d5e60e578e5518d87fe7025244f9db5",
                 "shasum": ""
             },
             "require": {
@@ -1514,7 +1514,7 @@
                 "amphp/phpunit-util": "^1",
                 "ext-json": "*",
                 "phpstan/phpstan": "^0.8.5",
-                "phpunit/phpunit": "^6.0.9",
+                "phpunit/phpunit": "^6.0.9 | ^7",
                 "react/promise": "^2"
             },
             "type": "library",
@@ -1567,7 +1567,7 @@
                 "non-blocking",
                 "promise"
             ],
-            "time": "2019-08-02T20:37:42+00:00"
+            "time": "2019-09-21T21:29:37+00:00"
         },
         {
             "name": "amphp/byte-stream",
