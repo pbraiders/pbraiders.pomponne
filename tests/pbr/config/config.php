@@ -25,20 +25,59 @@ return [
         ],
 
         // Temporary directory.
-        'temporary_path' => 'var' . \DIRECTORY_SEPARATOR . 'tmp',
+        'temporary_path' => sprintf('%s/var/tmp', getcwd()),
+
+        // Cache directory. While developping.
+        'cache_path' => sprintf('%s/var/cache', getcwd()),
 
     ],
+
     'service' => [
+
+        // Configure container settings.
+        'container' => [
+            // When a container is configured to be compiled, it will be compiled once and never be regenerated again.
+            // That allows for maximum performances in production.
+            // When you deploy new versions of your code to production you must delete the generated file
+            // (or the directory that contains it) to ensure that the container is re-compiled.
+            // @see php-di.org/doc/performances.html
+            'enable_compilation' => true,
+            'write_proxies_to_file' => true,
+        ],
+
+        // Configure database settings.
+        'database' => [
+            // Database Name used by PBRaiders.
+            'name' => 'the_database_name',
+            // Username used to access Database.
+            'username' => 'the_user_name',
+            // Password used by Username to access Database.
+            'password' => 'the_password',
+            // The hostname of your Database Server. A port number, Unix socket file path or pipe may be needed as well.
+            'host' => 'localhost',
+            // Driver
+            'driver' => 'mysql',
+            // Charset
+            'charset' => 'utf8mb4',
+            // Collation
+            'collation' => 'utf8mb4_unicode_ci',
+        ],
+
         'error' => [
             // If set to true, the application will use 'whoops error handling library' instead of the default PHP one.
             // Usefull during development.
-            'use_whoops' => true,
+            'use_whoops' => false,
+        ],
+
+        'logger' => [
+            // Name of the file where application errors should be logged.
+            'error_log' => sprintf('%s/var/log/%s_pbraiders_error.log', getcwd(), date("Ymd")),
         ],
     ],
 
     // These are various options for php.
     // Do not change unless you know what you are doing!
-    // All value must be string.
+    // All values must be string.
     'php' => [
 
         // Default timezone used by all date/time functions
@@ -74,6 +113,9 @@ return [
 
         // Tells whether script error messages should be logged to the server's error log or error_log.
         'log_errors' => '1',
+
+        // Name of the file where script errors should be logged.
+        'error_log' => sprintf('%s/var/log/%s_php_error.log', getcwd(), date("Ymd")),
 
         // Session cache expire.
         'session.cache_expire' => '180',

@@ -27,7 +27,7 @@ return [
         // Temporary directory.
         'temporary_path' => sprintf('%s/var/tmp', getcwd()),
 
-        // Cache directory. While developping, set it to false to deactivate all caches.
+        // Cache directory. While developping.
         'cache_path' => sprintf('%s/var/cache', getcwd()),
 
     ],

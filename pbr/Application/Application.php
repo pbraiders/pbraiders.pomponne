@@ -11,9 +11,12 @@ declare(strict_types=1);
 namespace Pbraiders\Pomponne\Application;
 
 use Pbraiders\Config\Exception\FileDoNotExistNorReadableException;
+use Pbraiders\Container\PhpDiFactory;
 use Pbraiders\Pomponne\Service\Config\Exception\DirectoryNotExistNorWritableException;
+use Pbraiders\Pomponne\Service\Config\Exception\MissingSettingException;
 use Pbraiders\Pomponne\Application\Exception\WorkingDirNotValidException;
 use Pbraiders\Pomponne\Service\Config\Factory as ConfigFactory;
+use Pbraiders\Pomponne\Service\Container\Factory as ContainerFactory;
 use Pbraiders\Pomponne\Service\ErrorHandler\Factory as ErrorHandlerFactory;
 
 use function Pbraiders\Stdlib\configurePHP;
@@ -21,30 +24,41 @@ use function Pbraiders\Stdlib\extractDepthKeyInArray;
 
 class Application
 {
+    /**
+     * Undocumented variable
+     *
+     * @var \Pbraiders\Container\PhpDiFactory
+     */
+    protected $pContainerFactory;
 
     /**
      * Constructor.
      *
-     * @param string|null $dir Working dir.
+     * @param \Pbraiders\Container\PhpDiFactory $factory
      */
-    //    public function __construct(?string $dir = null)
-    //    { }
+    public function __construct(PhpDiFactory $factory)
+    {
+        $this->pContainerFactory = $factory;
+    }
 
     /**
      * Constructor.
      */
     public function run(): void
     {
-        echo 'hello', PHP_EOL;
+        //throw new Exception("Whoops test", 1);
+        echo 'Hello', \PHP_EOL;
     }
 
     /**
      * Static method for quick and easy initialization of the Application.
      *
      * @param string|null $dir Working directory
-     * @throws WorkingDirNotValidException If the working directory parameter is not valid.
+     * @throws WorkingDirNotValidException If the working directory argument is not valid.
      * @throws DirectoryNotExistNorWritableException If the current working dir is not valid.
-     * @throws FileDoNotExistNorReadableException If the ocnfig file does not exist.
+     * @throws FileDoNotExistNorReadableException If the config file does not exist.
+     * @throws MissingSettingException If a setting is missing.
+     * @throws \InvalidArgumentException if the definition registrement is not valid.
      * @return Application
      */
     public static function init(?string $dir = null): Application
@@ -88,23 +102,24 @@ class Application
          * Whoops is an error handler framework for PHP.
          * Out-of-the-box, it provides a pretty error interface that helps you debug your web projects,
          * but at heart it's a simple yet powerful stacked error handling system.
+         *
+         * @var mixed $bUseWhoops
          */
         $bUseWhoops = extractDepthKeyInArray($aSettings, ['service' => ['error' => ['use_whoops' => true]]]);
         if (true === $bUseWhoops) {
             (new ErrorHandlerFactory())->create()->register();
         }
 
-        return new Application();
+        /**
+         * Creates the container factory from the settings.
+         *
+         * @var PhpDiFactory $pContainerFactory Helper to create and configure the PSR-11 container.
+         */
+        $pContainerFactory = (new ContainerFactory())->create($aSettings);
+
+        return new Application($pContainerFactory);
     }
 }
-
-
-
-
-/** @var PhpDiFactory $pContainerFactory Helper to create and configure the PSR-11 container. */
-//$pContainerFactory = (new ContainerFactory())->create($aSettings);
-
-//exit(print_r($aSettings, true));
 
 /**
  * Creates the container and loads all the needed services.
