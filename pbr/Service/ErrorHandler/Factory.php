@@ -23,6 +23,7 @@ final class Factory
     /**
      * Creates the error handler.
      *
+     * @throws \InvalidArgumentException  If handler is not callable or instance of HandlerInterface
      * @return \Whoops\Run
      */
     public function create(): Run
