@@ -10,6 +10,9 @@ declare(strict_types=1);
 
 namespace Pbraiders\Pomponne\Application;
 
+use Pbraiders\Config\Exception\FileDoNotExistNorReadableException;
+use Pbraiders\Pomponne\Service\Config\Exception\DirectoryNotExistNorWritableException;
+use Pbraiders\Pomponne\Application\Exception\WorkingDirNotValidException;
 use Pbraiders\Pomponne\Service\Config\Factory as ConfigFactory;
 
 use function Pbraiders\Stdlib\configurePHP;
@@ -22,10 +25,27 @@ class Application
      *
      * @param string|null $dir Working dir.
      */
-    public function __construct(?string $dir = null)
-    { }
+    //    public function __construct(?string $dir = null)
+    //    { }
 
-    public static function init(?string $dir = null)
+    /**
+     * Constructor.
+     */
+    public function run(): void
+    {
+        echo 'hello', PHP_EOL;
+    }
+
+    /**
+     * Static method for quick and easy initialization of the Application.
+     *
+     * @param string|null $dir Working directory
+     * @throws WorkingDirNotValidException If the working directory parameter is not valid.
+     * @throws DirectoryNotExistNorWritableException If the current working dir is not valid.
+     * @throws FileDoNotExistNorReadableException If the ocnfig file does not exist.
+     * @return Application
+     */
+    public static function init(?string $dir = null): Application
     {
         /**
          * Defines the working directory.
@@ -37,7 +57,7 @@ class Application
          */
         $sWorkingDir = is_null($dir) ? getcwd() : trim($dir);
         if ((false === $sWorkingDir) || (strlen($sWorkingDir) == 0)) {
-            die('The working directory is not defined. Stop.');
+            throw new WorkingDirNotValidException("The working directory is not defined.");
         }
 
         /**
@@ -56,9 +76,22 @@ class Application
          * These options will keep there new values during the script's execution,
          * and will be restored at the script's ending.
          */
-        if (!empty($aSettings['php'])) {
+        if (count($aSettings['php']) > 0) {
             configurePHP($aSettings['php']);
         }
+
+        /**
+         * In debug mode / development environment we activate Whoops globally, not as a middleware.
+         *
+         * Whoops is an error handler framework for PHP.
+         * Out-of-the-box, it provides a pretty error interface that helps you debug your web projects,
+         * but at heart it's a simple yet powerful stacked error handling system.
+         */
+        //        if ((!empty($aSettings['service']['error']['use_whoops']))) {
+        //            $pContainer->get('errorhandler')->register();
+        //        }
+
+        return new Application();
     }
 }
 
@@ -66,26 +99,9 @@ class Application
 
 
 /** @var PhpDiFactory $pContainerFactory Helper to create and configure the PSR-11 container. */
-$pContainerFactory = (new ContainerFactory())->create($aSettings);
+//$pContainerFactory = (new ContainerFactory())->create($aSettings);
 
-exit(print_r($aSettings, true));
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//exit(print_r($aSettings, true));
 
 /**
  * Creates the container and loads all the needed services.
@@ -93,7 +109,7 @@ exit(print_r($aSettings, true));
  *
  * @var \Psr\Container\ContainerInterface $pContainer
  */
-$pContainer = $pContainerBuilder->build();
+//$pContainer = $pContainerBuilder->build();
 
 /*
 $pContainer = \Pbraiders\Service\Container\Factory::createFromInvokables(
@@ -117,19 +133,10 @@ $pContainer = \Pbraiders\Service\Container\Factory::createFromInvokables(
  *
  * @var array $aSettings
  */
-$aSettings = $pContainer->get('settings');
+//$aSettings = $pContainer->get('settings');
 
 
-/**
- * In debug mode / development environment we activate Whoops globally, not as a middleware.
- *
- * Whoops is an error handler framework for PHP.
- * Out-of-the-box, it provides a pretty error interface that helps you debug your web projects,
- * but at heart it's a simple yet powerful stacked error handling system.
- */
-if ((!empty($aSettings['service']['error']['use_whoops']))) {
-    $pContainer->get('errorhandler')->register();
-}
+
 
 /**
  * Instantiate App
@@ -140,22 +147,22 @@ if ((!empty($aSettings['service']['error']['use_whoops']))) {
  *
  * @var Slim\App $pApplication
  */
-$pApplication = \Slim\Factory\AppFactory::createFromContainer($pContainer);
+//$pApplication = \Slim\Factory\AppFactory::createFromContainer($pContainer);
 
 /**
  * Register middlewares
  */
-$callable = require \PBR_PATH . \DIRECTORY_SEPARATOR . 'module' . \DIRECTORY_SEPARATOR . 'Middleware' . \DIRECTORY_SEPARATOR . 'middleware.php';
-$callable($pApplication);
+//$callable = require \PBR_PATH . \DIRECTORY_SEPARATOR . 'module' . \DIRECTORY_SEPARATOR . 'Middleware' . \DIRECTORY_SEPARATOR . 'middleware.php';
+//$callable($pApplication);
 
 /**
  * Register routes.
  */
-$callable = require \PBR_PATH . \DIRECTORY_SEPARATOR . 'module' . \DIRECTORY_SEPARATOR . 'App' . \DIRECTORY_SEPARATOR . 'routes.php';
-$callable($pApplication);
+//$callable = require \PBR_PATH . \DIRECTORY_SEPARATOR . 'module' . \DIRECTORY_SEPARATOR . 'App' . \DIRECTORY_SEPARATOR . 'routes.php';
+//$callable($pApplication);
 
 // Run app
-$pApplication->run();
+//$pApplication->run();
 
 // Now
 // Session http://paul-m-jones.com/post/2016/04/12/psr-7-and-session-cookies/

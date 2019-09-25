@@ -9,10 +9,11 @@
 namespace Pbraiders\Pomponne\Service\Config\Exception;
 
 /**
- * Exception thrown if an argument does not match with the expected value.
- * This represents error in the program logic and should be detected at compile time.
- * This kind of exceptions should directly lead to a fix in the code.
+ * Exception thrown if a value does not match with a set of values.
+ * Typically this happens when a function calls another function and expects the return value to be of a certain type or
+ * value not including arithmetic or buffer related errors.
+ * This represents errors that cannot be detected at compile time.
  */
-class MissingSettingException extends \RuntimeException implements ExceptionInterface
+class MissingSettingException extends \UnexpectedValueException implements ExceptionInterface
 {
 }

@@ -23,6 +23,7 @@ class FactoryTest extends \PHPUnit\Framework\TestCase
         $pFactory = new Factory();
         $aActual = $pFactory->create($sDir);
         $this->assertTrue(is_array($aActual));
+        $this->assertFalse(empty($aActual));
     }
 
     /**

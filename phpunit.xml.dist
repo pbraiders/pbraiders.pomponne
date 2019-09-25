@@ -29,6 +29,7 @@
     <testsuites>
         <testsuite name="Pbraiders Test Suite">
             <directory suffix="Test.php">tests/pbr/Service</directory>
+            <directory suffix="Test.php">tests/pbr/Application</directory>
         </testsuite>
     </testsuites>
     <logging>
@@ -36,6 +37,7 @@
     </logging>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">pbr/Application</directory>
             <directory suffix=".php">pbr/Service</directory>
             <exclude>
                 <directory>lib</directory>
