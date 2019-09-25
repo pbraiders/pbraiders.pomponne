@@ -20,7 +20,7 @@ use function Pbraiders\Stdlib\extractDepthKeyInArray;
 /**
  * Modifies php section of the settings.
  */
-class Session extends Processor
+final class Session extends Processor
 {
 
     /**
@@ -48,7 +48,7 @@ class Session extends Processor
 
         /** @var mixed|null */
         $sValue = extractDepthKeyInArray($aSettings, $aFilter);
-        if (! is_string($sValue)) {
+        if (!is_string($sValue)) {
             throw new MissingSettingException('The application.website.host setting is missing in the config file.');
         }
         $sValue = trim($sValue);
@@ -84,14 +84,14 @@ class Session extends Processor
 
         /** @var mixed|null */
         $sValue = extractDepthKeyInArray($aSettings, $aFilter);
-        if (! is_string($sValue)) {
+        if (!is_string($sValue)) {
             throw new MissingSettingException('The application.temporary_path setting is missing in the config file.');
         }
         $sValue = trim($sValue);
         if (strlen($sValue) == 0) {
             throw new SettingNotValidException('The application.temporary_path setting is not valid.');
         }
-        if (! is_dir($sValue) || ! is_writable($sValue)) {
+        if (!is_dir($sValue) || !is_writable($sValue)) {
             throw new DirectoryNotExistNorWritableException('The application.temporary_path setting is not a directory nor writeable.');
         }
         // Update php session settings
@@ -126,11 +126,11 @@ class Session extends Processor
 
         /** @var mixed|null */
         $sValue = extractDepthKeyInArray($aSettings, $aFilter);
-        if (! is_string($sValue)) {
+        if (!is_string($sValue)) {
             throw new MissingSettingException('The application.website.scheme setting is missing in the config file.');
         }
         $sValue = strtolower($sValue);
-        if (! in_array($sValue, $aSchemes, true)) {
+        if (!in_array($sValue, $aSchemes, true)) {
             throw new SettingNotValidException('The application.website.scheme setting is not valid.');
         }
 

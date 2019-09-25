@@ -28,6 +28,13 @@ return [
         'temporary_path' => 'var' . \DIRECTORY_SEPARATOR . 'tmp',
 
     ],
+    'service' => [
+        'error' => [
+            // If set to true, the application will use 'whoops error handling library' instead of the default PHP one.
+            // Usefull during development.
+            'use_whoops' => true,
+        ],
+    ],
 
     // These are various options for php.
     // Do not change unless you know what you are doing!

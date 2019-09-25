@@ -20,7 +20,7 @@ use function Pbraiders\Stdlib\extractDepthKeyInArray;
  * Container factory factory.
  * We use PHP-DI container factory
  */
-class Factory
+final class Factory
 {
 
     /**

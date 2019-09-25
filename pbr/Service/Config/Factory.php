@@ -21,7 +21,7 @@ use Pbraiders\Pomponne\Service\Config\Processor\Website;
 /**
  * Config factory.
  */
-class Factory
+final class Factory
 {
     /**
      * Build an array from php file.
@@ -36,8 +36,8 @@ class Factory
         // Init
         $sCurrentWorkingDirectory = trim($dir);
         if ((strlen($sCurrentWorkingDirectory) == 0)
-            || ! is_dir($sCurrentWorkingDirectory)
-            || ! is_readable($sCurrentWorkingDirectory)
+            || !is_dir($sCurrentWorkingDirectory)
+            || !is_readable($sCurrentWorkingDirectory)
         ) {
             throw new DirectoryNotExistNorWritableException(
                 \sprintf(

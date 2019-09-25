@@ -64,7 +64,7 @@ return [
         ],
 
         'error' => [
-            // If set to 1, the application will use 'whoops error handling library' instead of the default PHP one.
+            // If set to true, the application will use 'whoops error handling library' instead of the default PHP one.
             // Usefull during development.
             'use_whoops' => false,
         ],
@@ -83,7 +83,7 @@ return [
 
     // These are various options for php.
     // Do not change unless you know what you are doing!
-    // All value must be string.
+    // All values must be string.
     'php' => [
 
         // Default timezone used by all date/time functions

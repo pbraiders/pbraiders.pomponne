@@ -20,7 +20,7 @@ use function Pbraiders\Stdlib\extractDepthKeyInArray;
 /**
  * Modifies Website section of the settings.
  */
-class Website extends Processor
+final class Website extends Processor
 {
 
     /** @var array Website url filter */
@@ -47,7 +47,7 @@ class Website extends Processor
         // Retrieves the website value
         /** @var mixed|null */
         $sValue = extractDepthKeyInArray($settings, $this->aFilter);
-        if (! is_string($sValue)) {
+        if (!is_string($sValue)) {
             throw new MissingSettingException('The application.website.url setting is missing in the config file.');
         }
         $sValue = trim($sValue);

@@ -14,8 +14,10 @@ use Pbraiders\Config\Exception\FileDoNotExistNorReadableException;
 use Pbraiders\Pomponne\Service\Config\Exception\DirectoryNotExistNorWritableException;
 use Pbraiders\Pomponne\Application\Exception\WorkingDirNotValidException;
 use Pbraiders\Pomponne\Service\Config\Factory as ConfigFactory;
+use Pbraiders\Pomponne\Service\ErrorHandler\Factory as ErrorHandlerFactory;
 
 use function Pbraiders\Stdlib\configurePHP;
+use function Pbraiders\Stdlib\extractDepthKeyInArray;
 
 class Application
 {
@@ -87,9 +89,10 @@ class Application
          * Out-of-the-box, it provides a pretty error interface that helps you debug your web projects,
          * but at heart it's a simple yet powerful stacked error handling system.
          */
-        //        if ((!empty($aSettings['service']['error']['use_whoops']))) {
-        //            $pContainer->get('errorhandler')->register();
-        //        }
+        $bUseWhoops = extractDepthKeyInArray($aSettings, ['service' => ['error' => ['use_whoops' => true]]]);
+        if (true === $bUseWhoops) {
+            (new ErrorHandlerFactory())->create()->register();
+        }
 
         return new Application();
     }
