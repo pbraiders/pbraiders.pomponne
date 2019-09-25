@@ -36,8 +36,8 @@ final class Factory
         // Init
         $sCurrentWorkingDirectory = trim($dir);
         if ((strlen($sCurrentWorkingDirectory) == 0)
-            || !is_dir($sCurrentWorkingDirectory)
-            || !is_readable($sCurrentWorkingDirectory)
+            || ! is_dir($sCurrentWorkingDirectory)
+            || ! is_readable($sCurrentWorkingDirectory)
         ) {
             throw new DirectoryNotExistNorWritableException(
                 \sprintf(
