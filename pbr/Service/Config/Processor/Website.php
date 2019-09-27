@@ -39,8 +39,6 @@ final class Website extends Processor
 
         /** @var array $aFilter Website url filter */
         $aFilter = ['application' => ['website' => ['url' => true]]];
-
-        /** @var array $aSettings Filtered settings*/
         $aSettings = \array_intersect_key($settings, $aFilter);
 
         /** @var mixed|null $sUrl The url*/
@@ -59,8 +57,6 @@ final class Website extends Processor
 
         /** @var array $aWebsite Website settings */
         $aWebsite = &$settings['application']['website'];
-
-        /** @var \League\Uri\Parser $pParser The RFC3986 parser */
         $pParser = new Parser();
 
         // Modifies the settings.

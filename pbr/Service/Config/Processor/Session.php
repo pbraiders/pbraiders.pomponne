@@ -37,8 +37,6 @@ final class Session extends Processor
 
         /** @var array $aFilter Website host filter */
         $aFilter = ['application' => ['website' => ['host' => true]]];
-
-        /** @var array $aSettings Filtered settings*/
         $aSettings = \array_intersect_key($settings, $aFilter);
 
         /** @var mixed|null $sHost The host*/
@@ -74,8 +72,6 @@ final class Session extends Processor
 
         /** @var array $aFilter temporary path filter */
         $aFilter = ['application' => ['temporary_path' => true]];
-
-        /** @var array $aSettings Filtered settings*/
         $aSettings = \array_intersect_key($settings, $aFilter);
 
         /** @var mixed|null $sPath The path*/
@@ -113,8 +109,6 @@ final class Session extends Processor
 
         /** @var array $aFilter website scheme filter */
         $aFilter = ['application' => ['website' => ['scheme' => true]]];
-
-        /** @var array $aSettings Filtered settings*/
         $aSettings = \array_intersect_key($settings, $aFilter);
 
         /** @var mixed|null $sScheme The scheme */

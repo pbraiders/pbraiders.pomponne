@@ -47,7 +47,6 @@ final class Factory
             ]
         ];
 
-        /** @var array $aSettings Filtered settings*/
         $aSettings = \array_intersect_key($settings, $aFilter);
 
         /** @var string|null $sCacheDirectory */
