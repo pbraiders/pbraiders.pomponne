@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace PbraidersTest\Service\Logger;
+namespace PbraidersTest\Pomponne\Service\Logger;
 
-use Pbraiders\Service\Logger\LineFormatter;
+use Pbraiders\Pomponne\Service\Logger\LineFormatter;
 
 class LineFormatterTest extends \PHPUnit\Framework\TestCase
 {
 
     /**
-     * @covers \Pbraiders\Service\Logger\LineFormatter
+     * @covers \Pbraiders\Pomponne\Service\Logger\LineFormatter
      * @group specification
      */
     public function testConstructor()
@@ -31,6 +31,6 @@ class LineFormatterTest extends \PHPUnit\Framework\TestCase
         ];
         $pLineFormatter = new LineFormatter();
         $sMessageActual = $pLineFormatter->format($aData);
-        $this->assertFalse(empty($sMessageActual));
+        $this->assertFalse(strlen($sMessageActual) == 0);
     }
 }
