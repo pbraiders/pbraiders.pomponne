@@ -10,14 +10,11 @@ declare(strict_types=1);
 
 namespace Pbraiders\Pomponne\Application;
 
-use Pbraiders\Config\Exception\FileDoNotExistNorReadableException;
-use Pbraiders\Container\PhpDiFactory;
-use Pbraiders\Pomponne\Service\Config\Exception\DirectoryNotExistNorWritableException;
-use Pbraiders\Pomponne\Service\Config\Exception\MissingSettingException;
-use Pbraiders\Pomponne\Application\Exception\WorkingDirNotValidException;
+use Pbraiders\Container\FactoryInterface;
 use Pbraiders\Pomponne\Service\Config\Factory as ConfigFactory;
 use Pbraiders\Pomponne\Service\Container\Factory as ContainerFactory;
 use Pbraiders\Pomponne\Service\ErrorHandler\Factory as ErrorHandlerFactory;
+use Slim\Factory\AppFactory;
 
 use function Pbraiders\Stdlib\configurePHP;
 use function Pbraiders\Stdlib\extractDepthKeyInArray;
@@ -25,39 +22,103 @@ use function Pbraiders\Stdlib\extractDepthKeyInArray;
 class Application
 {
     /**
-     * Undocumented variable
+     * The PSR-11 container factory.
      *
-     * @var \Pbraiders\Container\PhpDiFactory
+     * @var \Pbraiders\Container\FactoryInterface
      */
     protected $pContainerFactory;
 
     /**
      * Constructor.
      *
-     * @param \Pbraiders\Container\PhpDiFactory $factory
+     * @param \Pbraiders\Container\FactoryInterface $factory The PSR-11 container factory
      */
-    public function __construct(PhpDiFactory $factory)
+    public function __construct(FactoryInterface $factory)
     {
         $this->pContainerFactory = $factory;
     }
 
+
     /**
-     * Constructor.
+     * Undocumented function
+     *
+     * @return self
+     */
+    public function bootstrap(): self
+    {
+
+        /**
+         * Creates the logger.
+         *
+         * @var \Psr\Log\LoggerInterface; $pLogger.
+         */
+        //        $pLogger = new LoggerFactory($aSettings);
+        //        $pContainerFactory->registerDefinition(LoggerInterface::class, $pLogger, true);
+
+        //        $pContainer
+        //            ->share(LoggerInterface::class, Logger::class)
+        //            ->addArgument('pbraiders')
+        //            ->addMethodCall('pushHandler', [$pContainer->get(StreamHandler::class)])
+        //            ->addMethodCall('pushProcessor', [$pContainer->get(WebProcessor::class)]);
+
+
+
+        return $this;
+    }
+
+    /**
+     * Run the Slim App.
+     *
+     * @throws \Pbraiders\Container\Exception\ProxyDirectoryNotExistNorWritableException If proxy directory does not exist or is not writable.
+     * @throws \Pbraiders\Container\Exception\CacheDirectoryNotExistNorWritableException If cache directory does not exist or is not writable.
+     * @throws \InvalidArgumentException when the proxy directory is null.
+     * @return void
      */
     public function run(): void
     {
-        //throw new Exception("Whoops test", 1);
-        echo 'Hello', \PHP_EOL;
+        /**
+         * Creates the container and loads all the needed services.
+         * In order to use the dependency injection pattern.
+         *
+         * @var \Psr\Container\ContainerInterface $pContainer
+         */
+        $pContainer = $this->pContainerFactory->createContainer();
+
+        /**
+         * Instantiate the app
+         *
+         * In order for the app to work you need to ensure you have installed
+         * a supported PSR-7 implementation of your choice e.g.: Slim PSR-7 and a supported
+         * ServerRequest creator (included with Slim PSR-7)
+         *
+         * @var \Slim\App $pApplication
+         */
+        $pApplication = AppFactory::createFromContainer($pContainer);
+
+        /**
+         * Register middlewares
+         */
+        //$callable = require \PBR_PATH . \DIRECTORY_SEPARATOR . 'module' . \DIRECTORY_SEPARATOR . 'Middleware' . \DIRECTORY_SEPARATOR . 'middleware.php';
+        //$callable($pApplication);
+
+        /**
+         * Register routes.
+         */
+        //$callable = require \PBR_PATH . \DIRECTORY_SEPARATOR . 'module' . \DIRECTORY_SEPARATOR . 'App' . \DIRECTORY_SEPARATOR . 'routes.php';
+        //$callable($pApplication);
+
+
+        $pApplication->run();
     }
 
     /**
      * Static method for quick and easy initialization of the Application.
      *
      * @param string|null $dir Working directory
-     * @throws WorkingDirNotValidException If the working directory argument is not valid.
-     * @throws DirectoryNotExistNorWritableException If the current working dir is not valid.
-     * @throws FileDoNotExistNorReadableException If the config file does not exist.
-     * @throws MissingSettingException If a setting is missing.
+     * @throws \Pbraiders\Pomponne\Application\Exception\WorkingDirNotValidException If the working directory argument is not valid.
+     * @throws \Pbraiders\Pomponne\Service\Config\Exception\DirectoryNotExistNorWritableException If the working directory is not valid or not writable.
+     * @throws \Pbraiders\Pomponne\Service\Config\Exception\MissingSettingException If a setting is missing.
+     * @throws \Pbraiders\Config\Exception\FileDoNotExistNorReadableException If the config file does not exist.
      * @throws \InvalidArgumentException if the definition registrement is not valid.
      * @return Application
      */
@@ -103,7 +164,7 @@ class Application
          * Out-of-the-box, it provides a pretty error interface that helps you debug your web projects,
          * but at heart it's a simple yet powerful stacked error handling system.
          *
-         * @var mixed $bUseWhoops
+         * @var mixed $bUseWhoops Boolean is required.
          */
         $bUseWhoops = extractDepthKeyInArray($aSettings, ['service' => ['error' => ['use_whoops' => true]]]);
         if (true === $bUseWhoops) {
@@ -113,21 +174,16 @@ class Application
         /**
          * Creates the container factory from the settings.
          *
-         * @var PhpDiFactory $pContainerFactory Helper to create and configure the PSR-11 container.
+         * @var \Pbraiders\Container\FactoryInterface $pContainerFactory Helper to create and configure the PSR-11 container.
          */
         $pContainerFactory = (new ContainerFactory())->create($aSettings);
+        $pContainerFactory->registerDefinition('settings', $aSettings, true);
 
         return new Application($pContainerFactory);
     }
 }
 
-/**
- * Creates the container and loads all the needed services.
- * In order to use the dependency injection pattern.
- *
- * @var \Psr\Container\ContainerInterface $pContainer
- */
-//$pContainer = $pContainerBuilder->build();
+
 
 /*
 $pContainer = \Pbraiders\Service\Container\Factory::createFromInvokables(
@@ -144,43 +200,8 @@ $pContainer = \Pbraiders\Service\Container\Factory::createFromInvokables(
 );
 */
 
-/**
- * Loads the settings.
- *
- * In order to configure many things before the app runs.
- *
- * @var array $aSettings
- */
-//$aSettings = $pContainer->get('settings');
 
 
-
-
-/**
- * Instantiate App
- *
- * In order for the app to work you need to ensure you have installed
- * a supported PSR-7 implementation of your choice e.g.: Slim PSR-7 and a supported
- * ServerRequest creator (included with Slim PSR-7)
- *
- * @var Slim\App $pApplication
- */
-//$pApplication = \Slim\Factory\AppFactory::createFromContainer($pContainer);
-
-/**
- * Register middlewares
- */
-//$callable = require \PBR_PATH . \DIRECTORY_SEPARATOR . 'module' . \DIRECTORY_SEPARATOR . 'Middleware' . \DIRECTORY_SEPARATOR . 'middleware.php';
-//$callable($pApplication);
-
-/**
- * Register routes.
- */
-//$callable = require \PBR_PATH . \DIRECTORY_SEPARATOR . 'module' . \DIRECTORY_SEPARATOR . 'App' . \DIRECTORY_SEPARATOR . 'routes.php';
-//$callable($pApplication);
-
-// Run app
-//$pApplication->run();
 
 // Now
 // Session http://paul-m-jones.com/post/2016/04/12/psr-7-and-session-cookies/

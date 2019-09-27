@@ -839,16 +839,16 @@
         },
         {
             "name": "php-di/phpdoc-reader",
-            "version": "2.1.0",
+            "version": "2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-DI/PhpDocReader.git",
-                "reference": "7d0de60b9341933c8afd172a6255cd7557601e0e"
+                "reference": "15678f7451c020226807f520efb867ad26fbbfcf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-DI/PhpDocReader/zipball/7d0de60b9341933c8afd172a6255cd7557601e0e",
-                "reference": "7d0de60b9341933c8afd172a6255cd7557601e0e",
+                "url": "https://api.github.com/repos/PHP-DI/PhpDocReader/zipball/15678f7451c020226807f520efb867ad26fbbfcf",
+                "reference": "15678f7451c020226807f520efb867ad26fbbfcf",
                 "shasum": ""
             },
             "require": {
@@ -872,7 +872,7 @@
                 "phpdoc",
                 "reflection"
             ],
-            "time": "2018-02-18T17:39:01+00:00"
+            "time": "2019-09-26T11:24:58+00:00"
         },
         {
             "name": "psr/container",
@@ -4925,16 +4925,16 @@
         },
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "3.4.2",
+            "version": "3.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "b8a7362af1cc1aadb5bd36c3defc4dda2cf5f0a8"
+                "reference": "0afebf16a2e7f1e434920fa976253576151effe9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/b8a7362af1cc1aadb5bd36c3defc4dda2cf5f0a8",
-                "reference": "b8a7362af1cc1aadb5bd36c3defc4dda2cf5f0a8",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/0afebf16a2e7f1e434920fa976253576151effe9",
+                "reference": "0afebf16a2e7f1e434920fa976253576151effe9",
                 "shasum": ""
             },
             "require": {
@@ -4972,7 +4972,7 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2019-04-10T23:49:02+00:00"
+            "time": "2019-09-26T23:12:26+00:00"
         },
         {
             "name": "symfony/config",
@@ -6014,16 +6014,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "3.5.1",
+            "version": "3.5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "deb36e8b273d4b25601f1991482a69d412e3169f"
+                "reference": "c3e781c4a06cbb17dc32068eb5d6de075f6babdc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/deb36e8b273d4b25601f1991482a69d412e3169f",
-                "reference": "deb36e8b273d4b25601f1991482a69d412e3169f",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/c3e781c4a06cbb17dc32068eb5d6de075f6babdc",
+                "reference": "c3e781c4a06cbb17dc32068eb5d6de075f6babdc",
                 "shasum": ""
             },
             "require": {
@@ -6036,7 +6036,7 @@
                 "nikic/php-parser": "^4.2",
                 "ocramius/package-versions": "^1.2",
                 "openlss/lib-array2xml": "^1.0",
-                "php": "^7.1",
+                "php": "^7.1.3",
                 "sebastian/diff": "^3.0",
                 "symfony/console": "^3.3||^4.0",
                 "webmozart/glob": "^4.1",
@@ -6047,6 +6047,7 @@
             },
             "require-dev": {
                 "bamarni/composer-bin-plugin": "^1.2",
+                "ext-curl": "*",
                 "friendsofphp/php-cs-fixer": "^2.15",
                 "phpmyadmin/sql-parser": "^5.0",
                 "phpunit/phpunit": "^7.5 || ^8.0",
@@ -6097,7 +6098,7 @@
                 "inspection",
                 "php"
             ],
-            "time": "2019-09-10T01:28:56+00:00"
+            "time": "2019-09-27T13:22:06+00:00"
         },
         {
             "name": "webmozart/assert",

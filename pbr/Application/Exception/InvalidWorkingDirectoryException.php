@@ -13,6 +13,5 @@ namespace Pbraiders\Pomponne\Application\Exception;
  * This represents error in the program logic and should be detected at compile time.
  * This kind of exceptions should directly lead to a fix in the code.
  */
-class WorkingDirNotValidException extends \InvalidArgumentException implements ExceptionInterface
-{
-}
+class InvalidWorkingDirectoryException extends \InvalidArgumentException implements ExceptionInterface
+{ }

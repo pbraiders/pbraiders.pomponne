@@ -18,4 +18,4 @@ chdir(dirname(__DIR__)) || exit(30);
 // Includes the Composer autoloader
 require 'lib' . \DIRECTORY_SEPARATOR . 'autoload.php';
 
-(Application::init())->run();
+(Application::init())->bootstrap()->run();
