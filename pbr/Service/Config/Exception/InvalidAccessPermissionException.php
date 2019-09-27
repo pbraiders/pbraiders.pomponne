@@ -9,10 +9,8 @@
 namespace Pbraiders\Pomponne\Service\Config\Exception;
 
 /**
- * Exception thrown if an argument does not match with the expected value.
- * This represents error in the program logic and should be detected at compile time.
- * This kind of exceptions should directly lead to a fix in the code.
+ * Exception thrown if an error which can only be found on runtime occurs.
  */
-class MissingSettingException extends \InvalidArgumentException implements ExceptionInterface
+class InvalidAccessPermissionException extends \RuntimeException implements ExceptionInterface
 {
 }

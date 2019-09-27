@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace PbraidersTest\Pomponne\Service\Config\Processor;
 
+use Pbraiders\Pomponne\Service\Config\Exception\InvalidSettingException;
+use Pbraiders\Pomponne\Service\Config\Exception\MissingSettingException;
 use Pbraiders\Pomponne\Service\Config\Processor\Website;
 
 class WebsiteTest extends \PHPUnit\Framework\TestCase
@@ -24,7 +26,7 @@ class WebsiteTest extends \PHPUnit\Framework\TestCase
         ];
 
         $pProcessor = new Website();
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(MissingSettingException::class);
         $pProcessor->process($aSettings);
     }
 
@@ -43,7 +45,7 @@ class WebsiteTest extends \PHPUnit\Framework\TestCase
         ];
 
         $pProcessor = new Website();
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(InvalidSettingException::class);
         $pProcessor->process($aSettings);
     }
 

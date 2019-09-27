@@ -13,6 +13,6 @@ namespace Pbraiders\Pomponne\Service\Config\Exception;
  * This represents error in the program logic and should be detected at compile time.
  * This kind of exceptions should directly lead to a fix in the code.
  */
-class MissingSettingException extends \InvalidArgumentException implements ExceptionInterface
+class InvalidSettingException extends \InvalidArgumentException implements ExceptionInterface
 {
 }

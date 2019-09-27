@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace PbraidersTest\Pomponne\Service\Config;
 
-use Pbraiders\Pomponne\Service\Config\Exception\DirectoryNotExistNorWritableException;
+use Pbraiders\Pomponne\Service\Config\Exception\InvalidAccessPermissionException;
 use Pbraiders\Pomponne\Service\Config\Factory;
 
 class FactoryTest extends \PHPUnit\Framework\TestCase
@@ -33,7 +33,7 @@ class FactoryTest extends \PHPUnit\Framework\TestCase
     public function testCreateException()
     {
         $pFactory = new Factory();
-        $this->expectException(DirectoryNotExistNorWritableException::class);
+        $this->expectException(InvalidAccessPermissionException::class);
         $pFactory->create('doesnotexists');
     }
 }

@@ -12,8 +12,7 @@ namespace Pbraiders\Pomponne\Service\Config\Processor;
 
 use League\Uri\Parser;
 use Pbraiders\Config\Processor\Processor;
-use Pbraiders\Pomponne\Service\Config\Exception\MissingSettingException;
-use Pbraiders\Pomponne\Service\Config\Exception\SettingNotValidException;
+use Pbraiders\Pomponne\Service\Config\Exception;
 
 use function Pbraiders\Stdlib\extractDepthKeyInArray;
 
@@ -23,48 +22,49 @@ use function Pbraiders\Stdlib\extractDepthKeyInArray;
 final class Website extends Processor
 {
 
-    /** @var array Website url filter */
-    protected $aFilter = [
-        'application' => [
-            'website' => [
-                'url' => true
-            ],
-        ],
-    ];
-
     /**
      * Process the setting structure and call the next processor.
      *
      * @param mixed $settings. Usely an array
-     * @throws MissingSettingException If settings is missing.
-     * @throws SettingNotValidException If settings is not valid.
+     * @throws \Pbraiders\Pomponne\Service\Config\Exception\MissingSettingException If settings is missing.
+     * @throws \Pbraiders\Pomponne\Service\Config\Exception\InvalidSettingException If settings is not valid.
      * @throws \InvalidArgumentException If URl is not valid.
      * @return mixed Returns the modified config.
      */
     public function process($settings)
     {
+        /**
+         * Filters the settings
+         */
 
-        // Retrieves the website value
-        /** @var mixed|null */
-        $sValue = extractDepthKeyInArray($settings, $this->aFilter);
-        if (! is_string($sValue)) {
-            throw new MissingSettingException('The application.website.url setting is missing in the config file.');
+        /** @var array $aFilter Website url filter */
+        $aFilter = ['application' => ['website' => ['url' => true]]];
+
+        /** @var array $aSettings Filtered settings*/
+        $aSettings = \array_intersect_key($settings, $aFilter);
+
+        /** @var mixed|null $sUrl The url*/
+        $sUrl = extractDepthKeyInArray($aSettings, $aFilter);
+        if (!is_string($sUrl)) {
+            throw new Exception\MissingSettingException('The application.website.url setting is missing.');
         }
-        $sValue = trim($sValue);
-        if (strlen($sValue) == 0) {
-            throw new SettingNotValidException('The application.website.url setting is not valid.');
+        $sUrl = trim($sUrl);
+        if (strlen($sUrl) == 0) {
+            throw new Exception\InvalidSettingException('The application.website.url setting is not valid.');
         }
 
-        // Parse the url according to RFC3986
+        /**
+         * Parse the url according to RFC3986
+         */
 
-        /** @var array */
+        /** @var array $aWebsite Website settings */
         $aWebsite = &$settings['application']['website'];
 
-        /** @var \League\Uri\Parser */
+        /** @var \League\Uri\Parser $pParser The RFC3986 parser */
         $pParser = new Parser();
 
         // Modifies the settings.
-        $aWebsite = array_merge($aWebsite, $pParser($sValue));
+        $aWebsite = array_merge($aWebsite, $pParser($sUrl));
 
         // Next
         return parent::process($settings);

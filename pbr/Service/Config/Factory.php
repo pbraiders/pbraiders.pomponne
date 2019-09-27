@@ -13,8 +13,7 @@ namespace Pbraiders\Pomponne\Service\Config;
 use Pbraiders\Config\ArrayFactory;
 use Pbraiders\Config\Reader\FileMandatory;
 use Pbraiders\Config\Reader\FileOptional;
-use Pbraiders\Pomponne\Service\Config\Exception\DirectoryNotExistNorWritableException;
-use Pbraiders\Config\Exception\FileDoNotExistNorReadableException;
+use Pbraiders\Pomponne\Service\Config\Exception;
 use Pbraiders\Pomponne\Service\Config\Processor\Session;
 use Pbraiders\Pomponne\Service\Config\Processor\Website;
 
@@ -27,8 +26,8 @@ final class Factory
      * Build an array from php file.
      *
      * @param string $dir Current working directory.
-     * @throws DirectoryNotExistNorWritableException If the current working dir is not valid
-     * @throws FileDoNotExistNorReadableException If file does not exist.
+     * @throws \Pbraiders\Pomponne\Service\Config\Exception\InvalidAccessPermissionException If the current working dir is not valid
+     * @throws \Pbraiders\Config\Exception\FileDoNotExistNorReadableException If file does not exist.
      * @return array
      */
     public function create(string $dir): array
@@ -36,10 +35,10 @@ final class Factory
         // Init
         $sCurrentWorkingDirectory = trim($dir);
         if ((strlen($sCurrentWorkingDirectory) == 0)
-            || ! is_dir($sCurrentWorkingDirectory)
-            || ! is_readable($sCurrentWorkingDirectory)
+            || !is_dir($sCurrentWorkingDirectory)
+            || !is_readable($sCurrentWorkingDirectory)
         ) {
-            throw new DirectoryNotExistNorWritableException(
+            throw new Exception\InvalidAccessPermissionException(
                 \sprintf(
                     "the directory %s does not exist or is not writable.",
                     $sCurrentWorkingDirectory

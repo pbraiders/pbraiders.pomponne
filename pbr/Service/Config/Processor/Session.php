@@ -11,9 +11,7 @@ declare(strict_types=1);
 namespace Pbraiders\Pomponne\Service\Config\Processor;
 
 use Pbraiders\Config\Processor\Processor;
-use Pbraiders\Pomponne\Service\Config\Exception\DirectoryNotExistNorWritableException;
-use Pbraiders\Pomponne\Service\Config\Exception\MissingSettingException;
-use Pbraiders\Pomponne\Service\Config\Exception\SettingNotValidException;
+use Pbraiders\Pomponne\Service\Config\Exception;
 
 use function Pbraiders\Stdlib\extractDepthKeyInArray;
 
@@ -26,119 +24,116 @@ final class Session extends Processor
     /**
      * Update the session.cookie_domain setting.
      *
-     * @param array $aSettings
-     * @throws MissingSettingException If settings is missing.
-     * @throws SettingNotValidException If settings is not valid.
+     * @param array $settings
+     * @throws \Pbraiders\Pomponne\Service\Config\Exception\MissingSettingException If host setting is missing.
+     * @throws \Pbraiders\Pomponne\Service\Config\Exception\InvalidSettingException If host setting is not valid.
      * @return void
      */
-    protected function processCookieDomain(array &$aSettings): void
+    protected function processCookieDomain(array &$settings): void
     {
-        // Init
+        /**
+         * Filters the settings
+         */
 
-        /** @var array */
-        $aFilter = [
-            'application' => [
-                'website' => [
-                    'host' => true,
-                ],
-            ],
-        ];
+        /** @var array $aFilter Website host filter */
+        $aFilter = ['application' => ['website' => ['host' => true]]];
 
-        // Retrieves the values
+        /** @var array $aSettings Filtered settings*/
+        $aSettings = \array_intersect_key($settings, $aFilter);
 
-        /** @var mixed|null */
-        $sValue = extractDepthKeyInArray($aSettings, $aFilter);
-        if (! is_string($sValue)) {
-            throw new MissingSettingException('The application.website.host setting is missing in the config file.');
+        /** @var mixed|null $sHost The host*/
+        $sHost = extractDepthKeyInArray($aSettings, $aFilter);
+        if (!is_string($sHost)) {
+            throw new Exception\MissingSettingException('The application.website.host setting is missing.');
         }
-        $sValue = trim($sValue);
-        if (strlen($sValue) == 0) {
-            throw new SettingNotValidException('The application.website.host setting is not a valid.');
+        $sHost = trim($sHost);
+        if (strlen($sHost) == 0) {
+            throw new Exception\InvalidSettingException('The application.website.host setting is not a valid.');
         }
 
-        // Update php session settings
-        $aSettings['php']['session.cookie_domain'] = $sValue;
+        /**
+         * Update php session settings
+         */
+        $settings['php']['session.cookie_domain'] = $sHost;
     }
 
     /**
      * Update the session.save_path setting.
      *
-     * @param array $aSettings
-     * @throws MissingSettingException If settings is missing.
-     * @throws SettingNotValidException If settings is not valid.
-     * @throws DirectoryNotExistNorWritableException If directory does not exist nor writable.
+     * @param array $settings
+     * @throws \Pbraiders\Pomponne\Service\Config\Exception\MissingSettingException If temporary_path setting is missing.
+     * @throws \Pbraiders\Pomponne\Service\Config\Exception\InvalidSettingException If temporary_path setting is not valid.
+     * @throws \Pbraiders\Pomponne\Service\Config\Exception\InvalidAccessPermissionException If directory does not exist nor writable.
      * @return void
      */
-    protected function processSessionSavePath(array &$aSettings): void
+    protected function processSessionSavePath(array &$settings): void
     {
-        // Init
+        /**
+         * Filters the settings
+         */
 
-        /** @var array */
-        $aFilter = [
-            'application' => [
-                'temporary_path' => true,
-            ],
-        ];
+        /** @var array $aFilter temporary path filter */
+        $aFilter = ['application' => ['temporary_path' => true]];
 
-        // Retrieves the values
+        /** @var array $aSettings Filtered settings*/
+        $aSettings = \array_intersect_key($settings, $aFilter);
 
-        /** @var mixed|null */
-        $sValue = extractDepthKeyInArray($aSettings, $aFilter);
-        if (! is_string($sValue)) {
-            throw new MissingSettingException('The application.temporary_path setting is missing in the config file.');
+        /** @var mixed|null $sPath The path*/
+        $sPath = extractDepthKeyInArray($aSettings, $aFilter);
+        if (!is_string($sPath)) {
+            throw new Exception\MissingSettingException('The application.temporary_path setting is missing.');
         }
-        $sValue = trim($sValue);
-        if (strlen($sValue) == 0) {
-            throw new SettingNotValidException('The application.temporary_path setting is not valid.');
+        $sPath = trim($sPath);
+        if (strlen($sPath) == 0) {
+            throw new Exception\InvalidSettingException('The application.temporary_path setting is not valid.');
         }
-        if (! is_dir($sValue) || ! is_writable($sValue)) {
-            throw new DirectoryNotExistNorWritableException('The application.temporary_path setting is not a directory nor writeable.');
+        if (!is_dir($sPath) || !is_writable($sPath)) {
+            throw new Exception\InvalidAccessPermissionException('The application.temporary_path setting is not a directory nor writeable.');
         }
-        // Update php session settings
-        $aSettings['php']['session.save_path'] = $sValue;
+
+        /**
+         * Update php session settings
+         */
+        $settings['php']['session.save_path'] = $sPath;
     }
 
     /**
      * Update the session.cookie_secure setting.
      *
-     * @param array $aSettings
-     * @throws MissingSettingException If settings is missing.
-     * @throws SettingNotValidException If settings is not valid.
+     * @param array $settings
+     * @throws \Pbraiders\Pomponne\Service\Config\Exception\MissingSettingException If website scheme setting is missing.
+     * @throws \Pbraiders\Pomponne\Service\Config\Exception\InvalidSettingException If website scheme setting is not valid.
      * @return void
      */
-    protected function processCookieSecure(array &$aSettings): void
+    protected function processCookieSecure(array &$settings): void
     {
-        // Init
+        /**
+         * Filters the settings
+         */
 
-        /** @var array */
-        $aFilter = [
-            'application' => [
-                'website' => [
-                    'scheme' => true,
-                ],
-            ],
-        ];
+        /** @var array $aFilter website scheme filter */
+        $aFilter = ['application' => ['website' => ['scheme' => true]]];
 
-        /** @var array */
-        $aSchemes = ["http", "https"];
+        /** @var array $aSettings Filtered settings*/
+        $aSettings = \array_intersect_key($settings, $aFilter);
 
-        // Retrieves the value
-
-        /** @var mixed|null */
-        $sValue = extractDepthKeyInArray($aSettings, $aFilter);
-        if (! is_string($sValue)) {
-            throw new MissingSettingException('The application.website.scheme setting is missing in the config file.');
+        /** @var mixed|null $sScheme The scheme */
+        $sScheme = extractDepthKeyInArray($aSettings, $aFilter);
+        if (!is_string($sScheme)) {
+            throw new Exception\MissingSettingException('The application.website.scheme setting is missing.');
         }
-        $sValue = strtolower($sValue);
-        if (! in_array($sValue, $aSchemes, true)) {
-            throw new SettingNotValidException('The application.website.scheme setting is not valid.');
+        $sScheme = strtolower(trim($sScheme));
+        if (!in_array($sScheme, ["http", "https"], true)) {
+            throw new Exception\InvalidSettingException('The application.website.scheme setting is not valid.');
         }
 
-        // Update php session settings
-        if (strcasecmp('https', $sValue) == 0) {
-            $aSettings['php']['session.cookie_secure'] = '1';
+        /**
+         * Update php session settings
+         */
+        if (strcasecmp('https', $sScheme) == 0) {
+            $settings['php']['session.cookie_secure'] = '1';
         } else {
-            $aSettings['php']['session.cookie_secure'] = '0';
+            $settings['php']['session.cookie_secure'] = '0';
         }
     }
 
@@ -146,9 +141,9 @@ final class Session extends Processor
      * Process the setting structure and call the next processor.
      *
      * @param mixed $settings. Usely an array
-     * @throws MissingSettingException If settings is missing.
-     * @throws SettingNotValidException If settings is not valid.
-     * @throws DirectoryNotExistNorWritableException If directory does not exist nor writable.
+     * @throws \Pbraiders\Pomponne\Service\Config\Exception\MissingSettingException If the setting is missing.
+     * @throws \Pbraiders\Pomponne\Service\Config\Exception\InvalidSettingException If the setting is not valid.
+     * @throws \Pbraiders\Pomponne\Service\Config\Exception\InvalidAccessPermissionException If directory does not exist nor writable.
      * @return mixed Returns the modified config.
      */
     public function process($settings)
