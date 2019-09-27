@@ -26,6 +26,9 @@ final class Factory
      * Creates and initializes the logger.
      *
      * @param array $settings
+     * @throws \Pbraiders\Pomponne\Service\Logger\Exception\MissingSettingException If a setting is missing.
+     * @throws \Pbraiders\Pomponne\Service\Logger\Exception\InvalidSettingException If a setting is not valid.
+     * @throws \Exception if something bad happened.
      * @return \Psr\Log\LoggerInterface
      */
     public function create(array $settings): LoggerInterface
@@ -38,12 +41,12 @@ final class Factory
         $aSettings = \array_intersect_key($settings, $aFilter);
 
         if (\count($aSettings) != \count($aFilter)) {
-            throw new Exception\MissingSettingException('The service settings are missing in the config file.');
+            throw new Exception\MissingSettingException('The service settings are missing.');
         }
 
         $aSettings = extractDepthKeyInArray($aSettings, $aFilter);
         if (is_null($aSettings)) {
-            throw new Exception\MissingSettingException('The service.logger settings are missing in the config file.');
+            throw new Exception\MissingSettingException('The service.logger settings are missing.');
         }
 
         /**

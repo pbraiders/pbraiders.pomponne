@@ -71,7 +71,7 @@ return [
 
         'logger' => [
             // Name of the file where application errors should be logged.
-            'error_log' => sprintf('%s/var/log/%s_pbraiders_error.log', getcwd(), date("Ymd")),
+            'error_log' => sprintf('%s/var/log/pbraiders_error.log', getcwd()),
         ],
 
         'templating_engine' => [
