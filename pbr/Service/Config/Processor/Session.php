@@ -41,7 +41,7 @@ final class Session extends Processor
 
         /** @var mixed|null $sHost The host*/
         $sHost = extractDepthKeyInArray($aSettings, $aFilter);
-        if (!is_string($sHost)) {
+        if (! is_string($sHost)) {
             throw new Exception\MissingSettingException('The application.website.host setting is missing.');
         }
         $sHost = trim($sHost);
@@ -76,14 +76,14 @@ final class Session extends Processor
 
         /** @var mixed|null $sPath The path*/
         $sPath = extractDepthKeyInArray($aSettings, $aFilter);
-        if (!is_string($sPath)) {
+        if (! is_string($sPath)) {
             throw new Exception\MissingSettingException('The application.temporary_path setting is missing.');
         }
         $sPath = trim($sPath);
         if (strlen($sPath) == 0) {
             throw new Exception\InvalidSettingException('The application.temporary_path setting is not valid.');
         }
-        if (!is_dir($sPath) || !is_writable($sPath)) {
+        if (! is_dir($sPath) || ! is_writable($sPath)) {
             throw new Exception\InvalidAccessPermissionException('The application.temporary_path setting is not a directory nor writeable.');
         }
 
@@ -113,11 +113,11 @@ final class Session extends Processor
 
         /** @var mixed|null $sScheme The scheme */
         $sScheme = extractDepthKeyInArray($aSettings, $aFilter);
-        if (!is_string($sScheme)) {
+        if (! is_string($sScheme)) {
             throw new Exception\MissingSettingException('The application.website.scheme setting is missing.');
         }
         $sScheme = strtolower(trim($sScheme));
-        if (!in_array($sScheme, ["http", "https"], true)) {
+        if (! in_array($sScheme, ["http", "https"], true)) {
             throw new Exception\InvalidSettingException('The application.website.scheme setting is not valid.');
         }
 

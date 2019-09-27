@@ -39,7 +39,7 @@ class RotatingFileHandler extends MonologRotatingFileHandler
             throw new Exception\MissingSettingException('The error_log setting is missing.');
         }
 
-        if (!is_string($aSettings['error_log']) || (strlen(trim($aSettings['error_log'])) == 0)) {
+        if (! is_string($aSettings['error_log']) || (strlen(trim($aSettings['error_log'])) == 0)) {
             throw new Exception\InvalidSettingException('The error_log setting is not valid.');
         }
 

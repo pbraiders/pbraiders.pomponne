@@ -43,7 +43,7 @@ final class Website extends Processor
 
         /** @var mixed|null $sUrl The url*/
         $sUrl = extractDepthKeyInArray($aSettings, $aFilter);
-        if (!is_string($sUrl)) {
+        if (! is_string($sUrl)) {
             throw new Exception\MissingSettingException('The application.website.url setting is missing.');
         }
         $sUrl = trim($sUrl);

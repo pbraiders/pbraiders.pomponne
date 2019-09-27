@@ -75,10 +75,10 @@ final class Factory
         $pFactory
             ->setCacheDirectory($sCacheDirectory)
             ->setProxyDirectory($sCacheDirectory . DIRECTORY_SEPARATOR . 'proxies');
-        if (!$bCompilationEnabled) {
+        if (! $bCompilationEnabled) {
             $pFactory->disableCompilation();
         }
-        if (!$bProxyEnabled) {
+        if (! $bProxyEnabled) {
             $pFactory->disableProxy();
         }
 

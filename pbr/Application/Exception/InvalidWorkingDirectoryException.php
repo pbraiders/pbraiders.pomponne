@@ -14,4 +14,6 @@ namespace Pbraiders\Pomponne\Application\Exception;
  * This kind of exceptions should directly lead to a fix in the code.
  */
 class InvalidWorkingDirectoryException extends \InvalidArgumentException implements ExceptionInterface
-{ }
+{
+
+}
