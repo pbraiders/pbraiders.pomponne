@@ -37,20 +37,33 @@ final class Factory
          * Retrieves the values we need.
          */
 
+        /** @var array $aFilter Settings filter*/
+        $aFilter = [
+            'application' => [
+                'cache_path' => true
+            ],
+            'service' => [
+                'container' => true
+            ]
+        ];
+
+        /** @var array $aSettings Filtered settings*/
+        $aSettings = \array_intersect_key($settings, $aFilter);
+
         /** @var string|null $sCacheDirectory */
-        $sCacheDirectory = extractDepthKeyInArray($settings, ['application' => ['cache_path' => true]]);
+        $sCacheDirectory = extractDepthKeyInArray($aSettings, ['application' => ['cache_path' => true]]);
         if (is_null($sCacheDirectory)) {
             throw new MissingSettingException('The application.cache_path setting is missing in the config file.');
         }
 
         /** @var boolean|null $bCompilationEnabled */
-        $bCompilationEnabled = extractDepthKeyInArray($settings, ['service' => ['container' => ['enable_compilation' => true]]]);
+        $bCompilationEnabled = extractDepthKeyInArray($aSettings, ['service' => ['container' => ['enable_compilation' => true]]]);
         if (is_null($bCompilationEnabled)) {
             throw new MissingSettingException('The service.container.enable_compilation setting is missing in the config file.');
         }
 
         /** @var boolean|null $bProxyEnabled */
-        $bProxyEnabled = extractDepthKeyInArray($settings, ['service' => ['container' => ['write_proxies_to_file' => true]]]);
+        $bProxyEnabled = extractDepthKeyInArray($aSettings, ['service' => ['container' => ['write_proxies_to_file' => true]]]);
         if (is_null($bProxyEnabled)) {
             throw new MissingSettingException('The service.container.write_proxies_to_file setting is missing in the config file.');
         }

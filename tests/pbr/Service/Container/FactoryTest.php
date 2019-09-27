@@ -22,8 +22,8 @@ class FactoryTest extends \PHPUnit\Framework\TestCase
             ],
             'service' => [
                 'container' => [
-                    'enable_compilation' => true,
-                    'write_proxies_to_file' => true
+                    'enable_compilation' => false,
+                    'write_proxies_to_file' => false
                 ],
             ],
         ];
