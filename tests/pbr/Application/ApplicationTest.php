@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace PbraidersTest\Pomponne\Application;
 
 use Pbraiders\Pomponne\Application\Application;
-use Pbraiders\Pomponne\Application\Exception\WorkingDirNotValidException;
-use Pbraiders\Pomponne\Service\Config\Exception\DirectoryNotExistNorWritableException;
+use Pbraiders\Pomponne\Application\Exception\InvalidWorkingDirectoryException;
 
 class ApplicationTest extends \PHPUnit\Framework\TestCase
 {
@@ -17,7 +16,7 @@ class ApplicationTest extends \PHPUnit\Framework\TestCase
      */
     public function testInitException()
     {
-        $this->expectException(WorkingDirNotValidException::class);
+        $this->expectException(InvalidWorkingDirectoryException::class);
         Application::init('     ');
     }
 
@@ -25,11 +24,13 @@ class ApplicationTest extends \PHPUnit\Framework\TestCase
      * @covers \Pbraiders\Pomponne\Application\Application
      * @group specification
      */
-    public function testInit()
+    public function testInitAndBootstrap()
     {
         $sDir = getcwd();
         $sDir .= \DIRECTORY_SEPARATOR . 'tests';
-        $pApp = Application::init($sDir);
+        $pInit = Application::init($sDir);
+        $this->assertTrue($pInit instanceof Application);
+        $pApp = $pInit->bootstrap();
         $this->assertTrue($pApp instanceof Application);
     }
 }

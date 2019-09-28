@@ -15,5 +15,4 @@ namespace Pbraiders\Pomponne\Application\Exception;
  */
 class InvalidWorkingDirectoryException extends \InvalidArgumentException implements ExceptionInterface
 {
-
 }

@@ -16,10 +16,12 @@ use Pbraiders\Pomponne\Service\Container\Factory as ContainerFactory;
 use Pbraiders\Pomponne\Service\ErrorHandler\Factory as ErrorHandlerFactory;
 use Slim\Factory\AppFactory;
 
+use function DI\factory;
+use function DI\get;
 use function Pbraiders\Stdlib\configurePHP;
 use function Pbraiders\Stdlib\extractDepthKeyInArray;
 
-class Application
+final class Application
 {
     /**
      * The PSR-11 container factory.
@@ -38,31 +40,22 @@ class Application
         $this->pContainerFactory = $factory;
     }
 
-
     /**
-     * Undocumented function
+     * Populates the container.
      *
      * @return self
      */
     public function bootstrap(): self
     {
-
-        /**
-         * Creates the logger.
-         *
-         * @var \Psr\Log\LoggerInterface; $pLogger.
-         */
-        //        $pLogger = new LoggerFactory($aSettings);
-        //        $pContainerFactory->registerDefinition(LoggerInterface::class, $pLogger, true);
-
-        //        $pContainer
-        //            ->share(LoggerInterface::class, Logger::class)
-        //            ->addArgument('pbraiders')
-        //            ->addMethodCall('pushHandler', [$pContainer->get(StreamHandler::class)])
-        //            ->addMethodCall('pushProcessor', [$pContainer->get(WebProcessor::class)]);
-
-
-
+        // Add the logger
+        $this->pContainerFactory->registerDefinition(
+            '\Psr\Log\LoggerInterface::class',
+            [
+                \Psr\Log\LoggerInterface::class => factory('\Pbraiders\Pomponne\Service\Logger\Factory::create')
+                    ->parameter('settings', get('settings')),
+            ],
+            true
+        );
         return $this;
     }
 
@@ -79,8 +72,6 @@ class Application
         /**
          * Creates the container and loads all the needed services.
          * In order to use the dependency injection pattern.
-         *
-         * @var \Psr\Container\ContainerInterface $pContainer
          */
         $pContainer = $this->pContainerFactory->createContainer();
 
@@ -90,8 +81,6 @@ class Application
          * In order for the app to work you need to ensure you have installed
          * a supported PSR-7 implementation of your choice e.g.: Slim PSR-7 and a supported
          * ServerRequest creator (included with Slim PSR-7)
-         *
-         * @var \Slim\App $pApplication
          */
         $pApplication = AppFactory::createFromContainer($pContainer);
 
@@ -107,7 +96,8 @@ class Application
         //$callable = require \PBR_PATH . \DIRECTORY_SEPARATOR . 'module' . \DIRECTORY_SEPARATOR . 'App' . \DIRECTORY_SEPARATOR . 'routes.php';
         //$callable($pApplication);
 
-
+        //$pLogger = $pContainer->get(\Psr\Log\LoggerInterface::class);
+        //$pLogger->notice('hello');
         $pApplication->run();
     }
 
@@ -115,8 +105,8 @@ class Application
      * Static method for quick and easy initialization of the Application.
      *
      * @param string|null $dir Working directory
-     * @throws \Pbraiders\Pomponne\Application\Exception\WorkingDirNotValidException If the working directory argument is not valid.
-     * @throws \Pbraiders\Pomponne\Service\Config\Exception\DirectoryNotExistNorWritableException If the working directory is not valid or not writable.
+     * @throws \Pbraiders\Pomponne\Application\Exception\InvalidWorkingDirectoryException If the working directory argument is not valid.
+     * @throws \Pbraiders\Pomponne\Service\Config\Exception\InvalidAccessPermissionException If the working directory is not valid or not writable.
      * @throws \Pbraiders\Pomponne\Service\Config\Exception\MissingSettingException If a setting is missing.
      * @throws \Pbraiders\Config\Exception\FileDoNotExistNorReadableException If the config file does not exist.
      * @throws \InvalidArgumentException if the definition registrement is not valid.
@@ -134,7 +124,7 @@ class Application
          */
         $sWorkingDir = is_null($dir) ? getcwd() : trim($dir);
         if ((false === $sWorkingDir) || (strlen($sWorkingDir) == 0)) {
-            throw new WorkingDirNotValidException("The working directory is not defined.");
+            throw new Exception\InvalidWorkingDirectoryException("The working directory is not defined.");
         }
 
         /**
@@ -173,11 +163,9 @@ class Application
 
         /**
          * Creates the container factory from the settings.
-         *
-         * @var \Pbraiders\Container\FactoryInterface $pContainerFactory Helper to create and configure the PSR-11 container.
          */
         $pContainerFactory = (new ContainerFactory())->create($aSettings);
-        $pContainerFactory->registerDefinition('settings', $aSettings, true);
+        $pContainerFactory->registerDefinition('settings', ['settings' => $aSettings], true);
 
         return new Application($pContainerFactory);
     }
