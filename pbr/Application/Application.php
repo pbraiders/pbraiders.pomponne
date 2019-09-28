@@ -14,7 +14,6 @@ use Pbraiders\Container\FactoryInterface;
 use Pbraiders\Pomponne\Service\Config\Factory as ConfigFactory;
 use Pbraiders\Pomponne\Service\Container\Factory as ContainerFactory;
 use Pbraiders\Pomponne\Service\ErrorHandler\Factory as ErrorHandlerFactory;
-use Slim\Factory\AppFactory;
 
 use function DI\factory;
 use function DI\get;
@@ -82,7 +81,7 @@ final class Application
          * a supported PSR-7 implementation of your choice e.g.: Slim PSR-7 and a supported
          * ServerRequest creator (included with Slim PSR-7)
          */
-        $pApplication = AppFactory::createFromContainer($pContainer);
+        $pApplication = \DI\Bridge\Slim\Bridge::create($pContainer);
 
         /**
          * Register middlewares
@@ -96,8 +95,6 @@ final class Application
         //$callable = require \PBR_PATH . \DIRECTORY_SEPARATOR . 'module' . \DIRECTORY_SEPARATOR . 'App' . \DIRECTORY_SEPARATOR . 'routes.php';
         //$callable($pApplication);
 
-        //$pLogger = $pContainer->get(\Psr\Log\LoggerInterface::class);
-        //$pLogger->notice('hello');
         $pApplication->run();
     }
 

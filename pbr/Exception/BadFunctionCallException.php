@@ -1,14 +1,12 @@
 <?php
 
 /**
- * This file is a part of the Pomponne version of Pbraiders
- *
- * @package Pbraiders\App\Exception
+ * @package Pbraiders\Pomponne\Exception
  * @link    https://github.com/pbraiders/pomponne for the canonical source repository
  * @license https://github.com/pbraiders/pomponne/blob/master/LICENSE GNU General Public License v3.0 License.
  */
 
-namespace Pbraiders\App\Exception;
+namespace Pbraiders\Pomponne\Exception;
 
 /**
  * Exception thrown if a callback refers to an undefined function or if some
@@ -18,5 +16,4 @@ namespace Pbraiders\App\Exception;
  * This kind of exceptions should directly lead to a fix in the code.
  */
 class BadFunctionCallException extends \BadFunctionCallException implements ExceptionInterface
-{
-}
+{ }
