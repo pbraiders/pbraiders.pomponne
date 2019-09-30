@@ -30,7 +30,7 @@ return static function (App $pApplication) {
      */
     $aSettings = $pContainer->get('settings');
 
-    /*
+    /**
      * Add Routing Middleware
      *
      * The routing middleware should be added earlier than the ErrorMiddleware
@@ -38,7 +38,7 @@ return static function (App $pApplication) {
      */
     $pApplication->addRoutingMiddleware();
 
-    /*
+    /**
      * Activates Error Handling Middleware. Only in production environment.
      * The warning and notice error are not catched.
      *
