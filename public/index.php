@@ -2,6 +2,11 @@
 
 declare(strict_types=1);
 
+use Pbraiders\Pomponne\Application\Application;
+use Pbraiders\Pomponne\Application\Bootstrap\RegisterDefinition;
+use Pbraiders\Pomponne\Application\Initializer\Main;
+use Pbraiders\Pomponne\Application\Run\SlimBridge;
+
 /**
  * Public entry point.
  *
@@ -13,9 +18,13 @@ declare(strict_types=1);
  * This makes our life easier when dealing with paths. Everything is relative
  * to the application root now.
  */
-chdir(dirname(__DIR__)) || exit(30);
+if (! chdir(dirname(__DIR__))) {
+    exit(30);
+}
 
 // Includes the Composer autoloader
 require 'lib' . \DIRECTORY_SEPARATOR . 'autoload.php';
 
-(Application::init())->bootstrap()->run();
+(Application::init(new Main()))
+    ->bootstrap(new RegisterDefinition())
+    ->run(new SlimBridge());

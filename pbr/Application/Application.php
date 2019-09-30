@@ -10,18 +10,12 @@ declare(strict_types=1);
 
 namespace Pbraiders\Pomponne\Application;
 
+use Pbraiders\Pomponne\Application\Bootstrap\BootstrapInterface;
+use Pbraiders\Pomponne\Application\Initializer\InitializerInterface;
 use Pbraiders\Container\FactoryInterface;
-use Pbraiders\Pomponne\Service\Config\Factory as ConfigFactory;
-use Pbraiders\Pomponne\Service\Container\Factory as ContainerFactory;
-use Pbraiders\Pomponne\Service\ErrorHandler\Factory as ErrorHandlerFactory;
-use Slim\Factory\AppFactory;
+use Pbraiders\Pomponne\Application\Run\RunInterface;
 
-use function DI\factory;
-use function DI\get;
-use function Pbraiders\Stdlib\configurePHP;
-use function Pbraiders\Stdlib\extractDepthKeyInArray;
-
-final class Application
+class Application
 {
     /**
      * The PSR-11 container factory.
@@ -41,155 +35,43 @@ final class Application
     }
 
     /**
-     * Populates the container.
+     * Static method for quick and easy initialization of the Application.
      *
+     * @param \Pbraiders\Pomponne\Application\Initializer\InitializerInterface $initializer
+     * @return \Pbraiders\Pomponne\Application\Application
+     */
+    public static function init(InitializerInterface $initializer): Application
+    {
+        return $initializer->initialize();
+    }
+
+    /**
+     * Registers dependencies.
+     *
+     * @param \Pbraiders\Pomponne\Application\Bootstrap\BootstrapInterface $bootstrapper
      * @return self
      */
-    public function bootstrap(): self
+    public function bootstrap(BootstrapInterface $bootstrapper): self
     {
-        // Add the logger
-        $this->pContainerFactory->registerDefinition(
-            '\Psr\Log\LoggerInterface::class',
-            [
-                \Psr\Log\LoggerInterface::class => factory('\Pbraiders\Pomponne\Service\Logger\Factory::create')
-                    ->parameter('settings', get('settings')),
-            ],
-            true
-        );
+        $bootstrapper
+            ->setContainerFactory($this->pContainerFactory)
+            ->bootstrap();
+
         return $this;
     }
 
     /**
-     * Run the Slim App.
+     * Run the App.
      *
-     * @throws \Pbraiders\Container\Exception\ProxyDirectoryNotExistNorWritableException If proxy directory does not exist or is not writable.
-     * @throws \Pbraiders\Container\Exception\CacheDirectoryNotExistNorWritableException If cache directory does not exist or is not writable.
-     * @throws \InvalidArgumentException when the proxy directory is null.
      * @return void
      */
-    public function run(): void
+    public function run(RunInterface $runner): void
     {
-        /**
-         * Creates the container and loads all the needed services.
-         * In order to use the dependency injection pattern.
-         */
-        $pContainer = $this->pContainerFactory->createContainer();
-
-        /**
-         * Instantiate the app
-         *
-         * In order for the app to work you need to ensure you have installed
-         * a supported PSR-7 implementation of your choice e.g.: Slim PSR-7 and a supported
-         * ServerRequest creator (included with Slim PSR-7)
-         */
-        $pApplication = AppFactory::createFromContainer($pContainer);
-
-        /**
-         * Register middlewares
-         */
-        //$callable = require \PBR_PATH . \DIRECTORY_SEPARATOR . 'module' . \DIRECTORY_SEPARATOR . 'Middleware' . \DIRECTORY_SEPARATOR . 'middleware.php';
-        //$callable($pApplication);
-
-        /**
-         * Register routes.
-         */
-        //$callable = require \PBR_PATH . \DIRECTORY_SEPARATOR . 'module' . \DIRECTORY_SEPARATOR . 'App' . \DIRECTORY_SEPARATOR . 'routes.php';
-        //$callable($pApplication);
-
-        //$pLogger = $pContainer->get(\Psr\Log\LoggerInterface::class);
-        //$pLogger->notice('hello');
-        $pApplication->run();
-    }
-
-    /**
-     * Static method for quick and easy initialization of the Application.
-     *
-     * @param string|null $dir Working directory
-     * @throws \Pbraiders\Pomponne\Application\Exception\InvalidWorkingDirectoryException If the working directory argument is not valid.
-     * @throws \Pbraiders\Pomponne\Service\Config\Exception\InvalidAccessPermissionException If the working directory is not valid or not writable.
-     * @throws \Pbraiders\Pomponne\Service\Config\Exception\MissingSettingException If a setting is missing.
-     * @throws \Pbraiders\Config\Exception\FileDoNotExistNorReadableException If the config file does not exist.
-     * @throws \InvalidArgumentException if the definition registrement is not valid.
-     * @return Application
-     */
-    public static function init(?string $dir = null): Application
-    {
-        /**
-         * Defines the working directory.
-         *
-         * We keep the actual working directory.
-         * This method works well in production and development environment.
-         *
-         * @var string|bool $sWorkingDir Working dir.
-         */
-        $sWorkingDir = is_null($dir) ? getcwd() : trim($dir);
-        if ((false === $sWorkingDir) || (strlen($sWorkingDir) == 0)) {
-            throw new Exception\InvalidWorkingDirectoryException("The working directory is not defined.");
-        }
-
-        /**
-         * Loads the settings from the configuration files.
-         *
-         * We use the config factory helper to loads and merges the configuration files.
-         *
-         * @var array $aSetting Settings.
-         */
-        $aSettings = (new ConfigFactory())->create($sWorkingDir);
-
-        /**
-         * Configures PHP.
-         *
-         * We modify the configuration options using the ini_set php command.
-         * These options will keep there new values during the script's execution,
-         * and will be restored at the script's ending.
-         */
-        if (count($aSettings['php']) > 0) {
-            configurePHP($aSettings['php']);
-        }
-
-        /**
-         * In debug mode / development environment we activate Whoops globally, not as a middleware.
-         *
-         * Whoops is an error handler framework for PHP.
-         * Out-of-the-box, it provides a pretty error interface that helps you debug your web projects,
-         * but at heart it's a simple yet powerful stacked error handling system.
-         *
-         * @var mixed $bUseWhoops Boolean is required.
-         */
-        $bUseWhoops = extractDepthKeyInArray($aSettings, ['service' => ['error' => ['use_whoops' => true]]]);
-        if (true === $bUseWhoops) {
-            (new ErrorHandlerFactory())->create()->register();
-        }
-
-        /**
-         * Creates the container factory from the settings.
-         */
-        $pContainerFactory = (new ContainerFactory())->create($aSettings);
-        $pContainerFactory->registerDefinition('settings', ['settings' => $aSettings], true);
-
-        return new Application($pContainerFactory);
+        $runner
+            ->setContainerFactory($this->pContainerFactory)
+            ->run();
     }
 }
-
-
-
-/*
-$pContainer = \Pbraiders\Service\Container\Factory::createFromInvokables(
-    [
-        // Add the services provider.
-        \Pbraiders\Service\Config\ServiceProvider::class,
-        \Pbraiders\Service\Utils\ServiceProvider::class,
-        \Pbraiders\Service\ErrorHandler\ServiceProvider::class,
-        \Pbraiders\Service\Logger\ServiceProvider::class,
-        \Pbraiders\Service\TemplatingEngine\ServiceProvider::class,
-        // Add the mediators provider.
-        \Pbraiders\App\Home\ServiceProvider::class,
-    ]
-);
-*/
-
-
-
 
 // Now
 // Session http://paul-m-jones.com/post/2016/04/12/psr-7-and-session-cookies/
