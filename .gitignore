@@ -5,3 +5,10 @@
 *.log
 local.*
 desktop.ini
+!var/cache/proxies
+var/cache/proxies/*
+var/cache/*
+!var/log
+var/log/*
+!var/tmp
+var/tmp/*
