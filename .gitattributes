@@ -4,6 +4,10 @@
 # Enables and controls end-of-line normalization.
 * text=auto eol=lf
 
+# Documantation files and vendored files are excluded from language statistics.
+lib/* linguist-vendored
+build/* linguist-documentation
+
 # We do not want any end-of-line conversions applied to, nor textual diffs produced for, any binary file we track.
 *.pdf binary
 *.mo binary
