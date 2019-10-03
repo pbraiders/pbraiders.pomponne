@@ -8,10 +8,15 @@ use Pbraiders\Pomponne\Service\Logger\Exception\MissingSettingException;
 use Pbraiders\Pomponne\Service\Logger\Factory;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @coversDefaultClass \Pbraiders\Pomponne\Service\Logger\Factory
+ */
 class FactoryTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @covers \Pbraiders\Pomponne\Service\Logger\Factory
+     * @covers ::create
+     * @uses \Pbraiders\Pomponne\Service\Logger\RotatingFileHandler
+     * @uses \Pbraiders\Pomponne\Service\Logger\LineFormatter
      * @group specification
      */
     public function testCreate()
@@ -22,7 +27,7 @@ class FactoryTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers \Pbraiders\Pomponne\Service\Logger\Factory
+     * @covers ::create
      * @group specification
      */
     public function testServiceSettingException()
@@ -33,7 +38,7 @@ class FactoryTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers \Pbraiders\Pomponne\Service\Logger\Factory
+     * @covers ::create
      * @group specification
      */
     public function testLoggerSettingException()

@@ -1,8 +1,9 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <phpunit
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/6.3/phpunit.xsd"
-    colors="false"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/8.3/phpunit.xsd"
+    executionOrder="depends,defects"
+    colors="true"
     convertErrorsToExceptions="true"
     convertNoticesToExceptions="true"
     convertWarningsToExceptions="true"
@@ -11,6 +12,9 @@
     cacheResult="false"
     cacheTokens="true"
     forceCoversAnnotation="true"
+    beStrictAboutCoversAnnotation="true"
+    beStrictAboutOutputDuringTests="true"
+    beStrictAboutTodoAnnotatedTests="true"
     printerClass="PHPUnit\TextUI\ResultPrinter"
     processIsolation="false"
     stopOnError="false"
@@ -27,7 +31,7 @@
     <php>
     </php>
     <testsuites>
-        <testsuite name="Pbraiders Test Suite">
+        <testsuite name="Pbraiders Pomponne Test Suite">
             <directory suffix="Test.php">tests/pbr/Service</directory>
             <directory suffix="Test.php">tests/pbr/Application</directory>
         </testsuite>

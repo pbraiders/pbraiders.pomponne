@@ -6,11 +6,17 @@ namespace PbraidersTest\Pomponne\Service\Config\Processor;
 
 use Pbraiders\Pomponne\Service\Config\Processor\Session;
 
+/**
+ * @coversDefaultClass \Pbraiders\Pomponne\Service\Config\Processor\Session
+ */
 class SessionTest  extends \PHPUnit\Framework\TestCase
 {
 
     /**
-     * @covers \Pbraiders\Pomponne\Service\Config\Processor\Session
+     * @covers ::process
+     * @uses \Pbraiders\Pomponne\Service\Config\Processor\Session::processCookieDomain
+     * @uses \Pbraiders\Pomponne\Service\Config\Processor\Session::processSessionSavePath
+     * @uses \Pbraiders\Pomponne\Service\Config\Processor\Session::processCookieSecure
      * @group specification
      */
     public function testProcess()

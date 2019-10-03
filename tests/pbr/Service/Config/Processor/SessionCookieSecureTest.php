@@ -9,12 +9,15 @@ use Pbraiders\Pomponne\Service\Config\Exception\MissingSettingException;
 use Pbraiders\Pomponne\Service\Config\Processor\Session;
 use Pbraiders\Stdlib\ReflectionTrait;
 
+/**
+ * @coversDefaultClass \Pbraiders\Pomponne\Service\Config\Processor\Session
+ */
 class SessionCookieSecureTest  extends \PHPUnit\Framework\TestCase
 {
     use ReflectionTrait;
 
     /**
-     * @covers \Pbraiders\Pomponne\Service\Config\Processor\Session
+     * @covers ::processCookieSecure
      * @group specification
      */
     public function testProcessCookieSecure()
@@ -46,7 +49,7 @@ class SessionCookieSecureTest  extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers \Pbraiders\Pomponne\Service\Config\Processor\Session
+     * @covers ::processCookieSecure
      * @group specification
      */
     public function testProcessCookieNotSecure()
@@ -78,7 +81,7 @@ class SessionCookieSecureTest  extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers \Pbraiders\Pomponne\Service\Config\Processor\Session
+     * @covers ::processCookieSecure
      * @group specification
      */
     public function testProcessCookieSecureMissing()
@@ -100,7 +103,7 @@ class SessionCookieSecureTest  extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers \Pbraiders\Pomponne\Service\Config\Processor\Session
+     * @covers ::processCookieSecure
      * @group specification
      */
     public function testProcessCookieSecureNotValid()
