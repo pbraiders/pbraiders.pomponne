@@ -10,11 +10,16 @@ use Pbraiders\Pomponne\Application\Exception\InvalidWorkingDirectoryException;
 use Pbraiders\Pomponne\Application\Initializer\Simple;
 use Pbraiders\Pomponne\Application\Run\DoNothing as RunDoNothing;
 
+/**
+ * @coversDefaultClass \Pbraiders\Pomponne\Application\Application
+ */
 class ApplicationTest extends \PHPUnit\Framework\TestCase
 {
 
     /**
-     * @covers \Pbraiders\Pomponne\Application\Application
+     * @covers ::init
+     * @uses \Pbraiders\Pomponne\Application\Initializer\Simple
+     * @uses \Pbraiders\Pomponne\Application\Initializer\Initializer
      * @group specification
      */
     public function testInitException()
@@ -27,6 +32,14 @@ class ApplicationTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @covers \Pbraiders\Pomponne\Application\Application
+     * @uses \Pbraiders\Pomponne\Application\Bootstrap\DoNothing
+     * @uses \Pbraiders\Pomponne\Application\Run\DoNothing
+     * @uses \Pbraiders\Pomponne\Service\Config\Factory
+     * @uses \Pbraiders\Pomponne\Service\Config\Processor\Session
+     * @uses \Pbraiders\Pomponne\Service\Config\Processor\Website
+     * @uses \Pbraiders\Pomponne\Service\Container\Factory
+     * @uses \Pbraiders\Pomponne\Application\Initializer\Initializer
+     * @uses \Pbraiders\Pomponne\Application\Initializer\Simple
      * @group specification
      */
     public function testInitBootstrapAndRun()

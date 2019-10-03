@@ -7,10 +7,15 @@ namespace PbraidersTest\Pomponne\Service\Config;
 use Pbraiders\Pomponne\Service\Config\Exception\InvalidAccessPermissionException;
 use Pbraiders\Pomponne\Service\Config\Factory;
 
+/**
+ * @coversDefaultClass \Pbraiders\Pomponne\Service\Config\Factory
+ */
 class FactoryTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @covers \Pbraiders\Pomponne\Service\Config\Factory
+     * @covers ::create
+     * @uses \Pbraiders\Pomponne\Service\Config\Processor\Session
+     * @uses \Pbraiders\Pomponne\Service\Config\Processor\Website
      * @group specification
      */
     public function testCreate()
@@ -27,7 +32,7 @@ class FactoryTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers \Pbraiders\Pomponne\Service\Config\Factory
+     * @covers ::create
      * @group specification
      */
     public function testCreateException()

@@ -9,12 +9,15 @@ use Pbraiders\Pomponne\Service\Config\Exception\MissingSettingException;
 use Pbraiders\Pomponne\Service\Config\Processor\Session;
 use Pbraiders\Stdlib\ReflectionTrait;
 
+/**
+ * @coversDefaultClass \Pbraiders\Pomponne\Service\Config\Processor\Session
+ */
 class SessionCookieDomainTest  extends \PHPUnit\Framework\TestCase
 {
     use ReflectionTrait;
 
     /**
-     * @covers \Pbraiders\Pomponne\Service\Config\Processor\Session
+     * @covers ::processCookieDomain
      * @group specification
      */
     public function testProcessCookieDomain()
@@ -46,7 +49,7 @@ class SessionCookieDomainTest  extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers \Pbraiders\Pomponne\Service\Config\Processor\Session
+     * @covers ::processCookieDomain
      * @group specification
      */
     public function testProcessCookieDomainMissing()
@@ -68,7 +71,7 @@ class SessionCookieDomainTest  extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers \Pbraiders\Pomponne\Service\Config\Processor\Session
+     * @covers ::processCookieDomain
      * @group specification
      */
     public function testProcessCookieDomainNotValid()
