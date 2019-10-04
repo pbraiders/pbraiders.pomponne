@@ -5,15 +5,3 @@
 *.log
 local.*
 desktop.ini
-/var/**
-!/var
-!/var/tmp
-!/var/log
-!/var/cache
-!/var/proxies
-/tests/var/**
-!/tests/var
-!/tests/var/tmp
-!/tests/var/log
-!/tests/var/cache
-!/tests/var/proxies
