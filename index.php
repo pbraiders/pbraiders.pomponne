@@ -2,11 +2,6 @@
 
 declare(strict_types=1);
 
-use Pbraiders\Pomponne\Application\Application;
-use Pbraiders\Pomponne\Application\Bootstrap\RegisterDefinition;
-use Pbraiders\Pomponne\Application\Initializer\Main;
-use Pbraiders\Pomponne\Application\Run\SlimBridge;
-
 /**
  * Root entry point.
  *
@@ -22,9 +17,8 @@ if (! chdir(__DIR__)) {
     exit(31);
 }
 
-// Includes the Composer autoloader
+// Includes the Composer autoloader.
 require 'lib' . \DIRECTORY_SEPARATOR . 'autoload.php';
 
-(Application::init(new Main()))
-    ->bootstrap(new RegisterDefinition())
-    ->run(new SlimBridge());
+// Runs application.
+require 'pbr' . \DIRECTORY_SEPARATOR . 'Application' . \DIRECTORY_SEPARATOR . 'application.php';

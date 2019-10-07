@@ -37,10 +37,11 @@
         "league/plates": "^4.0.0-alpha",
         "league/uri-parser": "^1.4",
         "monolog/monolog": "^2.0",
-        "pbraiders/stdlib": "^1.0",
-        "pbraiders/container": "^1.0",
         "pbraiders/config": "^1.0",
+        "pbraiders/container": "^1.0",
+        "pbraiders/stdlib": "^1.0",
         "php-di/php-di": "^6.0",
+        "php-di/slim-bridge": "^3.0",
         "slim/psr7": "^0.5",
         "slim/slim": "^4.2"
     },

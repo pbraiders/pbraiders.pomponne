@@ -24,7 +24,8 @@
 >
     <projectFiles>
         <directory name="pbr/Service" />
-        <directory name="pbr/Application" />
+        <directory name="pbr/Application/Bootstrap" />
+        <directory name="pbr/Application/Init" />
         <ignoreFiles>
             <directory name="lib" />
             <directory name="old" />
