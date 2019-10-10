@@ -46,10 +46,12 @@ abstract class AbstractStage implements Stage
      */
     public function initialize(ContainerFactoryInterface $factory): ?App
     {
+        $pReturn = null;
+
         if (isset($this->pNextStage)) {
-            return $this->pNextStage->initialize($factory);
+            $pReturn = $this->pNextStage->initialize($factory);
         }
 
-        return null;
+        return $pReturn;
     }
 }

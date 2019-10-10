@@ -33,8 +33,9 @@ class PHPStage extends AbstractStage
      */
     public function boot(array $settings): ?ContainerFactoryInterface
     {
+
         // Loads PHP settings only
-        $aSettings = array_intersect_key($settings, ['php']);
+        $aSettings = array_intersect_key($settings, ['php' => true]);
 
         // Settings must exists
         if (! isset($aSettings['php']) || ! is_array($aSettings['php'])) {
