@@ -18,6 +18,14 @@ use Pbraiders\Pomponne\Application\Bootstrap\AbstractStage;
  */
 class DoNothingStage extends AbstractStage
 {
+
+    /**
+     * Current settings.
+     *
+     * @var array
+     */
+    public $aSettings = [];
+
     /**
      * Do nothing.
      *
@@ -26,6 +34,7 @@ class DoNothingStage extends AbstractStage
      */
     public function boot(array $settings): ?ContainerFactoryInterface
     {
+        $this->aSettings = $settings;
         return parent::boot($settings);
     }
 }
