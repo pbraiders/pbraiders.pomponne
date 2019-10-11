@@ -123,7 +123,8 @@ return [
 
         // Name of the file where script errors should be logged.
         // The first %s will be replaced with the current working directory.
-        'error_log' => sprintf('%s/var/log/%s_php_error.log', getcwd(), date("Ymd")),
+        // The second, with the current date.
+        'error_log' => '%s/var/log/%s_php_error.log',
 
         // Session cache expire.
         'session.cache_expire' => '180',

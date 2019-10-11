@@ -4,4 +4,5 @@
 .php_cs.cache
 *.log
 local.*
+!/tests/pbr/config/local.config.php
 desktop.ini

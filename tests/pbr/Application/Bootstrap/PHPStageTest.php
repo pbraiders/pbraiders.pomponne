@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PbraidersTest\Pomponne\Application\Bootstrap;
 
+use Pbraiders\Pomponne\Service\Config\Exception\MissingSettingException;
 use Pbraiders\Pomponne\Application\Bootstrap\PHPStage;
 
 /**
@@ -18,21 +19,21 @@ class PHPStageTest extends \PHPUnit\Framework\TestCase
     public function testBootException()
     {
         $pStage = new PHPStage();
-        $this->expectException(InvalidWorkingDirectoryException::class);
+        $this->expectException(MissingSettingException::class);
         $pStage->boot(['no_php_section' => false]);
     }
 
     /**
      * @covers ::boot
+     * @uses \Pbraiders\Pomponne\Application\Bootstrap\AbstractStage
      * @group specification
      */
     public function testBoot()
     {
+        $sExpected = '/var/log/pbraiders/modified';
         $pStage = new PHPStage();
-
-        $pStage->boot(['service' => ['error' => ['use_whoops' => true]]]);
-
-        $this->assertTrue(restore_error_handler());
-        $this->assertTrue(restore_exception_handler());
+        $pStage->boot(['php' => ['error_log' => $sExpected]]);
+        $sActual = @ini_get('error_log');
+        $this->assertSame($sExpected, $sActual);
     }
 }

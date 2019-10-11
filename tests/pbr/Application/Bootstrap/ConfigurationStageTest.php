@@ -26,14 +26,15 @@ class ConfigurationStageTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @covers ::boot
-     * @uses \Pbraiders\Pomponne\Application\Bootstrap\AbstractStage::boot
-     * @uses \Pbraiders\Pomponne\Application\Bootstrap\AbstractStage::setNext
-     * @uses \Pbraiders\Pomponne\Service\Config\Factory::create
-     * @uses \Pbraiders\Pomponne\Service\Config\Processor\Session::process
-     * @uses \Pbraiders\Pomponne\Service\Config\Processor\Session::processCookieDomain
-     * @uses \Pbraiders\Pomponne\Service\Config\Processor\Session::processCookieSecure
-     * @uses \Pbraiders\Pomponne\Service\Config\Processor\Session::processSessionSavePath
-     * @uses \Pbraiders\Pomponne\Service\Config\Processor\Website::process
+     * @uses \Pbraiders\Pomponne\Application\Bootstrap\AbstractStage
+     * @uses \Pbraiders\Pomponne\Service\Config\Factory
+     * @uses \Pbraiders\Pomponne\Service\Config\Processor\php\Session
+     * @uses \Pbraiders\Pomponne\Service\Config\Processor\Application\Website
+     * @uses Pbraiders\Pomponne\Service\Config\Processor\Application\CachePath
+     * @uses Pbraiders\Pomponne\Service\Config\Processor\Application\TemporaryPath
+     * @uses Pbraiders\Pomponne\Service\Config\Processor\Application\WorkingDir
+     * @uses Pbraiders\Pomponne\Service\Config\Processor\Php\ErrorLog
+     * @uses Pbraiders\Pomponne\Service\Config\Processor\Service\Logger
      * @group specification
      */
     public function testBoot()

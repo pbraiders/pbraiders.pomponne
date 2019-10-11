@@ -14,8 +14,13 @@ class FactoryTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @covers ::create
-     * @uses \Pbraiders\Pomponne\Service\Config\Processor\Session
-     * @uses \Pbraiders\Pomponne\Service\Config\Processor\Website
+     * @uses \Pbraiders\Pomponne\Service\Config\Processor\Application\Website
+     * @uses \Pbraiders\Pomponne\Service\Config\Processor\Application\CachePath
+     * @uses \Pbraiders\Pomponne\Service\Config\Processor\Application\TemporaryPath
+     * @uses \Pbraiders\Pomponne\Service\Config\Processor\Application\WorkingDir
+     * @uses \Pbraiders\Pomponne\Service\Config\Processor\Service\Logger
+     * @uses \Pbraiders\Pomponne\Service\Config\Processor\Php\ErrorLog
+     * @uses \Pbraiders\Pomponne\Service\Config\Processor\Php\Session
      * @group specification
      */
     public function testCreate()
