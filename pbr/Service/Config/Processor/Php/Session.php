@@ -3,12 +3,12 @@
 declare(strict_types=1);
 
 /**
- * @package Pbraiders\Pomponne\Service\Config\Processor
+ * @package Pbraiders\Pomponne\Service\Config\Processor\Php
  * @link    https://github.com/pbraiders/pomponne for the canonical source repository
  * @license https://github.com/pbraiders/pomponne/blob/master/LICENSE GNU General Public License v3.0 License.
  */
 
-namespace Pbraiders\Pomponne\Service\Config\Processor;
+namespace Pbraiders\Pomponne\Service\Config\Processor\Php;
 
 use Pbraiders\Config\Processor\Processor;
 use Pbraiders\Pomponne\Service\Config\Exception;
@@ -18,7 +18,7 @@ use function Pbraiders\Stdlib\extractDepthKeyInArray;
 /**
  * Modifies php section of the settings.
  */
-final class Session extends Processor
+class Session extends Processor
 {
 
     /**

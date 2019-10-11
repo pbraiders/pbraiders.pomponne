@@ -46,7 +46,6 @@ class ConfigurationStage extends AbstractStage
 
         // Loads the configuration.
         $aSettings = (new ConfigFactory())->create($sWorkingDir);
-        $aSettings['application']['working_directory'] = $sWorkingDir;
 
         return parent::boot($aSettings);
     }

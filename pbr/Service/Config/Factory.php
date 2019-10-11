@@ -14,8 +14,13 @@ use Pbraiders\Config\ArrayFactory;
 use Pbraiders\Config\Reader\FileMandatory;
 use Pbraiders\Config\Reader\FileOptional;
 use Pbraiders\Pomponne\Service\Config\Exception;
-use Pbraiders\Pomponne\Service\Config\Processor\Session;
-use Pbraiders\Pomponne\Service\Config\Processor\Website;
+use Pbraiders\Pomponne\Service\Config\Processor\Application\CachePath;
+use Pbraiders\Pomponne\Service\Config\Processor\Application\TemporaryPath;
+use Pbraiders\Pomponne\Service\Config\Processor\Application\Website;
+use Pbraiders\Pomponne\Service\Config\Processor\Application\WorkingDir;
+use Pbraiders\Pomponne\Service\Config\Processor\Service\Logger;
+use Pbraiders\Pomponne\Service\Config\Processor\Php\ErrorLog;
+use Pbraiders\Pomponne\Service\Config\Processor\Php\Session;
 
 /**
  * Config factory.
@@ -65,8 +70,15 @@ final class Factory
         );
 
         // Chain of processors
-        $pProcessor = new Website();
-        $pProcessor->setNext(new Session());
+        $pProcessor = new WorkingDir();
+        $pProcessor
+            ->setWorkingDir($sCurrentWorkingDirectory)
+            ->setNext(new TemporaryPath())
+            ->setNext(new CachePath())
+            ->setNext(new Website())
+            ->setNext(new Logger())
+            ->setNext(new ErrorLog())
+            ->setNext(new Session());
 
         // Create the factory
         $pArrayFactory = new ArrayFactory($pReaderMain, $pReaderLocal);

@@ -24,11 +24,11 @@ return [
             'url' => 'https://www.example.com/pbraiders/',
         ],
 
-        // Temporary directory.
-        'temporary_path' => sprintf('%s/var/tmp', getcwd()),
+        // Temporary directory. %s will be replaced with the current working directory.
+        'temporary_path' => '%s/var/tmp',
 
-        // Cache directory. While developping.
-        'cache_path' => sprintf('%s/var/cache', getcwd()),
+        // Cache directory. %s will be replaced with the current working directory.
+        'cache_path' => '%s/var/cache',
 
     ],
 
@@ -71,7 +71,8 @@ return [
 
         'logger' => [
             // Name of the file where application errors should be logged.
-            'error_log' => sprintf('%s/var/log/pbraiders_error.log', getcwd()),
+            // %s will be replaced with the current working directory.
+            'error_log' => '%s/var/log/pbraiders_error.log',
         ],
 
         'templating_engine' => [
@@ -121,6 +122,7 @@ return [
         'log_errors' => '1',
 
         // Name of the file where script errors should be logged.
+        // The first %s will be replaced with the current working directory.
         'error_log' => sprintf('%s/var/log/%s_php_error.log', getcwd(), date("Ymd")),
 
         // Session cache expire.

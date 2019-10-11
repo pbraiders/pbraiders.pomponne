@@ -3,12 +3,12 @@
 declare(strict_types=1);
 
 /**
- * @package Pbraiders\Pomponne\Service\Config\Processor
+ * @package Pbraiders\Pomponne\Service\Config\Processor\Application
  * @link    https://github.com/pbraiders/pomponne for the canonical source repository
  * @license https://github.com/pbraiders/pomponne/blob/master/LICENSE GNU General Public License v3.0 License.
  */
 
-namespace Pbraiders\Pomponne\Service\Config\Processor;
+namespace Pbraiders\Pomponne\Service\Config\Processor\Application;
 
 use League\Uri\Parser;
 use Pbraiders\Config\Processor\Processor;
@@ -19,7 +19,7 @@ use function Pbraiders\Stdlib\extractDepthKeyInArray;
 /**
  * Modifies Website section of the settings.
  */
-final class Website extends Processor
+class Website extends Processor
 {
 
     /**
