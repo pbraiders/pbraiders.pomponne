@@ -38,14 +38,14 @@ class Logger extends Processor
          * @var mixed|null $sWorkingDir The working directory.
          */
         $sWorkingDir = extractDepthKeyInArray($settings, ['application' => ['working_directory' => true]]);
-        if (!is_string($sWorkingDir)) {
+        if (! is_string($sWorkingDir)) {
             throw new Exception\MissingSettingException('The application.working_directory setting is missing.');
         }
         $sWorkingDir = trim($sWorkingDir);
 
         /** @var mixed|null $sFormat The format. */
         $sFormat = extractDepthKeyInArray($settings, ['service' => ['logger' => ['error_log' => true]]]);
-        if (!is_string($sFormat)) {
+        if (! is_string($sFormat)) {
             throw new Exception\MissingSettingException('The service.logger.error_log setting is missing.');
         }
         $sFormat = trim($sFormat);

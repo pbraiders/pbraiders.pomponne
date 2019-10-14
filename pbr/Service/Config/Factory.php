@@ -33,6 +33,7 @@ final class Factory
      * @param string $dir Current working directory.
      * @throws \Pbraiders\Pomponne\Service\Config\Exception\InvalidAccessPermissionException If the current working dir is not valid
      * @throws \Pbraiders\Config\Exception\FileDoNotExistNorReadableException If file does not exist.
+     * @throws \Pbraiders\Pomponne\Service\Config\Exception\InvalidSettingException If a setting is not valid.
      * @return array
      */
     public function create(string $dir): array
