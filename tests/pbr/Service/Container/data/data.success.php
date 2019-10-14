@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use Pbraiders\Container\PhpDiFactory;
-
 return [
     [
         'input' => [
@@ -17,6 +15,6 @@ return [
                 ],
             ],
         ],
-        'expected' => PhpDiFactory::class,
+        'expected' => \Pbraiders\Container\FactoryInterface::class,
     ],
 ];

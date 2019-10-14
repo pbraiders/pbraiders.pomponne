@@ -30,12 +30,6 @@ interface Stage
      * Loads, configures and then executes bootstrap stages.
      *
      * @param array $settings The settings.
-     * @throws \InvalidArgumentException  If an error handler is not callable or not an instance of HandlerInterface.
-     * @throws \InvalidArgumentException if a container definition is not valid.
-     * @throws \Pbraiders\Pomponne\Application\Exception\InvalidWorkingDirectoryException If the working directory can not be defined.
-     * @throws \Pbraiders\Pomponne\Service\Config\Exception\InvalidAccessPermissionException If the directory does not exist or is not writable.
-     * @throws \Pbraiders\Pomponne\Service\Config\Exception\MissingSettingException If a setting is missing.
-     * @throws \Pbraiders\Config\Exception\FileDoNotExistNorReadableException If a file does not exist or is not readable.
      * @return \Pbraiders\Container\FactoryInterface|null
      */
     public function boot(array $settings): ?ContainerFactoryInterface;

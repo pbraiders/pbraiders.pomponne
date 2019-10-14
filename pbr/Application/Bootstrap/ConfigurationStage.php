@@ -29,6 +29,7 @@ class ConfigurationStage extends AbstractStage
      * @throws \Pbraiders\Pomponne\Application\Exception\InvalidWorkingDirectoryException If the working directory can not be defined.
      * @throws \Pbraiders\Pomponne\Service\Config\Exception\InvalidAccessPermissionException If the directory does not exist or is not writable.
      * @throws \Pbraiders\Config\Exception\FileDoNotExistNorReadableException If a file does not exist or is not readable.
+     * @throws \Pbraiders\Pomponne\Service\Config\Exception\InvalidSettingException If a setting is not valid.
      * @return \Pbraiders\Container\FactoryInterface|null
      */
     public function boot(array $settings): ?ContainerFactoryInterface
@@ -40,7 +41,7 @@ class ConfigurationStage extends AbstractStage
          * This method works well in production and development environment.
          */
         $sWorkingDir = $settings['application']['working_directory'] ?? getcwd();
-        if (! is_string($sWorkingDir) || (strlen($sWorkingDir) == 0)) {
+        if (!is_string($sWorkingDir) || (strlen($sWorkingDir) == 0)) {
             throw new InvalidWorkingDirectoryException("The working directory is not defined.");
         }
 
