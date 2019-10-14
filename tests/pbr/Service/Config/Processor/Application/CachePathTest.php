@@ -6,6 +6,9 @@ namespace PbraidersTest\Pomponne\Service\Config\Processor\Application;
 
 use Pbraiders\Pomponne\Service\Config\Processor\Application\CachePath;
 
+/**
+ * @coversDefaultClass \Pbraiders\Pomponne\Service\Config\Processor\Application\CachePath
+ */
 class CachePathTest extends \PHPUnit\Framework\TestCase
 {
     /**
@@ -31,7 +34,7 @@ class CachePathTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers \Pbraiders\Pomponne\Service\Config\Processor\Application\CachePath
+     * @covers ::process
      * @dataProvider provideFailureData
      * @group specification
      */
@@ -43,7 +46,7 @@ class CachePathTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers \Pbraiders\Pomponne\Service\Config\Processor\Application\CachePath
+     * @covers ::process
      * @dataProvider provideSucessData
      * @group specification
      */

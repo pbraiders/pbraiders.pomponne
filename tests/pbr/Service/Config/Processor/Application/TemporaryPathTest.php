@@ -6,6 +6,9 @@ namespace PbraidersTest\Pomponne\Service\Config\Processor\Application;
 
 use Pbraiders\Pomponne\Service\Config\Processor\Application\TemporaryPath;
 
+/**
+ * @coversDefaultClass \Pbraiders\Pomponne\Service\Config\Processor\Application\TemporaryPath
+ */
 class TemporaryPathTest extends \PHPUnit\Framework\TestCase
 {
     /**
@@ -31,7 +34,7 @@ class TemporaryPathTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers \Pbraiders\Pomponne\Service\Config\Processor\Application\TemporaryPath
+     * @covers ::process
      * @dataProvider provideFailureData
      * @group specification
      */
@@ -43,7 +46,7 @@ class TemporaryPathTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers \Pbraiders\Pomponne\Service\Config\Processor\Application\TemporaryPath
+     * @covers ::process
      * @dataProvider provideSucessData
      * @group specification
      */

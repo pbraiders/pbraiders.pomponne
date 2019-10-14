@@ -6,6 +6,9 @@ namespace PbraidersTest\Pomponne\Service\Config\Processor\Application;
 
 use Pbraiders\Pomponne\Service\Config\Processor\Application\Website;
 
+/**
+ * @coversDefaultClass \Pbraiders\Pomponne\Service\Config\Processor\Application\Website
+ */
 class WebsiteTest extends \PHPUnit\Framework\TestCase
 {
     /**
@@ -31,7 +34,7 @@ class WebsiteTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers \Pbraiders\Pomponne\Service\Config\Processor\Application\Website
+     * @covers ::process
      * @dataProvider provideFailureData
      * @group specification
      */
@@ -43,7 +46,7 @@ class WebsiteTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers \Pbraiders\Pomponne\Service\Config\Processor\Application\Website
+     * @covers ::process
      * @dataProvider provideSucessData
      * @group specification
      */
