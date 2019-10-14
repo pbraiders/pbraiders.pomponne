@@ -8,7 +8,7 @@
     ],
     "homepage": "https://github.com/pbraiders/pomponne",
     "readme": "README.md",
-    "time": "2019-09-10",
+    "time": "2019-10-14",
     "license": "GPL-3.0-or-later",
     "authors": [
         {
@@ -37,11 +37,12 @@
         "league/plates": "^4.0.0-alpha",
         "league/uri-parser": "^1.4",
         "monolog/monolog": "^2.0",
-        "pbraiders/stdlib": "^1.0",
-        "pbraiders/container": "^1.0",
         "pbraiders/config": "^1.0",
+        "pbraiders/container": "^1.0",
+        "pbraiders/stdlib": "^1.0",
         "php-di/php-di": "^6.0",
-        "slim/psr7": "^0.5",
+        "php-di/slim-bridge": "^3.0",
+        "slim/psr7": "^0.6",
         "slim/slim": "^4.2"
     },
     "autoload": {

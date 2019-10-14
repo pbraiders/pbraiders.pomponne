@@ -2,17 +2,15 @@
 
 declare(strict_types=1);
 
-use Pbraiders\Pomponne\Application\Application;
-use Pbraiders\Pomponne\Application\Bootstrap\RegisterDefinition;
-use Pbraiders\Pomponne\Application\Initializer\Main;
-use Pbraiders\Pomponne\Application\Run\SlimBridge;
-
 /**
  * Root entry point.
  *
  * @link    https://github.com/pbraiders/pomponne for the canonical source repository
  * @license https://github.com/pbraiders/pomponne/blob/master/LICENSE GNU General Public License v3.0 License.
  */
+
+use Pbraiders\Pomponne\Application\Application;
+use Slim\App;
 
 /**
  * This makes our life easier when dealing with paths. Everything is relative
@@ -22,9 +20,15 @@ if (! chdir(__DIR__)) {
     exit(31);
 }
 
-// Includes the Composer autoloader
+// Includes the Composer autoloader.
 require 'lib' . \DIRECTORY_SEPARATOR . 'autoload.php';
 
-(Application::init(new Main()))
-    ->bootstrap(new RegisterDefinition())
-    ->run(new SlimBridge());
+if (! class_exists(Application::class) || ! class_exists(App::class)) {
+    throw new \RuntimeException(
+        "Unable to load application.\n"
+            . "- Type `composer install` if you are developing locally.\n"
+    );
+}
+
+// Run the application!
+Application::init([])->run();

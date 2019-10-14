@@ -44,6 +44,7 @@
             <directory suffix=".php">pbr/Application</directory>
             <directory suffix=".php">pbr/Service</directory>
             <exclude>
+                <file>pbr/Application/application.php</file>
                 <directory>lib</directory>
                 <directory>old</directory>
                 <directory>public</directory>

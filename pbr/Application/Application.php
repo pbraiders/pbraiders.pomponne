@@ -1,7 +1,6 @@
 <?php
 
 declare(strict_types=1);
-
 /**
  * @package Pbraiders\Pomponne\Application
  * @link    https://github.com/pbraiders/pomponne for the canonical source repository
@@ -10,66 +9,81 @@ declare(strict_types=1);
 
 namespace Pbraiders\Pomponne\Application;
 
-use Pbraiders\Pomponne\Application\Bootstrap\BootstrapInterface;
-use Pbraiders\Pomponne\Application\Initializer\InitializerInterface;
-use Pbraiders\Container\FactoryInterface;
-use Pbraiders\Pomponne\Application\Run\RunInterface;
+use Pbraiders\Pomponne\Application\Bootstrap\ConfigurationStage;
+use Pbraiders\Pomponne\Application\Bootstrap\ContainerFactoryStage;
+use Pbraiders\Pomponne\Application\Bootstrap\ErrorHandlerStage;
+use Pbraiders\Pomponne\Application\Bootstrap\PHPStage;
+use Pbraiders\Pomponne\Application\Init\RegisterLoggerStage;
+use Pbraiders\Pomponne\Application\Init\SlimBridgeStage;
+use Slim\App;
 
-class Application
+/**
+ * Pomponne
+ */
+final class Application
 {
-    /**
-     * The PSR-11 container factory.
-     *
-     * @var \Pbraiders\Container\FactoryInterface
-     */
-    protected $pContainerFactory;
 
     /**
-     * Constructor.
+     * Static method for quick and easy bootstrap and initialization of the Application.
      *
-     * @param \Pbraiders\Container\FactoryInterface $factory The PSR-11 container factory
+     * - Set working directory.
+     * - Load settings from configurations files.
+     * - Configures PHP.
+     * - Configures the debug error handler if needed.
+     * - Creates the container factory.
+     *
+     * @param array $config May contains some forced setting values like the working dir.
+     * @return \Slim\App
      */
-    public function __construct(FactoryInterface $factory)
+    public static function init(array $config): App
     {
-        $this->pContainerFactory = $factory;
-    }
 
-    /**
-     * Static method for quick and easy initialization of the Application.
-     *
-     * @param \Pbraiders\Pomponne\Application\Initializer\InitializerInterface $initializer
-     * @return \Pbraiders\Pomponne\Application\Application
-     */
-    public static function init(InitializerInterface $initializer): Application
-    {
-        return $initializer->initialize();
-    }
+        /** Quick and easy application bootstrap.
+         * - Set working directory.
+         * - Load settings from configurations files.
+         * - Configures PHP.
+         * - Configures the debug error handler if needed.
+         * - Creates the container factory.
+         *
+         * @var \Pbraiders\Pomponne\Application\Bootstrap\Stage $pBootstrap
+         */
+        $pBootstrap = new ConfigurationStage();
+        $pBootstrap
+            ->setNext(new PHPStage())
+            ->setNext(new ErrorHandlerStage())
+            ->setNext(new ContainerFactoryStage());
 
-    /**
-     * Registers dependencies.
-     *
-     * @param \Pbraiders\Pomponne\Application\Bootstrap\BootstrapInterface $bootstrapper
-     * @return self
-     */
-    public function bootstrap(BootstrapInterface $bootstrapper): self
-    {
-        $bootstrapper
-            ->setContainerFactory($this->pContainerFactory)
-            ->bootstrap();
+        /**
+         * @var \Pbraiders\Container\FactoryInterface $pContainerFactory
+         */
+        $pContainerFactory = $pBootstrap->boot($config);
+        unset($pBootstrap);
 
-        return $this;
-    }
+        /**
+         * Quick and easy application initialization.
+         * - Registers definitions
+         * - Creates the Slim App
+         *
+         * @var \Pbraiders\Pomponne\Application\Init\Stage $pInitializer
+         */
+        $pInitializer = new RegisterLoggerStage();
+        $pInitializer->setNext(new SlimBridgeStage());
 
-    /**
-     * Run the App.
-     *
-     * @return void
-     */
-    public function run(RunInterface $runner): void
-    {
-        $runner
-            ->setContainerFactory($this->pContainerFactory)
-            ->run();
+        /**
+         * @var \Slim\App $pApplication
+         */
+        $pApplication = $pInitializer->initialize($pContainerFactory);
+        unset($pInitializer);
+
+        /**
+         * Add middlewares.
+         */
+
+        /**
+         * Add routes
+         */
+
+        return $pApplication;
     }
 }
 
