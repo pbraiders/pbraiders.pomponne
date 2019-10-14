@@ -30,10 +30,12 @@ class PHPStageTest extends \PHPUnit\Framework\TestCase
      */
     public function testBoot()
     {
+        $sInitial = @ini_get('error_log');
         $sExpected = '/var/log/pbraiders/modified';
         $pStage = new PHPStage();
         $pStage->boot(['php' => ['error_log' => $sExpected]]);
         $sActual = @ini_get('error_log');
         $this->assertSame($sExpected, $sActual);
+        @ini_set('error_log', $sInitial);
     }
 }
