@@ -41,7 +41,7 @@ class ConfigurationStage extends AbstractStage
          * This method works well in production and development environment.
          */
         $sWorkingDir = $settings['application']['working_directory'] ?? getcwd();
-        if (!is_string($sWorkingDir) || (strlen($sWorkingDir) == 0)) {
+        if (! is_string($sWorkingDir) || (strlen($sWorkingDir) == 0)) {
             throw new InvalidWorkingDirectoryException("The working directory is not defined.");
         }
 

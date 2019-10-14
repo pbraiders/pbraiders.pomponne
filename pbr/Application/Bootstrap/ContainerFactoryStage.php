@@ -28,9 +28,9 @@ class ContainerFactoryStage extends AbstractStage
      * @param array $settings The settings.
      * @throws \InvalidArgumentException if a container definition is not valid.
      * @throws \Pbraiders\Pomponne\Service\Config\Exception\MissingSettingException If a setting is missing.
-     * @return \Pbraiders\Container\FactoryInterface|null
+     * @return \Pbraiders\Container\FactoryInterface
      */
-    public function boot(array $settings): ?ContainerFactoryInterface
+    public function boot(array $settings): ContainerFactoryInterface
     {
         $pContainerFactory = (new ContainerFactoryFactory())->create($settings);
         $pContainerFactory->registerDefinition('settings', ['settings' => $settings], true);
