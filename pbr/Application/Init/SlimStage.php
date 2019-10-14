@@ -25,9 +25,9 @@ class SlimStage extends AbstractStage
      * Creates and initializes the Slim app.
      *
      * @param \Pbraiders\Container\FactoryInterface $factory
-     * @return \Slim\App|null
+     * @return \Slim\App
      */
-    public function initialize(ContainerFactoryInterface $factory): ?App
+    public function initialize(ContainerFactoryInterface $factory): App
     {
         /**
          * Creates the container and loads all the needed services.
