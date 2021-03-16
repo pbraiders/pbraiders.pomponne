@@ -64,7 +64,7 @@ final class CCookie
     private static $m_pInstance = NULL;
 
     // Name
-    private $m_sName='pbraiders120';
+    private $m_sName='pbraiders132';
 
     // Expire
     private $m_iExpire=0;
@@ -275,12 +275,13 @@ final class CCookie
             else
                 $iForceDesk=0;
             // Send cookie
-            $bReturn = setcookie($this->m_sName
-                                ,@serialize( array( $sUsername, $sSessionId, $sLanguage, $iForceDesk) )
-                                ,$iExpire
-                                ,$this->m_sPath.'; HttpOnly'
-                                ,$this->m_sDomain
-                                ,$this->m_iSecure);
+            $bReturn = setcookie($this->m_sName,
+                                @serialize( array( $sUsername, $sSessionId, $sLanguage, $iForceDesk) ),
+                                $iExpire,
+                                $this->m_sPath,
+                                $this->m_sDomain,
+                                $this->m_iSecure,
+                                true);
         }// if...
         return $bReturn;
     }
