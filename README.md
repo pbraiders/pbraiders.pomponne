@@ -1,7 +1,4 @@
-# PBRaiders Pomponne **WORK IN PROGRESS**
-
-[![Build Status](https://travis-ci.com/pbraiders/pomponne.svg?branch=master)](https://travis-ci.com/pbraiders/pomponne)
-[![Coverage Status](https://coveralls.io/repos/github/pbraiders/pomponne/badge.svg?branch=master)](https://coveralls.io/github/pbraiders/pomponne?branch=master)
+# PBRaiders Pomponne
 
 *Pomponne version of the PBRaiders web application.*
 
@@ -17,8 +14,8 @@ PBRaiders has been developed for simplicity, speed, performance, robustness and 
 
 ## Requirements
 
-- PHP: ^7.3
-- MariaDB: ^10.0
+- PHP: ^7.4
+- MariaDB: ^10.5
 - PHP extensions: GD and PDO driver for MysSQL.
 
 ## Installation

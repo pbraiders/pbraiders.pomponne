@@ -1,2 +1,0 @@
-includes:
-    - lib/phpstan/phpstan-strict-rules/rules.neon
