@@ -44,16 +44,16 @@
 if (!defined('PBR_VERSION') || !defined('PBR_PATH'))
     die('-1');
 
-$sPHPVersion = phpversion();
-$sPHPVersionRequiredMin = '5.3';
-$sPHPVersionRequiredMax = '7.4';
-if (version_compare($sPHPVersion, $sPHPVersionRequiredMin, '<') || version_compare($sPHPVersion, $sPHPVersionRequiredMax, '>')) {
-    header('Content-Type: text/html');
-    echo '<html>';
-    echo sprintf('<body>Votre version de php (%s) n\'est pas valide. Elle doit être >= %s et <= %s. </body>', $sPHPVersion, $sPHPVersionRequiredMin, $sPHPVersionRequiredMax);
-    echo '</html>';
-    exit;
-}
+    $sPHPVersion = phpversion();
+    $sPHPVersionRequiredMin = '5.3';
+    $sPHPVersionRequiredMax = '8.0';
+    if (version_compare($sPHPVersion, $sPHPVersionRequiredMin, '<') || version_compare($sPHPVersion, $sPHPVersionRequiredMax, '>=')) {
+        header('Content-Type: text/html');
+        echo '<html>';
+        echo sprintf('<body>Votre version de php (%s) n\'est pas valide. Elle doit être >= %s et < %s. </body>',$sPHPVersion,$sPHPVersionRequiredMin,$sPHPVersionRequiredMax);
+        echo '</html>';
+        exit;
+    }
 
 /** Turn off PHP time limit
  **************************/
@@ -115,7 +115,7 @@ unset($tNoUnset);
 /** Disable magic quotes
  ***********************/
 
-if (version_compare($sPHPVersion, $sPHPVersionRequiredMax, '<')) {
+if (version_compare($sPHPVersion, '7.4', '<')) {
     // Strip slashes from GET/POST/COOKIE
     if (get_magic_quotes_gpc()) {
         $_GET    = stripslashes_deep($_GET);
