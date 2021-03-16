@@ -137,7 +137,8 @@ CREATE  TABLE IF NOT EXISTS `_PBR_DB_DBN_`.`reservation` (
   `rent_planned` SMALLINT UNSIGNED NOT NULL DEFAULT 0 , -- COMMENT 'planned rent count' ,
   `rent_canceled` SMALLINT UNSIGNED NOT NULL DEFAULT 0 , -- COMMENT 'canceled rent count' ,
   `rent_max` SMALLINT UNSIGNED NOT NULL , -- COMMENT 'max rent allowed' ,
-  `age` TINYINT UNSIGNED NULL , -- COMMENT '1:16-25, 2:26-35, 3:35 and more.' ,
+  `age` TINYINT UNSIGNED NULL , -- COMMENT '1:Kids, 2:EMEK, 3:EVG, 4:Etha.' ,
+  `horaire` TINYINT UNSIGNED NULL , -- COMMENT '1:10H30 &lt; Kids, 2:12H, 3:13H   &lt; Kids,4:14H, 5:15H   &lt; Kids, 6:16H.' ,
   `arrhe` TINYINT UNSIGNED NULL , -- COMMENT '1:cash, 2:check, 3:credit card' ,
   `comment` TEXT NULL , -- COMMENT 'comment' ,
   `create_date` DATETIME NOT NULL , -- COMMENT 'creation date in server time zone' ,
@@ -182,6 +183,6 @@ CREATE INDEX `ix_reservation_day` ON `_PBR_DB_DBN_`.`reservation` (`day` ASC) ;
 -- -----------------------------------------------------
 SET AUTOCOMMIT=0;
 USE `_PBR_DB_DBN_`;
-INSERT INTO `config` (`name`, `value`, `role`) VALUES ('schema_version', '1.2.0', 10);
+INSERT INTO `config` (`name`, `value`, `role`) VALUES ('schema_version', '1.3.2', 10);
 
 COMMIT;
